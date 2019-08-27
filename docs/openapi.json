@@ -2,17 +2,16 @@
   "openapi": "3.0.0",
   "info": {
     "description": "API Reference — Labs v1",
-    "version": "1.0",
+    "version": "1.4",
     "title": "Tweets and Users",
-    "termsOfService": "https://twitter.com/en/tos",
+    "termsOfService": "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact": {
-      "email": "support@twitter.com",
-      "name": "Twitter Help",
-      "url": "https://help.twitter.com/"
+      "name": "Twitter Developers",
+      "url": "https://developer.twitter.com/"
     },
     "license": {
-      "name": "Twitter API Usage License",
-      "url": "https://twitter.com/en/tos"
+      "name": "Twitter Developer Agreement and Policy",
+      "url": "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html"
     }
   },
   "servers": [
@@ -92,6 +91,16 @@
           },
           {
             "$ref": "#/components/parameters/PlaceFormat"
+          },
+          {
+            "name": "expansions",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "description": "A comma separated list of fields to expand.",
+            "schema": {
+              "$ref": "#/components/schemas/UserExpansionsParamType"
+            }
           }
         ],
         "responses": {
@@ -166,6 +175,50 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TweetLookupResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/labs/1/tweets/metrics/private": {
+      "get": {
+        "tags": [
+          "Tweets",
+          "Metrics"
+        ],
+        "summary": "Returns private metrics corresponding to a Tweet",
+        "description": "Returns various metrics about a Tweet, including metrics for an embedded Video if one exists",
+        "operationId": "findPrivateTweetMetricsById",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "A comma separated list of Tweet IDs. Up to 50 are allowed in a single request.",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TweetID"
+              },
+              "minItems": 1,
+              "maxItems": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TweetMetricsResponse"
                 }
               }
             }
@@ -368,12 +421,28 @@
             "in_reply_to_user_id",
             "geo.place_id",
             "attachments.media_keys",
-            "attachments.poll_ids"
+            "attachments.poll_ids",
+            "entities.mentions.username",
+            "referenced_tweets.id.author_id"
           ]
         },
         "minItems": 1,
         "uniqueItems": true,
         "example": "author_id"
+      },
+      "UserExpansionsParamType": {
+        "description": "The list of fields you can expand for a [User](#User) object. If the field has an ID, it can be expanded into a full object.",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "most_recent_tweet_id",
+            "pinned_tweet_id"
+          ]
+        },
+        "minItems": 1,
+        "uniqueItems": true,
+        "example": "most_recent_tweet_id"
       },
       "Error": {
         "required": [
@@ -585,11 +654,11 @@
               },
               "reply_count": {
                 "type": "integer",
-                "description": "Number of Replies of this Tweet."
+                "description": "Number of times this Tweet has been replied to."
               },
               "like_count": {
                 "type": "integer",
-                "description": "Number of likes of this Tweet."
+                "description": "Number of times this Tweet has been liked."
               },
               "quote_count": {
                 "type": "integer",
@@ -777,6 +846,12 @@
                 "$ref": "#/components/schemas/FullTextEntities"
               }
             }
+          },
+          "most_recent_tweet_id": {
+            "$ref": "#/components/schemas/TweetID"
+          },
+          "pinned_tweet_id": {
+            "$ref": "#/components/schemas/TweetID"
           }
         }
       },
@@ -902,6 +977,25 @@
           },
           "includes": {
             "$ref": "#/components/schemas/Expansions"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "TweetMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TweetMetrics"
+            },
+            "minItems": 1
           },
           "errors": {
             "type": "array",
@@ -1534,6 +1628,61 @@
           }
         }
       },
+      "DisallowedResourceProblem": {
+        "description": "A problem that indicates that the resource requested violates the precepts of this API.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "required": [
+          "resource_id",
+          "resource_type",
+          "section"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/disallowed-resource"
+            ]
+          },
+          "resource_id": {
+            "type": "string"
+          },
+          "resource_type": {
+            "type": "string",
+            "enum": [
+              "tweet"
+            ]
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "data",
+              "includes"
+            ]
+          }
+        }
+      },
+      "UnsupportedAuthenticationProblem": {
+        "description": "A problem that indicates that the authentication used is not supported.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/unsupported-authentication"
+            ]
+          }
+        }
+      },
       "Problem": {
         "description": "An HTTP Problem Details object, as defined in IETF RFC 7807 (https://tools.ietf.org/html/rfc7807).",
         "oneOf": [
@@ -1551,6 +1700,12 @@
           },
           {
             "$ref": "#/components/schemas/ResourceUnauthorizedProblem"
+          },
+          {
+            "$ref": "#/components/schemas/DisallowedResourceProblem"
+          },
+          {
+            "$ref": "#/components/schemas/UnsupportedAuthenticationProblem"
           }
         ],
         "discriminator": {
@@ -1560,7 +1715,115 @@
             "https://api.twitter.com/labs/1/problems/invalid-request": "#/components/schemas/InvalidRequestProblem",
             "https://api.twitter.com/labs/1/problems/client-forbidden": "#/components/schemas/ClientForbiddenProblem",
             "https://api.twitter.com/labs/1/problems/resource-not-found": "#/components/schemas/ResourceNotFoundProblem",
-            "https://api.twitter.com/labs/1/problems/not-authorized-for-resource": "#/components/schemas/ResourceUnauthorizedProblem"
+            "https://api.twitter.com/labs/1/problems/not-authorized-for-resource": "#/components/schemas/ResourceUnauthorizedProblem",
+            "https://api.twitter.com/labs/1/problems/disallowed-resource": "#/components/schemas/DisallowedResourceProblem",
+            "https://api.twitter.com/labs/1/problems/unsupported-authentication": "#/components/schemas/UnsupportedAuthenticationProblem"
+          }
+        }
+      },
+      "TweetMetrics": {
+        "type": "object",
+        "description": "Metrics for a Tweet.",
+        "required": [
+          "tweet_id",
+          "tweet"
+        ],
+        "properties": {
+          "tweet_id": {
+            "$ref": "#/components/schemas/TweetID"
+          },
+          "tweet": {
+            "$ref": "#/components/schemas/TweetInteractionMetrics"
+          },
+          "video": {
+            "$ref": "#/components/schemas/VideoMetrics"
+          }
+        }
+      },
+      "TweetInteractionMetrics": {
+        "type": "object",
+        "description": "Interaction metrics for a Tweet.",
+        "required": [
+          "like_count",
+          "retweet_count",
+          "quote_count",
+          "reply_count"
+        ],
+        "properties": {
+          "like_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this Tweet has been liked."
+          },
+          "retweet_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this Tweet has been Retweeted."
+          },
+          "quote_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this Tweet has been quoted."
+          },
+          "reply_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this Tweet has been replied to."
+          },
+          "impression_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this Tweet has been viewed."
+          }
+        },
+        "example": {
+          "like_count": 1,
+          "retweet_count": 2,
+          "quote_count": 3,
+          "reply_count": 4,
+          "impression_count": 100
+        }
+      },
+      "VideoMetrics": {
+        "type": "object",
+        "description": "Metrics corresponding to a Video.",
+        "required": [
+          "media_key",
+          "view_count"
+        ],
+        "properties": {
+          "media_key": {
+            "$ref": "#/components/schemas/MediaKey"
+          },
+          "view_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of times this video has been viewed."
+          },
+          "playback_0_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of users who made it through 0% of the video."
+          },
+          "playback_25_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of users who made it through 25% of the video."
+          },
+          "playback_50_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of users who made it through 50% of the video."
+          },
+          "playback_75_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of users who made it through 75% of the video."
+          },
+          "playback_100_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of users who made it through 100% of the video."
           }
         }
       }
