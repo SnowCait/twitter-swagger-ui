@@ -1,0 +1,22 @@
+name: Update openapi.json
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Update openapi.json
+      run: curl https://api.twitter.com/labs/1/openapi.json -o docs/openapi.json
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v1.1.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        PULL_REQUEST_BRANCH: 'feature/update-openapi-json'
+        COMMIT_MESSAGE: 'Update openapi.json'
