@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "description": "API Reference — Labs v1",
-    "version": "1.4",
+    "version": "1.5",
     "title": "Tweets and Users",
     "termsOfService": "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact": {
@@ -219,6 +219,210 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TweetMetricsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/labs/1/tweets/stream/filter/rules": {
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Returns rules from a user's active rule set.",
+        "description": "Returns rules from a user's active rule set. Users can fetch all of their rules or a subset, specified by the provided rule ids.",
+        "operationId": "getRules",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "A comma-separated list of Rule IDs.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RuleId"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRulesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Add or delete rules from a user's active rule set.",
+        "description": "Add or delete rules from a user's active rule set. Users can provide unique, optionally tagged rules to add. Users can delete their entire rule set or a subset specified by rule ids or values.",
+        "operationId": "addOrDeleteRules",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "A comma-separated list of Rule IDs to delete.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RuleId"
+              }
+            }
+          },
+          {
+            "name": "values",
+            "in": "query",
+            "description": "A comma-separated list of Rule values to delete.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RuleValue"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AddRulesRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/DeleteRulesRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AddRulesResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/DeleteRulesResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/labs/1/tweets/stream/filter": {
+      "get": {
+        "tags": [
+          "Tweet"
+        ],
+        "summary": "Streams tweets matching a user's active rule set.",
+        "description": "Streams tweets matching a user's active rule set.",
+        "operationId": "streamFilter",
+        "parameters": [
+          {
+            "name": "expansions",
+            "in": "query",
+            "description": "A comma-separated list of tweet expansions.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TweetExpansionsParamType"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was successful. Successful responses will return a stream of individual JSON Tweet payloads.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "A tweet or error that can be returned by the streaming tweet API",
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "description": "The values returned with a successful streamed tweet",
+                      "required": [
+                        "data",
+                        "matching_rules"
+                      ],
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Tweet"
+                        },
+                        "matching_rules": {
+                          "type": "array",
+                          "description": "The list of rules which matched the tweet",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "$ref": "#/components/schemas/RuleId"
+                              },
+                              "tag": {
+                                "type": "string",
+                                "description": "The user-supplied tag assigned to the rule which matched"
+                              }
+                            }
+                          }
+                        },
+                        "includes": {
+                          "$ref": "#/components/schemas/Expansions"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "errors"
+                      ],
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Problem"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -1683,6 +1887,150 @@
           }
         }
       },
+      "UsageCapExceededProblem": {
+        "description": "A problem that indicates that a usage cap has been exceeded.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/usage-capped"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "Daily",
+              "Monthly"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "Account",
+              "Product"
+            ]
+          }
+        }
+      },
+      "ConnectionExceptionProblem": {
+        "description": "A problem that indicates something is wrong with the connection",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/streaming-connection"
+            ]
+          },
+          "connection_issue": {
+            "type": "string",
+            "enum": [
+              "TooManyConnections",
+              "ProvisioningSubscription"
+            ]
+          }
+        }
+      },
+      "ClientDisconnectedProblem": {
+        "description": "Your client has gone away.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/client-disconnected"
+            ]
+          }
+        }
+      },
+      "OperationalDisconnectProblem": {
+        "description": "You have been disconnected for operational reasons.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/operational-disconnect"
+            ]
+          },
+          "disconnect_type": {
+            "type": "string",
+            "enum": [
+              "OperationalDisconnect",
+              "UpstreamOperationalDisconnect",
+              "ForceDisconnect",
+              "UpstreamUncleanDisconnect",
+              "SlowReader",
+              "InternalError",
+              "PackageUpgraded",
+              "PackageDowngraded",
+              "ClientApplicationStateDegraded"
+            ]
+          }
+        }
+      },
+      "RulesCapProblem": {
+        "description": "You have exceeded the maximum number of rules.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/rule-cap"
+            ]
+          }
+        }
+      },
+      "InvalidRuleProblem": {
+        "description": "The rule you have submitted is invalid.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemFields"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "https://api.twitter.com/labs/1/problems/invalid-rules"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "enum": [
+              "UnprocessableEntity",
+              "DuplicateRule"
+            ]
+          }
+        }
+      },
       "Problem": {
         "description": "An HTTP Problem Details object, as defined in IETF RFC 7807 (https://tools.ietf.org/html/rfc7807).",
         "oneOf": [
@@ -1706,6 +2054,24 @@
           },
           {
             "$ref": "#/components/schemas/UnsupportedAuthenticationProblem"
+          },
+          {
+            "$ref": "#/components/schemas/UsageCapExceededProblem"
+          },
+          {
+            "$ref": "#/components/schemas/ConnectionExceptionProblem"
+          },
+          {
+            "$ref": "#/components/schemas/ClientDisconnectedProblem"
+          },
+          {
+            "$ref": "#/components/schemas/OperationalDisconnectProblem"
+          },
+          {
+            "$ref": "#/components/schemas/RulesCapProblem"
+          },
+          {
+            "$ref": "#/components/schemas/InvalidRuleProblem"
           }
         ],
         "discriminator": {
@@ -1717,7 +2083,13 @@
             "https://api.twitter.com/labs/1/problems/resource-not-found": "#/components/schemas/ResourceNotFoundProblem",
             "https://api.twitter.com/labs/1/problems/not-authorized-for-resource": "#/components/schemas/ResourceUnauthorizedProblem",
             "https://api.twitter.com/labs/1/problems/disallowed-resource": "#/components/schemas/DisallowedResourceProblem",
-            "https://api.twitter.com/labs/1/problems/unsupported-authentication": "#/components/schemas/UnsupportedAuthenticationProblem"
+            "https://api.twitter.com/labs/1/problems/unsupported-authentication": "#/components/schemas/UnsupportedAuthenticationProblem",
+            "https://api.twitter.com/labs/1/problems/usage-capped": "#/components/schemas/UsageCapExceededProblem",
+            "https://api.twitter.com/labs/1/problems/streaming-connection": "#/components/schemas/ConnectionExceptionProblem",
+            "https://api.twitter.com/labs/1/problems/client-disconnected": "#/components/schemas/ClientDisconnectedProblem",
+            "https://api.twitter.com/labs/1/problems/operational-disconnect": "#/components/schemas/OperationalDisconnectProblem",
+            "https://api.twitter.com/labs/1/problems/rule-cap": "#/components/schemas/RulesCapProblem",
+            "https://api.twitter.com/labs/1/problems/invalid-rules": "#/components/schemas/InvalidRuleProblem"
           }
         }
       },
@@ -1824,6 +2196,184 @@
             "type": "integer",
             "format": "int32",
             "description": "Number of users who made it through 100% of the video."
+          }
+        }
+      },
+      "RuleId": {
+        "type": "string",
+        "description": "Unique identifier of this rule.",
+        "pattern": "^[0-9]{1,19}$",
+        "example": "120897978112909812"
+      },
+      "RuleTag": {
+        "type": "string",
+        "description": "A tag meant for the labeling of user provided rules.",
+        "example": "Non-retweeted coffee tweets"
+      },
+      "RuleValue": {
+        "type": "string",
+        "description": "The filterlang value of the rule.",
+        "example": "coffee -is:retweet"
+      },
+      "Rule": {
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/RuleValue"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/RuleTag"
+          },
+          "id": {
+            "$ref": "#/components/schemas/RuleId"
+          }
+        }
+      },
+      "RuleNoId": {
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/RuleValue"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/RuleTag"
+          }
+        }
+      },
+      "GetRulesResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/RulesResponseMetadata"
+          }
+        }
+      },
+      "AddRulesRequest": {
+        "type": "object",
+        "required": [
+          "add"
+        ],
+        "properties": {
+          "add": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleNoId"
+            }
+          }
+        }
+      },
+      "AddRulesResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/RulesResponseMetadata"
+          }
+        }
+      },
+      "DeleteRulesRequest": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleId"
+            }
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleValue"
+            }
+          }
+        }
+      },
+      "DeleteRulesResponse": {
+        "type": "object",
+        "required": [
+          "meta"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/RulesResponseMetadata"
+          }
+        }
+      },
+      "RulesRequestSummary": {
+        "type": "object",
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "created",
+              "not_created"
+            ],
+            "properties": {
+              "created": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "not_created": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "deleted",
+              "not_deleted"
+            ],
+            "properties": {
+              "deleted": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "not_deleted": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "RulesResponseMetadata": {
+        "type": "object",
+        "required": [
+          "sent"
+        ],
+        "properties": {
+          "sent": {
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RulesRequestSummary"
           }
         }
       }
