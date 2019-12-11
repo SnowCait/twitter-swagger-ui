@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "description": "API Reference — Labs v1",
-    "version": "1.6",
+    "version": "1.7",
     "title": "Tweets and Users",
     "termsOfService": "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact": {
@@ -351,27 +351,12 @@
         "operationId": "addOrDeleteRules",
         "parameters": [
           {
-            "name": "ids",
+            "name": "dry_run",
             "in": "query",
-            "description": "A comma-separated list of Rule IDs to delete.",
+            "description": "Dry Run can be used with both the add and delete action, with the expected result given, but without actually taking any action in the system (meaning the end state will always be as it was when the request was submitted). This is particularly useful to validate rule changes.",
             "required": false,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/RuleId"
-              }
-            }
-          },
-          {
-            "name": "values",
-            "in": "query",
-            "description": "A comma-separated list of Rule values to delete.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/RuleValue"
-              }
+              "type": "boolean"
             }
           }
         ],
@@ -603,6 +588,72 @@
         "minimum": 0,
         "description": "The width of the media in pixels"
       },
+      "HTTPStatusCode": {
+        "type": "integer",
+        "minimum": 100,
+        "maximum": 599,
+        "description": "HTTP Status Code."
+      },
+      "ContextAnnotation": {
+        "type": "object",
+        "description": "Annotation inferred from the tweet text.",
+        "required": [
+          "domain",
+          "entity"
+        ],
+        "properties": {
+          "domain": {
+            "$ref": "#/components/schemas/ContextAnnotationDomainFields"
+          },
+          "entity": {
+            "$ref": "#/components/schemas/ContextAnnotationEntityFields"
+          }
+        }
+      },
+      "ContextAnnotationDomainFields": {
+        "type": "object",
+        "description": "Represents the data for the context annotation domain.",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique id for a context annotation domain.",
+            "pattern": "^[0-9]{1,19}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the context annotation domain."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the context annotation domain."
+          }
+        }
+      },
+      "ContextAnnotationEntityFields": {
+        "type": "object",
+        "description": "Represents the data for the context annotation entity.",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique id for a context annotation entity.",
+            "pattern": "^[0-9]{1,19}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the context annotation entity."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the context annotation entity."
+          }
+        }
+      },
       "URL": {
         "type": "string",
         "description": "A validly formatted URL.",
@@ -645,6 +696,24 @@
           "display_url": {
             "type": "string",
             "description": "The URL as displayed in the Twitter client."
+          },
+          "status": {
+            "$ref": "#/components/schemas/HTTPStatusCode"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the page the URL points to."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the URL landing page."
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/URLImage"
+            },
+            "minItems": 1
           }
         }
       },
@@ -658,6 +727,21 @@
             "$ref": "#/components/schemas/URLFields"
           }
         ]
+      },
+      "URLImage": {
+        "type": "object",
+        "description": "Represent the information for the URL image",
+        "properties": {
+          "url": {
+            "$ref": "#/components/schemas/URL"
+          },
+          "height": {
+            "$ref": "#/components/schemas/MediaHeight"
+          },
+          "width": {
+            "$ref": "#/components/schemas/MediaWidth"
+          }
+        }
       },
       "HashtagFields": {
         "type": "object",
@@ -754,6 +838,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CashtagEntity"
+            },
+            "minItems": 1
+          },
+          "annotations": {
+            "type": "array",
+            "items": {
+              "description": "Annotation for entities based on the tweet text.",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EntityIndices"
+                },
+                {
+                  "type": "object",
+                  "description": "Represents the data for the annotation.",
+                  "properties": {
+                    "probability": {
+                      "type": "number",
+                      "format": "double",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Confidence factor for annotation type."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Annotation type."
+                    },
+                    "normalized_text": {
+                      "type": "string",
+                      "description": "Text used to determine annotation."
+                    }
+                  }
+                }
+              ]
             },
             "minItems": 1
           }
@@ -1036,6 +1153,13 @@
                 "description": "Number of times this Tweet has been quoted."
               }
             }
+          },
+          "context_annotation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContextAnnotation"
+            },
+            "minItems": 1
           },
           "possibly_sensitive": {
             "type": "boolean",
