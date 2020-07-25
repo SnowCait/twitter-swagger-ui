@@ -1,6 +1,8 @@
 name: Update openapi.json
 
 on:
+  push:
+    paths: .github/workflows/update-openapi-json.yml
   schedule:
     - cron: '0 0 * * *' # UTC
 
@@ -10,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Update openapi.json
       run: curl https://api.twitter.com/labs/1/openapi.json -o docs/openapi.json
     - name: Create Pull Request
