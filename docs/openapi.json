@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — Labs v1",
-    "version" : "1.8",
+    "version" : "1.14",
     "title" : "Tweets and Users",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -55,182 +55,6 @@
     }
   } ],
   "paths" : {
-    "/labs/1/users" : {
-      "get" : {
-        "tags" : [ "Users" ],
-        "summary" : "Return details for the specified users",
-        "description" : "This endpoint returns information about users. You can specify users by their ID or screen name, or by a combination of the two.",
-        "operationId" : "findUsersByIdOrUsername",
-        "parameters" : [ {
-          "name" : "ids",
-          "in" : "query",
-          "description" : "Required (unless using `usernames`). A list of User IDs, comma-separated. You can specify up to 100 IDs.",
-          "required" : false,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/UserID"
-            },
-            "minItems" : 1,
-            "maxItems" : 100
-          },
-          "style" : "form",
-          "explode" : false
-        }, {
-          "name" : "usernames",
-          "in" : "query",
-          "description" : "Required (unless using `ids`). A list of Twitter handles, comma-separated. You can specify up to 100 values.",
-          "required" : false,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/UserName"
-            },
-            "minItems" : 1,
-            "maxItems" : 100
-          },
-          "style" : "form",
-          "explode" : false
-        }, {
-          "$ref" : "#/components/parameters/DefaultFormat"
-        }, {
-          "$ref" : "#/components/parameters/TweetFormat"
-        }, {
-          "$ref" : "#/components/parameters/UserFormat"
-        }, {
-          "$ref" : "#/components/parameters/PlaceFormat"
-        }, {
-          "name" : "expansions",
-          "in" : "query",
-          "style" : "form",
-          "explode" : false,
-          "description" : "A comma separated list of fields to expand.",
-          "schema" : {
-            "$ref" : "#/components/schemas/UserExpansionsParamType"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The request was successful",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UserLookupResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "$ref" : "#/components/responses/HttpErrorResponse"
-          }
-        }
-      }
-    },
-    "/labs/1/tweets" : {
-      "get" : {
-        "tags" : [ "Tweets" ],
-        "summary" : "Returns hydrated Tweet objects",
-        "description" : "Returns a variety of information about the Tweet specified by the requested ID",
-        "operationId" : "findTweetsById",
-        "parameters" : [ {
-          "name" : "ids",
-          "in" : "query",
-          "description" : "A comma separated list of Tweet IDs. Up to 100 are allowed in a single request.",
-          "required" : true,
-          "style" : "form",
-          "explode" : false,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/TweetID"
-            },
-            "minItems" : 1,
-            "maxItems" : 100
-          }
-        }, {
-          "$ref" : "#/components/parameters/DefaultFormat"
-        }, {
-          "$ref" : "#/components/parameters/TweetFormat"
-        }, {
-          "$ref" : "#/components/parameters/UserFormat"
-        }, {
-          "$ref" : "#/components/parameters/PlaceFormat"
-        }, {
-          "name" : "expansions",
-          "in" : "query",
-          "style" : "form",
-          "explode" : false,
-          "description" : "A comma separated list of fields to expand.",
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetExpansionsParamType"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The request was successful",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TweetLookupResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "$ref" : "#/components/responses/HttpErrorResponse"
-          }
-        }
-      }
-    },
-    "/labs/2/tweets/{id}" : {
-      "get" : {
-        "tags" : [ "Tweets" ],
-        "summary" : "Returns hydrated Tweet objects",
-        "description" : "Returns a variety of information about the Tweet specified by the requested ID",
-        "operationId" : "findTweetById",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "A single Tweet ID.",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetID"
-          }
-        }, {
-          "$ref" : "#/components/parameters/DefaultFormat"
-        }, {
-          "$ref" : "#/components/parameters/TweetFormat"
-        }, {
-          "$ref" : "#/components/parameters/UserFormat"
-        }, {
-          "$ref" : "#/components/parameters/PlaceFormat"
-        }, {
-          "name" : "expansions",
-          "in" : "query",
-          "style" : "form",
-          "explode" : false,
-          "description" : "A comma separated list of fields to expand.",
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetExpansionsParamType"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The request was successful",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SingleTweetLookupResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "$ref" : "#/components/responses/HttpErrorResponse"
-          }
-        }
-      }
-    },
     "/labs/1/tweets/metrics/private" : {
       "get" : {
         "tags" : [ "Tweets" ],
@@ -260,111 +84,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TweetMetricsResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "$ref" : "#/components/responses/HttpErrorResponse"
-          }
-        }
-      }
-    },
-    "/labs/1/tweets/search" : {
-      "get" : {
-        "tags" : [ "Search", "Tweets" ],
-        "summary" : "Returns Tweets from the last 7 days that match a search query.",
-        "description" : "Returns Tweets from the last 7 days that match a search query.",
-        "operationId" : "tweetsRecentSearch",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 512 characters.",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 512
-          }
-        }, {
-          "in" : "query",
-          "name" : "start_time",
-          "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
-          "required" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "date-time"
-          }
-        }, {
-          "in" : "query",
-          "name" : "end_time",
-          "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
-          "required" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "date-time"
-          }
-        }, {
-          "in" : "query",
-          "name" : "since_id",
-          "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetID"
-          }
-        }, {
-          "in" : "query",
-          "name" : "until_id",
-          "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetID"
-          }
-        }, {
-          "in" : "query",
-          "name" : "max_results",
-          "description" : "The maximum number of search results to be returned by a request.",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32",
-            "minimum" : 10,
-            "maximum" : 100,
-            "default" : 10
-          }
-        }, {
-          "in" : "query",
-          "name" : "next_token",
-          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
-          "required" : false,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "$ref" : "#/components/parameters/DefaultFormat"
-        }, {
-          "$ref" : "#/components/parameters/TweetFormat"
-        }, {
-          "$ref" : "#/components/parameters/UserFormat"
-        }, {
-          "$ref" : "#/components/parameters/PlaceFormat"
-        }, {
-          "name" : "expansions",
-          "in" : "query",
-          "style" : "form",
-          "explode" : false,
-          "description" : "A comma separated list of fields to expand.",
-          "schema" : {
-            "$ref" : "#/components/schemas/TweetExpansionsParamType"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Tweets recent search response",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TweetSearchResponse"
                 }
               }
             }
@@ -1109,7 +828,7 @@
               }
             }
           },
-          "context_annotation" : {
+          "context_annotations" : {
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/ContextAnnotation"
@@ -2054,10 +1773,19 @@
           "type" : {
             "type" : "string",
             "enum" : [ "https://api.twitter.com/labs/1/problems/invalid-rules" ]
-          },
-          "title" : {
+          }
+        }
+      },
+      "DuplicateRuleProblem" : {
+        "description" : "The rule you have submitted is a duplicate.",
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProblemFields"
+        } ],
+        "properties" : {
+          "type" : {
             "type" : "string",
-            "enum" : [ "UnprocessableEntity", "DuplicateRule" ]
+            "enum" : [ "https://api.twitter.com/labs/1/problems/duplicate-rules" ]
           }
         }
       },
@@ -2089,6 +1817,8 @@
           "$ref" : "#/components/schemas/RulesCapProblem"
         }, {
           "$ref" : "#/components/schemas/InvalidRuleProblem"
+        }, {
+          "$ref" : "#/components/schemas/DuplicateRuleProblem"
         } ],
         "discriminator" : {
           "propertyName" : "type",
@@ -2105,7 +1835,8 @@
             "https://api.twitter.com/labs/1/problems/client-disconnected" : "#/components/schemas/ClientDisconnectedProblem",
             "https://api.twitter.com/labs/1/problems/operational-disconnect" : "#/components/schemas/OperationalDisconnectProblem",
             "https://api.twitter.com/labs/1/problems/rule-cap" : "#/components/schemas/RulesCapProblem",
-            "https://api.twitter.com/labs/1/problems/invalid-rules" : "#/components/schemas/InvalidRuleProblem"
+            "https://api.twitter.com/labs/1/problems/invalid-rules" : "#/components/schemas/InvalidRuleProblem",
+            "https://api.twitter.com/labs/1/problems/duplicate-rules" : "#/components/schemas/DuplicateRuleProblem"
           }
         }
       },
@@ -2398,6 +2129,29 @@
                 "description" : "Number of search query results",
                 "type" : "integer",
                 "format" : "int32"
+              }
+            }
+          }
+        }
+      },
+      "HideReplyRequest" : {
+        "type" : "object",
+        "properties" : {
+          "hidden" : {
+            "type" : "boolean",
+            "enum" : [ true ]
+          }
+        }
+      },
+      "HideReplyResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "hidden" : {
+                "type" : "boolean",
+                "enum" : [ true ]
               }
             }
           }
