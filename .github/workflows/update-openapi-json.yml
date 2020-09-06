@@ -1,6 +1,7 @@
 name: Update openapi.json
 
 on:
+  workflow_dispatch:
   push:
     paths: .github/workflows/update-openapi-json.yml
   schedule:
@@ -14,7 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Update openapi.json
-      run: curl https://api.twitter.com/labs/1/openapi.json -o docs/openapi.json
+      run: |
+        curl https://api.twitter.com/2/openapi.json -o docs/v2/openapi.json
+        curl https://api.twitter.com/labs/1/openapi.json -o docs/labs/openapi.json
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
       with:
