@@ -1,5 +1,5 @@
 # Twitter Swagger UI
-Swagger UI for Twitter Developer Labs API
+Swagger UI for Twitter API
 
 ## openapi.json
 Copy from
