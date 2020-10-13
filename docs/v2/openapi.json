@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — v2",
-    "version" : "2.1",
+    "version" : "2.2",
     "title" : "Early Access",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -482,6 +482,152 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TweetSearchResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/tweets/search/all" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        } ],
+        "tags" : [ "Search", "Tweets" ],
+        "summary" : "Returns Tweets that match a search query.",
+        "description" : "Returns Tweets that match a search query.",
+        "operationId" : "tweetsFullarchiveSearch",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "query",
+          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 1024
+          }
+        }, {
+          "in" : "query",
+          "name" : "start_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "end_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "since_id",
+          "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "until_id",
+          "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "max_results",
+          "description" : "The maximum number of search results to be returned by a request.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 10,
+            "maximum" : 500,
+            "default" : 10
+          }
+        }, {
+          "in" : "query",
+          "name" : "next_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Tweets full archive search response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Tweet"
+                      },
+                      "minItems" : 1
+                    },
+                    "includes" : {
+                      "$ref" : "#/components/schemas/Expansions"
+                    },
+                    "errors" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Problem"
+                      },
+                      "minItems" : 1
+                    },
+                    "meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "newest_id" : {
+                          "type" : "string",
+                          "pattern" : "^[0-9]{1,19}$",
+                          "description" : "Most recent Tweet Id returned by search query"
+                        },
+                        "oldest_id" : {
+                          "type" : "string",
+                          "pattern" : "^[0-9]{1,19}$",
+                          "description" : "Oldest Tweet Id returned by search query"
+                        },
+                        "next_token" : {
+                          "description" : "This value is used to get the next 'page' of results by providing it to the next_token parameter.",
+                          "type" : "string"
+                        },
+                        "result_count" : {
+                          "description" : "Number of search query results",
+                          "type" : "integer",
+                          "format" : "int32"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -991,6 +1137,7 @@
         }
       },
       "Tweet" : {
+        "type" : "object",
         "required" : [ "id", "text" ],
         "properties" : {
           "id" : {
@@ -1013,6 +1160,9 @@
           },
           "conversation_id" : {
             "$ref" : "#/components/schemas/TweetID"
+          },
+          "conversation_control" : {
+            "$ref" : "#/components/schemas/ConversationControl"
           },
           "referenced_tweets" : {
             "type" : "array",
@@ -1350,6 +1500,31 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "type" : "string",
+                "description" : "The next cursor provided by the response."
+              },
+              "oldest_id" : {
+                "type" : "string",
+                "description" : "The ID of the oldest Tweet in the response."
+              },
+              "newest_id" : {
+                "type" : "string",
+                "description" : "The ID of the newest Tweet in the response."
+              },
+              "previous_token" : {
+                "type" : "string",
+                "description" : "The previous cursor provided by the response."
+              },
+              "result_count" : {
+                "type" : "integer",
+                "description" : "Number of results returned in the response."
+              }
+            }
           }
         }
       },
@@ -2495,7 +2670,7 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "id", "created_at", "text", "author_id", "in_reply_to_user_id", "referenced_tweets", "attachments", "withheld", "geo", "entities", "public_metrics", "possibly_sensitive", "source", "lang", "context_annotations", "non_public_metrics", "promoted_metrics", "organic_metrics", "conversation_id" ]
+            "enum" : [ "id", "created_at", "text", "author_id", "in_reply_to_user_id", "referenced_tweets", "attachments", "withheld", "geo", "entities", "public_metrics", "possibly_sensitive", "source", "lang", "context_annotations", "non_public_metrics", "promoted_metrics", "organic_metrics", "conversation_id", "conversation_control" ]
           },
           "minItems" : 1,
           "uniqueItems" : true,
@@ -2576,6 +2751,79 @@
           "minItems" : 1,
           "uniqueItems" : true,
           "example" : "end_datetime"
+        }
+      },
+      "SinceIdRequestParameter" : {
+        "name" : "since_id",
+        "in" : "query",
+        "description" : "The minimum Tweet ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
+        "required" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/TweetID"
+        }
+      },
+      "UntilIdRequestParameter" : {
+        "name" : "until_id",
+        "in" : "query",
+        "description" : "The maximum Tweet ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
+        "required" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/TweetID"
+        }
+      },
+      "PaginationTokenRequestParameter" : {
+        "name" : "pagination_token",
+        "in" : "query",
+        "description" : "This parameter is used to get the next 'page' of results.",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "pattern" : "[a-zA-Z0-9]+"
+        }
+      },
+      "MaxResultsRequestParameter" : {
+        "name" : "max_results",
+        "in" : "query",
+        "description" : "The maximum number of results",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 5,
+          "maximum" : 100
+        }
+      },
+      "StartTimeRequestParameter" : {
+        "name" : "start_time",
+        "in" : "query",
+        "required" : false,
+        "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the mentions will be provided. The since_id parameter takes precedence if it is also specified.",
+        "schema" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      },
+      "EndTimeRequestParameter" : {
+        "name" : "end_time",
+        "in" : "query",
+        "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided. The until_id parameter takes precedence if it is also specified.",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      },
+      "TweetTypeExcludesRequestParameter" : {
+        "name" : "exclude",
+        "in" : "query",
+        "description" : "The set of entities to exclude (e.g. 'replies' or 'retweets')",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "replies", "retweets" ]
+          }
         }
       }
     }
