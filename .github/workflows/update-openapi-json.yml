@@ -19,7 +19,7 @@ jobs:
         curl https://api.twitter.com/2/openapi.json -o docs/v2/openapi.json
         curl https://api.twitter.com/labs/1/openapi.json -o docs/labs/openapi.json
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v2
+      uses: peter-evans/create-pull-request@v3.5.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: 'feature/update-openapi-json'
