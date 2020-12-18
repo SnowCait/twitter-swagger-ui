@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — v2",
-    "version" : "2.2",
+    "version" : "2.6",
     "title" : "Early Access",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -220,6 +220,110 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/SingleUserLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/followers" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that follow the provided user ID",
+        "description" : "Returns a list of users that follow the provided user ID",
+        "operationId" : "usersIdFollowers",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 1000
+          }
+        }, {
+          "name" : "pagination_token",
+          "in" : "query",
+          "description" : "This value is populated by passing the 'next_token' or 'previous_token' returned in a request to paginate through results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "^[a-zA-Z0-9]{16}$"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersFollowersLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/following" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that are being followed by the provided user ID",
+        "description" : "Returns a list of users that are being followed by the provided user ID",
+        "operationId" : "usersIdFollowing",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 1000
+          }
+        }, {
+          "name" : "pagination_token",
+          "in" : "query",
+          "description" : "This value is populated by passing the 'next_token' or 'previous_token' returned in a request to paginate through results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "^[a-zA-Z0-9]{16}$"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersFollowingLookupResponse"
                 }
               }
             }
@@ -818,6 +922,128 @@
           }
         }
       }
+    },
+    "/2/users/{id}/tweets" : {
+      "get" : {
+        "tags" : [ "Tweets" ],
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "summary" : "Returns Tweet objects authored by the provided User ID",
+        "description" : "Returns a list of Tweets authored by the provided User ID",
+        "operationId" : "usersIdTweets",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the User to list Tweets of",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/SinceIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/UntilIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/MaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetTypeExcludesRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/StartTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/EndTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GenericTweetsTimelineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/mentions" : {
+      "get" : {
+        "tags" : [ "Mentions" ],
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "summary" : "Returns Tweet objects that mention the username associated to the provided User ID",
+        "description" : "Returns Tweet objects that mention username associated to the provided User ID",
+        "operationId" : "usersIdMentions",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the User to list mentions of",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/SinceIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/UntilIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/MaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/StartTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/EndTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GenericTweetsTimelineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -1084,6 +1310,12 @@
         "pattern" : "^[0-9]{1,19}$",
         "example" : "712089797812"
       },
+      "ReplySettings" : {
+        "type" : "string",
+        "pattern" : "^[A-Za-z]{1,12}$",
+        "enum" : [ "everyone", "mentionedUsers", "following", "other" ],
+        "description" : "Shows who can reply a Tweet. Fields returned are everyone, mentioned_users, and following."
+      },
       "Error" : {
         "required" : [ "code", "message" ],
         "properties" : {
@@ -1161,8 +1393,8 @@
           "conversation_id" : {
             "$ref" : "#/components/schemas/TweetID"
           },
-          "conversation_control" : {
-            "$ref" : "#/components/schemas/ConversationControl"
+          "reply_settings" : {
+            "$ref" : "#/components/schemas/ReplySettings"
           },
           "referenced_tweets" : {
             "type" : "array",
@@ -2068,7 +2300,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "tweet", "media" ]
+              "enum" : [ "tweet", "user", "media" ]
             }
           }
         } ]
@@ -2602,6 +2834,86 @@
             "$ref" : "#/components/schemas/RulesResponseMetadata"
           }
         }
+      },
+      "UsersFollowersLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "result_count" : {
+                "description" : "The number of user results returned in this response",
+                "type" : "integer"
+              }
+            }
+          }
+        }
+      },
+      "UsersFollowingLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "result_count" : {
+                "description" : "The number of user results returned in this response",
+                "type" : "integer"
+              }
+            }
+          }
+        }
       }
     },
     "responses" : {
@@ -2670,7 +2982,7 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "id", "created_at", "text", "author_id", "in_reply_to_user_id", "referenced_tweets", "attachments", "withheld", "geo", "entities", "public_metrics", "possibly_sensitive", "source", "lang", "context_annotations", "non_public_metrics", "promoted_metrics", "organic_metrics", "conversation_id", "conversation_control" ]
+            "enum" : [ "id", "created_at", "text", "author_id", "in_reply_to_user_id", "referenced_tweets", "attachments", "withheld", "geo", "entities", "public_metrics", "possibly_sensitive", "source", "lang", "context_annotations", "non_public_metrics", "promoted_metrics", "organic_metrics", "conversation_id", "reply_settings" ]
           },
           "minItems" : 1,
           "uniqueItems" : true,
