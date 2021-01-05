@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths: .github/workflows/update-openapi-json.yml
+    branches: master
   schedule:
     - cron: '0 0 * * *' # UTC
 
