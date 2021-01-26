@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — v2",
-    "version" : "2.6",
+    "version" : "2.7",
     "title" : "Early Access",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -262,7 +262,8 @@
           "required" : false,
           "schema" : {
             "type" : "string",
-            "pattern" : "^[a-zA-Z0-9]{16}$"
+            "minLength" : 16,
+            "maxLength" : 16
           }
         } ],
         "responses" : {
@@ -314,7 +315,8 @@
           "required" : false,
           "schema" : {
             "type" : "string",
-            "pattern" : "^[a-zA-Z0-9]{16}$"
+            "minLength" : 16,
+            "maxLength" : 16
           }
         } ],
         "responses" : {
@@ -564,7 +566,8 @@
           "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
           "required" : false,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1
           }
         }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
@@ -667,7 +670,8 @@
           "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
           "required" : false,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1
           }
         }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
@@ -3090,7 +3094,7 @@
         "required" : false,
         "schema" : {
           "type" : "string",
-          "pattern" : "[a-zA-Z0-9]+"
+          "minLength" : 1
         }
       },
       "MaxResultsRequestParameter" : {
