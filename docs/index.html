@@ -37,6 +37,21 @@
         margin:0;
         background: #fafafa;
       }
+
+      .swagger-ui .topbar .download-url-wrapper select {
+        width: 100%;
+        margin: 0;
+        border: 2px solid #62a03f;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+        min-width: 100px;
+        padding: 8px 10px;
+        box-sizing: border-box;
+        overflow: visible;
+        font-family: sans-serif;
+        font-size: 100%;
+        line-height: 1.15;
+      }
     </style>
   </head>
 
@@ -49,7 +64,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "./openapi.json",
+        url: `${location.href}openapi.v2.json`,
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -64,6 +79,28 @@
       // End Swagger UI call region
 
       window.ui = ui
+
+      const urls = [
+        `${location.href}openapi.v2.json`,
+        `${location.href}openapi.labs.json`,
+      ]
+      const input = document.getElementsByClassName('download-url-input')[0]
+      const select = document.createElement('select')
+      select.classList = input.classList
+      urls.forEach (url => {
+          const option = document.createElement('option')
+          option.label = url
+          option.value = url
+          select.appendChild(option)
+        }
+      )
+      select.addEventListener('change', (event) => {
+        const url = event.target.value
+        ui.specActions.updateUrl(url)
+        ui.specActions.download(url)
+      });
+      input.parentElement.replaceChild(select, input)
+      document.getElementsByClassName('download-url-button')[0].remove()
     }
   </script>
   </body>
