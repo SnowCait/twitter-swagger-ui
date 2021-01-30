@@ -1,0 +1,24 @@
+{
+  "name": "twitter-swagger-ui",
+  "version": "1.0.0",
+  "description": "Swagger UI for Twitter API",
+  "main": "github-pages.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node github-pages.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnowCait/twitter-swagger-ui.git"
+  },
+  "author": "SnowCait",
+  "bugs": {
+    "url": "https://github.com/SnowCait/twitter-swagger-ui/issues"
+  },
+  "homepage": "https://github.com/SnowCait/twitter-swagger-ui#readme",
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
+}
