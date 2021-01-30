@@ -3,8 +3,9 @@ name: Update openapi.json
 on:
   workflow_dispatch:
   push:
-    paths: .github/workflows/update-openapi-json.yml
-    branches: master
+    paths:
+      - .github/workflows/update-openapi-json.yml
+    branches: [master]
   schedule:
     - cron: '0 0 * * *' # UTC
 
@@ -19,8 +20,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download openapi.json
         run: |
-          curl --fail --output docs/v2/openapi.json https://api.twitter.com/2/openapi.json
-          curl --fail --output docs/labs/openapi.json https://api.twitter.com/labs/2/openapi.json
+          curl --fail --output docs/openapi.v2.json https://api.twitter.com/2/openapi.json
+          curl --fail --output docs/openapi.labs.json https://api.twitter.com/labs/2/openapi.json
       - name: Count changes
         id: changes
         run: echo "::set-output name=count::$(git diff --name-only | wc -l)"
