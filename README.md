@@ -3,8 +3,8 @@ Swagger UI for Twitter API
 
 ## openapi.json
 Copy from
-- https://api.twitter.com/2/openapi.json -> [v2/openapi.json](docs/v2/openapi.json)
-- https://api.twitter.com/labs/2/openapi.json -> [labs/openapi.json](docs/labs/openapi.json)
+- https://api.twitter.com/2/openapi.json -> [openapi.v2.json](docs/openapi.v2.json)
+- https://api.twitter.com/labs/2/openapi.json -> [openapi.labs.json](docs/openapi.labs.json)
 
 ## Development
 
