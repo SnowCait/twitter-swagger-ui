@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — v2",
-    "version" : "2.7",
+    "version" : "2.8",
     "title" : "Early Access",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -326,6 +326,92 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersFollowingLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Causes the user(in the path) to follow the target user, defined by user ID",
+        "description" : "Causes the user(in the path) to follow, or “request to follow” for protected users, the target user. The user(in the path) must match the user context authorizing the request",
+        "operationId" : "usersIdFollow",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to follow the target user",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "target_user_id" ],
+                "properties" : {
+                  "target_user_id" : {
+                    "type" : "string",
+                    "pattern" : "^[0-9]{1,19}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersFollowingCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{source_user_id}/following/{target_user_id}" : {
+      "delete" : {
+        "tags" : [ "Users" ],
+        "summary" : "Causes the source user to unfollow the target user, defined by user ID",
+        "description" : "Causes the source user to unfollow the target user. The source user must match the user context authorizing the request",
+        "operationId" : "usersIdUnfollow",
+        "parameters" : [ {
+          "name" : "source_user_id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to unfollow the target user",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "target_user_id",
+          "in" : "path",
+          "description" : "The ID of the user that the source user is requesting to unfollow",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersFollowingDeleteResponse"
                 }
               }
             }
@@ -2916,6 +3002,49 @@
                 "type" : "integer"
               }
             }
+          }
+        }
+      },
+      "UsersFollowingCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "following" : {
+                "type" : "boolean"
+              },
+              "pending_follow" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "UsersFollowingDeleteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "following" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
           }
         }
       }
