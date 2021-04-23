@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.9",
+    "version" : "2.10",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1229,6 +1229,87 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/GenericTweetsTimelineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/likes" : {
+      "post" : {
+        "tags" : [ "Tweets" ],
+        "summary" : "Causes the user (in the path) to like the specified tweet",
+        "description" : "Causes the user (in the path) to like the specified tweet. The user in the path must match the user context authorizing the request.",
+        "operationId" : "usersIdLike",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to like the tweet",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UsersLikesCreateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersLikesCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/likes/{tweet_id}" : {
+      "delete" : {
+        "tags" : [ "Tweets" ],
+        "summary" : "Causes the user (in the path) to unlike the specified tweet",
+        "description" : "Causes the user (in the path) to unlike the specified tweet. The user must match the user context authorizing the request",
+        "operationId" : "usersIdUnlike",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to unlike the tweet",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "tweet_id",
+          "in" : "path",
+          "description" : "The ID of the tweet that the user is requesting to unlike",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersLikesDeleteResponse"
                 }
               }
             }
@@ -3125,6 +3206,16 @@
                 "type" : "string",
                 "pattern" : "^[0-9]{1,19}$"
               },
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
               "result_count" : {
                 "description" : "Number of Tweets in result set",
                 "type" : "integer",
@@ -3264,6 +3355,56 @@
             "type" : "object",
             "properties" : {
               "following" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "UsersLikesCreateRequest" : {
+        "type" : "object",
+        "required" : [ "tweet_id" ],
+        "properties" : {
+          "tweet_id" : {
+            "type" : "string",
+            "pattern" : "^[0-9]{1,19}$"
+          }
+        }
+      },
+      "UsersLikesCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "liked" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "UsersLikesDeleteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "liked" : {
                 "type" : "boolean"
               }
             }
