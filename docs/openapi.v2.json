@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.10",
+    "version" : "2.11",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -265,6 +265,57 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersBlockingMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that are blocked by provided user ID",
+        "description" : "Returns a list of users that are blocked by the provided user ID",
+        "operationId" : "usersIdBlocking",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 1000
+          }
+        }, {
+          "name" : "pagination_token",
+          "in" : "query",
+          "description" : "This value is populated by passing the 'next_token' or 'previous_token' returned in a request to paginate through results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 16,
+            "maxLength" : 16
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersBlockingLookupResponse"
                 }
               }
             }
@@ -945,6 +996,8 @@
           "$ref" : "#/components/parameters/PlaceFieldsParameter"
         }, {
           "$ref" : "#/components/parameters/PollFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/BackfillMinutesRequestParameter"
         } ],
         "responses" : {
           "200" : {
@@ -1078,6 +1131,8 @@
           "$ref" : "#/components/parameters/PlaceFieldsParameter"
         }, {
           "$ref" : "#/components/parameters/PollFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/BackfillMinutesRequestParameter"
         } ],
         "responses" : {
           "200" : {
@@ -1310,6 +1365,125 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersLikesDeleteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/liked_tweets" : {
+      "get" : {
+        "tags" : [ "Tweets" ],
+        "summary" : "Returns Tweet objects liked by the provided User ID",
+        "description" : "Returns a list of Tweets liked by the provided User ID",
+        "operationId" : "usersIdLikedTweets",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the User to list the liked Tweets of",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/MaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Tweet"
+                      },
+                      "minItems" : 1
+                    },
+                    "includes" : {
+                      "$ref" : "#/components/schemas/Expansions"
+                    },
+                    "errors" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Problem"
+                      },
+                      "minItems" : 1
+                    },
+                    "meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "previous_token" : {
+                          "description" : "The previous token",
+                          "type" : "string",
+                          "pattern" : "^[a-zA-Z0-9]+$"
+                        },
+                        "next_token" : {
+                          "description" : "The next token",
+                          "type" : "string",
+                          "pattern" : "^[a-zA-Z0-9]+$"
+                        },
+                        "result_count" : {
+                          "description" : "Number of Tweets in result set",
+                          "type" : "integer",
+                          "format" : "int32"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/tweets/{id}/liking_users" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that have liked the provided Tweet ID",
+        "description" : "Returns a list of users that have liked the provided Tweet ID",
+        "operationId" : "tweetsIdLikingUsers",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the Tweet for which to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetsLikingUsersLookupResponse"
                 }
               }
             }
@@ -3245,6 +3419,46 @@
           }
         }
       },
+      "UsersBlockingLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^[a-zA-Z0-9]+$"
+              },
+              "result_count" : {
+                "description" : "The number of user results returned in this response",
+                "type" : "integer"
+              }
+            }
+          }
+        }
+      },
       "UsersFollowersLookupResponse" : {
         "type" : "object",
         "properties" : {
@@ -3415,6 +3629,36 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 1
+          }
+        }
+      },
+      "TweetsLikingUsersLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "result_count" : {
+                "description" : "The number of user results returned in this response",
+                "type" : "integer"
+              }
+            }
           }
         }
       }
