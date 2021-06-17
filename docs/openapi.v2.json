@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.11",
+    "version" : "2.12",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -80,7 +80,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserLookupResponse"
+                  "$ref" : "#/components/schemas/MultiUserLookupResponse"
                 }
               }
             }
@@ -173,7 +173,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserLookupResponse"
+                  "$ref" : "#/components/schemas/MultiUserLookupResponse"
                 }
               }
             }
@@ -233,6 +233,9 @@
         "summary" : "Block User by User ID",
         "description" : "Causes the user (in the path) to block the target user. The user (in the path) must match the user context authorizing the request",
         "operationId" : "usersIdBlock",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -279,6 +282,9 @@
         "summary" : "Returns user objects that are blocked by provided user ID",
         "description" : "Returns a list of users that are blocked by the provided user ID",
         "operationId" : "usersIdBlocking",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -332,6 +338,9 @@
         "summary" : "Unblock User by User ID",
         "description" : "Causes the source user to unblock the target user. The source user must match the user context authorizing the request",
         "operationId" : "usersIdUnblock",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "source_user_id",
           "in" : "path",
@@ -372,6 +381,10 @@
         "summary" : "Returns user objects that follow the provided user ID",
         "description" : "Returns a list of users that follow the provided user ID",
         "operationId" : "usersIdFollowers",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -480,6 +493,9 @@
         "summary" : "Follow User",
         "description" : "Causes the user(in the path) to follow, or “request to follow” for protected users, the target user. The user(in the path) must match the user context authorizing the request",
         "operationId" : "usersIdFollow",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -528,6 +544,9 @@
         "summary" : "Unfollow User",
         "description" : "Causes the source user to unfollow the target user. The source user must match the user context authorizing the request",
         "operationId" : "usersIdUnfollow",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "source_user_id",
           "in" : "path",
@@ -606,7 +625,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/TweetLookupResponse"
+                  "$ref" : "#/components/schemas/MultiTweetLookupResponse"
                 }
               }
             }
@@ -671,6 +690,9 @@
         "summary" : "Hide replies",
         "description" : "Hides or unhides a reply to an owned conversation.",
         "operationId" : "hideReplyById",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -921,50 +943,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "data" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/Tweet"
-                      },
-                      "minItems" : 1
-                    },
-                    "includes" : {
-                      "$ref" : "#/components/schemas/Expansions"
-                    },
-                    "errors" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/Problem"
-                      },
-                      "minItems" : 1
-                    },
-                    "meta" : {
-                      "type" : "object",
-                      "properties" : {
-                        "newest_id" : {
-                          "type" : "string",
-                          "pattern" : "^[0-9]{1,19}$",
-                          "description" : "Most recent Tweet Id returned by search query"
-                        },
-                        "oldest_id" : {
-                          "type" : "string",
-                          "pattern" : "^[0-9]{1,19}$",
-                          "description" : "Oldest Tweet Id returned by search query"
-                        },
-                        "next_token" : {
-                          "description" : "This value is used to get the next 'page' of results by providing it to the next_token parameter.",
-                          "type" : "string"
-                        },
-                        "result_count" : {
-                          "description" : "Number of search query results",
-                          "type" : "integer",
-                          "format" : "int32"
-                        }
-                      }
-                    }
-                  }
+                  "$ref" : "#/components/schemas/TweetSearchResponse"
                 }
               }
             }
@@ -981,6 +960,7 @@
           "BearerToken" : [ ]
         } ],
         "tags" : [ "Tweets" ],
+        "x-twitter-streaming" : true,
         "summary" : "Filtered stream",
         "description" : "Streams Tweets matching the stream's active rule set.",
         "operationId" : "searchStream",
@@ -1116,6 +1096,7 @@
           "BearerToken" : [ ]
         } ],
         "tags" : [ "Tweets" ],
+        "x-twitter-streaming" : true,
         "summary" : "Sample stream",
         "description" : "Streams a deterministic 1% of public Tweets.",
         "operationId" : "sampleStream",
@@ -1300,6 +1281,9 @@
         "summary" : "Causes the user (in the path) to like the specified tweet",
         "description" : "Causes the user (in the path) to like the specified tweet. The user in the path must match the user context authorizing the request.",
         "operationId" : "usersIdLike",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1341,6 +1325,9 @@
         "summary" : "Causes the user (in the path) to unlike the specified tweet",
         "description" : "Causes the user (in the path) to unlike the specified tweet. The user must match the user context authorizing the request",
         "operationId" : "usersIdUnlike",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1381,6 +1368,10 @@
         "summary" : "Returns Tweet objects liked by the provided User ID",
         "description" : "Returns a list of Tweets liked by the provided User ID",
         "operationId" : "usersIdLikedTweets",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1468,6 +1459,10 @@
         "summary" : "Returns user objects that have liked the provided Tweet ID",
         "description" : "Returns a list of users that have liked the provided Tweet ID",
         "operationId" : "tweetsIdLikingUsers",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1582,21 +1577,40 @@
         "format" : "uri",
         "example" : "https://developer.twitter.com/en/docs/twitter-api"
       },
-      "EntityIndices" : {
+      "EntityIndicesInclusiveExclusive" : {
         "type" : "object",
-        "description" : "Represent a boundary range (start and end index) for a recognized entity (for example a hashtag or a mention). `start` must be smaller than `end`.",
+        "description" : "Represent a boundary range (start and end index) for a recognized entity (for example a hashtag or a mention). `start` must be smaller than `end`.  The start index is inclusive, the end index is exclusive.",
         "required" : [ "start", "end" ],
         "properties" : {
           "start" : {
             "type" : "integer",
             "minimum" : 0,
-            "description" : "Index (zero-based) at which position this entity starts.",
+            "description" : "Index (zero-based) at which position this entity starts.  The index is inclusive.",
             "example" : 50
           },
           "end" : {
             "type" : "integer",
             "minimum" : 0,
-            "description" : "Index (zero-based) at which position this entity ends.",
+            "description" : "Index (zero-based) at which position this entity ends.  The index is exclusive.",
+            "example" : 61
+          }
+        }
+      },
+      "EntityIndicesInclusiveInclusive" : {
+        "type" : "object",
+        "description" : "Represent a boundary range (start and end index) for a recognized entity (for example a hashtag or a mention). `start` must be smaller than `end`.  The start index is inclusive, the end index is inclusive.",
+        "required" : [ "start", "end" ],
+        "properties" : {
+          "start" : {
+            "type" : "integer",
+            "minimum" : 0,
+            "description" : "Index (zero-based) at which position this entity starts.  The index is inclusive.",
+            "example" : 50
+          },
+          "end" : {
+            "type" : "integer",
+            "minimum" : 0,
+            "description" : "Index (zero-based) at which position this entity ends.  The index is inclusive.",
             "example" : 61
           }
         }
@@ -1648,7 +1662,7 @@
       "UrlEntity" : {
         "description" : "Represent the portion of text recognized as a URL, and its start and end position within the text.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/EntityIndices"
+          "$ref" : "#/components/schemas/EntityIndicesInclusiveExclusive"
         }, {
           "$ref" : "#/components/schemas/URLFields"
         } ]
@@ -1682,7 +1696,7 @@
       },
       "HashtagEntity" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/EntityIndices"
+          "$ref" : "#/components/schemas/EntityIndicesInclusiveExclusive"
         }, {
           "$ref" : "#/components/schemas/HashtagFields"
         } ]
@@ -1700,7 +1714,7 @@
       },
       "CashtagEntity" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/EntityIndices"
+          "$ref" : "#/components/schemas/EntityIndicesInclusiveExclusive"
         }, {
           "$ref" : "#/components/schemas/CashtagFields"
         } ]
@@ -1717,7 +1731,7 @@
       },
       "MentionEntity" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/EntityIndices"
+          "$ref" : "#/components/schemas/EntityIndicesInclusiveExclusive"
         }, {
           "$ref" : "#/components/schemas/MentionFields"
         } ]
@@ -2134,7 +2148,7 @@
         "description" : "The Twitter handle (screen name) of this user.",
         "pattern" : "^[A-Za-z0-9_]{1,15}$"
       },
-      "UserLookupResponse" : {
+      "MultiUserLookupResponse" : {
         "type" : "object",
         "properties" : {
           "data" : {
@@ -2174,7 +2188,7 @@
           }
         }
       },
-      "TweetLookupResponse" : {
+      "MultiTweetLookupResponse" : {
         "type" : "object",
         "properties" : {
           "data" : {
@@ -2193,36 +2207,6 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 1
-          },
-          "meta" : {
-            "type" : "object",
-            "properties" : {
-              "next_token" : {
-                "type" : "string",
-                "description" : "The next cursor provided by the response.",
-                "example" : "b26v89c19zqg8o3fosnu6iw2546eijh0544aj2le8n0xp"
-              },
-              "oldest_id" : {
-                "type" : "string",
-                "description" : "The ID of the oldest Tweet in the response.",
-                "example" : "1346889436626259968"
-              },
-              "newest_id" : {
-                "type" : "string",
-                "description" : "The ID of the newest Tweet in the response.",
-                "example" : "1346889436626259968"
-              },
-              "previous_token" : {
-                "type" : "string",
-                "description" : "The previous cursor provided by the response.",
-                "example" : "b26v89c19zqg8o3fosnu6iw2546eijh0544aj2le8n0xp"
-              },
-              "result_count" : {
-                "type" : "integer",
-                "description" : "Number of results returned in the response.",
-                "example" : 50
-              }
-            }
           }
         }
       },
@@ -2790,6 +2774,31 @@
           }
         } ]
       },
+      "ResourceUnavailableProblem" : {
+        "description" : "A problem that indicates a particular Tweet, User, etc. is not available to you.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProblemFields"
+        }, {
+          "required" : [ "parameter", "resource_id", "resource_type" ],
+          "properties" : {
+            "type" : {
+              "type" : "string",
+              "enum" : [ "https://api.twitter.com/2/problems/resource-unavailable" ]
+            },
+            "parameter" : {
+              "type" : "string",
+              "minLength" : 1
+            },
+            "resource_id" : {
+              "type" : "string"
+            },
+            "resource_type" : {
+              "type" : "string",
+              "enum" : [ "user", "tweet", "media" ]
+            }
+          }
+        } ]
+      },
       "FieldUnauthorizedProblem" : {
         "description" : "A problem that indicates that you are not allowed to see a particular field on a Tweet, User, etc.",
         "type" : "object",
@@ -2918,7 +2927,7 @@
             },
             "connection_issue" : {
               "type" : "string",
-              "enum" : [ "TooManyConnections", "ProvisioningSubscription" ]
+              "enum" : [ "TooManyConnections", "ProvisioningSubscription", "RuleConfigurationIssue" ]
             }
           }
         } ]
@@ -3008,6 +3017,8 @@
         }, {
           "$ref" : "#/components/schemas/ResourceNotFoundProblem"
         }, {
+          "$ref" : "#/components/schemas/ResourceUnavailableProblem"
+        }, {
           "$ref" : "#/components/schemas/ResourceUnauthorizedProblem"
         }, {
           "$ref" : "#/components/schemas/FieldUnauthorizedProblem"
@@ -3043,6 +3054,7 @@
             "https://api.twitter.com/2/problems/invalid-request" : "#/components/schemas/InvalidRequestProblem",
             "https://api.twitter.com/2/problems/client-forbidden" : "#/components/schemas/ClientForbiddenProblem",
             "https://api.twitter.com/2/problems/resource-not-found" : "#/components/schemas/ResourceNotFoundProblem",
+            "https://api.twitter.com/2/problems/resource-unavailable" : "#/components/schemas/ResourceUnavailableProblem",
             "https://api.twitter.com/2/problems/not-authorized-for-resource" : "#/components/schemas/ResourceUnauthorizedProblem",
             "https://api.twitter.com/2/problems/not-authorized-for-field" : "#/components/schemas/FieldUnauthorizedProblem",
             "https://api.twitter.com/2/problems/disallowed-resource" : "#/components/schemas/DisallowedResourceProblem",
@@ -3321,19 +3333,26 @@
       "DeleteRulesRequest" : {
         "type" : "object",
         "description" : "A response from deleting user-specified stream filtering rules.",
+        "required" : [ "delete" ],
         "properties" : {
-          "ids" : {
-            "type" : "array",
-            "description" : "IDs of all deleted user-specified stream filtering rules.",
-            "items" : {
-              "$ref" : "#/components/schemas/RuleId"
-            }
-          },
-          "values" : {
-            "type" : "array",
-            "description" : "Values of all deleted user-specified stream filtering rules.",
-            "items" : {
-              "$ref" : "#/components/schemas/RuleValue"
+          "delete" : {
+            "type" : "object",
+            "description" : "IDs and values of all deleted user-specified stream filtering rules.",
+            "properties" : {
+              "ids" : {
+                "type" : "array",
+                "description" : "IDs of all deleted user-specified stream filtering rules.",
+                "items" : {
+                  "$ref" : "#/components/schemas/RuleId"
+                }
+              },
+              "values" : {
+                "type" : "array",
+                "description" : "Values of all deleted user-specified stream filtering rules.",
+                "items" : {
+                  "$ref" : "#/components/schemas/RuleValue"
+                }
+              }
             }
           }
         }
@@ -3372,13 +3391,11 @@
             "properties" : {
               "newest_id" : {
                 "description" : "Newest Tweet ID in the result set",
-                "type" : "string",
-                "pattern" : "^[0-9]{1,19}$"
+                "$ref" : "#/components/schemas/TweetID"
               },
               "oldest_id" : {
                 "description" : "Oldest Tweet ID in the result set",
-                "type" : "string",
-                "pattern" : "^[0-9]{1,19}$"
+                "$ref" : "#/components/schemas/TweetID"
               },
               "previous_token" : {
                 "description" : "The previous token",
@@ -3661,6 +3678,56 @@
             }
           }
         }
+      },
+      "UsersRetweetsCreateRequest" : {
+        "type" : "object",
+        "required" : [ "tweet_id" ],
+        "properties" : {
+          "tweet_id" : {
+            "type" : "string",
+            "pattern" : "^[0-9]{1,19}$"
+          }
+        }
+      },
+      "UsersRetweetsCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "retweeted" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "UsersRetweetsDeleteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "retweeted" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
       }
     },
     "responses" : {
@@ -3893,6 +3960,18 @@
           "minItems" : 1,
           "uniqueItems" : true,
           "example" : [ "replies", "retweets" ]
+        }
+      },
+      "BackfillMinutesRequestParameter" : {
+        "name" : "backfill_minutes",
+        "in" : "query",
+        "description" : "The number of minutes of backfill requested",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0,
+          "maximum" : 5
         }
       }
     }
