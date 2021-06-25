@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.12",
+    "version" : "2.15",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1488,6 +1488,186 @@
           }
         }
       }
+    },
+    "/2/tweets/counts/recent" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Counts" ],
+        "summary" : "Recent search counts",
+        "description" : "Returns Tweet Counts from the last 7 days that match a search query.",
+        "operationId" : "tweetCountsRecentSearch",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "query",
+          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 2048,
+            "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
+          }
+        }, {
+          "in" : "query",
+          "name" : "start_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "end_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "since_id",
+          "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "until_id",
+          "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "next_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "granularity",
+          "description" : "The granularity for the search counts results.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/Granularity"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Recent tweet counts response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetCountsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/tweets/counts/all" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Counts" ],
+        "summary" : "Full archive search counts",
+        "description" : "Returns Tweet Counts that match a search query.",
+        "operationId" : "tweetCountsFullArchiveSearch",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "query",
+          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 2048,
+            "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
+          }
+        }, {
+          "in" : "query",
+          "name" : "start_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "end_time",
+          "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "since_id",
+          "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "until_id",
+          "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "next_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "granularity",
+          "description" : "The granularity for the search counts results.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/Granularity"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Tweet counts response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetCountsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -1722,10 +1902,13 @@
       "MentionFields" : {
         "type" : "object",
         "description" : "Represent the portion of text recognized as a User mention, and its start and end position within the text.",
-        "required" : [ "username" ],
+        "required" : [ "username", "id" ],
         "properties" : {
           "username" : {
             "$ref" : "#/components/schemas/UserName"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/UserID"
           }
         }
       },
@@ -3728,6 +3911,74 @@
             "minItems" : 1
           }
         }
+      },
+      "TweetCountsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SearchCount"
+            },
+            "minItems" : 1
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "description" : "This value is used to get the next 'page' of results by providing it to the next_token parameter.",
+                "type" : "string"
+              },
+              "total_tweet_count" : {
+                "description" : "Sum of search query count results",
+                "type" : "integer",
+                "format" : "int32"
+              }
+            }
+          }
+        }
+      },
+      "SearchCount" : {
+        "type" : "object",
+        "description" : "Represent a Search Count Result",
+        "required" : [ "end", "start", "tweet_count" ],
+        "properties" : {
+          "end" : {
+            "$ref" : "#/components/schemas/End"
+          },
+          "start" : {
+            "$ref" : "#/components/schemas/Start"
+          },
+          "tweet_count" : {
+            "$ref" : "#/components/schemas/TweetCount"
+          }
+        }
+      },
+      "Start" : {
+        "type" : "string",
+        "format" : "date-time",
+        "description" : "The start time of the bucket"
+      },
+      "End" : {
+        "type" : "string",
+        "format" : "date-time",
+        "description" : "The end time of the bucket"
+      },
+      "TweetCount" : {
+        "type" : "integer",
+        "description" : "The count for the bucket"
+      },
+      "Granularity" : {
+        "type" : "string",
+        "enum" : [ "minute", "hour", "day" ],
+        "default" : "hour"
       }
     },
     "responses" : {
