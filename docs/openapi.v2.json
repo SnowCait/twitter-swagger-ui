@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.15",
+    "version" : "2.16",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -365,6 +365,100 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersBlockingMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{source_user_id}/muting/{target_user_id}" : {
+      "delete" : {
+        "tags" : [ "Users" ],
+        "summary" : "Unmute User by User ID",
+        "description" : "Causes the source user to unmute the target user. The source user must match the user context authorizing the request",
+        "operationId" : "usersIdUnmute",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "source_user_id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to unmute the target user",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "target_user_id",
+          "in" : "path",
+          "description" : "The ID of the user that the source user is requesting to unmute",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersMutingMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/muting" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Mute User by User ID",
+        "description" : "Causes the user (in the path) to mute the target user. The user (in the path) must match the user context authorizing the request",
+        "operationId" : "usersIdMute",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to mute the target user",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "target_user_id" ],
+                "properties" : {
+                  "target_user_id" : {
+                    "type" : "string",
+                    "pattern" : "^[0-9]{1,19}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersMutingMutationResponse"
                 }
               }
             }
@@ -1502,12 +1596,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 512,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -1592,12 +1686,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 512,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -3656,6 +3750,26 @@
                 "type" : "integer"
               }
             }
+          }
+        }
+      },
+      "UsersMutingMutationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "muting" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
           }
         }
       },
