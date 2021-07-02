@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.16",
+    "version" : "2.17",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1596,12 +1596,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 512,
+            "maxLength" : 2048,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -1686,12 +1686,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 512,
+            "maxLength" : 2048,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
