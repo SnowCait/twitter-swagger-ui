@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — Labs v2",
-    "version" : "2.11",
+    "version" : "2.12",
     "title" : "Tweets and Users",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -543,10 +543,13 @@
       "MentionFields" : {
         "type" : "object",
         "description" : "Represent the portion of text recognized as a User mention, and its start and end position within the text.",
-        "required" : [ "username" ],
+        "required" : [ "username", "id" ],
         "properties" : {
           "username" : {
             "$ref" : "#/components/schemas/UserName"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/UserID"
           }
         }
       },
@@ -1525,7 +1528,7 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/ProblemFields"
         } ],
-        "required" : [ "parameter", "value", "resource_type" ],
+        "required" : [ "parameter", "value", "resource_id", "resource_type" ],
         "properties" : {
           "type" : {
             "type" : "string",
@@ -1537,6 +1540,9 @@
           },
           "value" : {
             "description" : "Value will match the schema of the field."
+          },
+          "resource_id" : {
+            "type" : "string"
           },
           "resource_type" : {
             "type" : "string",
