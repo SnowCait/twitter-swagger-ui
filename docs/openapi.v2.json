@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.17",
+    "version" : "2.18",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1572,7 +1572,130 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/TweetsLikingUsersLookupResponse"
+                  "$ref" : "#/components/schemas/MultipleUsersLookupResponseWithCount"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/tweets/{id}/retweeted_by" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that have retweeted the provided Tweet ID",
+        "description" : "Returns a list of users that have retweeted the provided Tweet ID",
+        "operationId" : "tweetsIdRetweetingUsers",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the Tweet for which to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultipleUsersLookupResponseWithCount"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/retweets" : {
+      "post" : {
+        "tags" : [ "Tweets" ],
+        "summary" : "Causes the user (in the path) to retweet the specified tweet",
+        "description" : "Causes the user (in the path) to retweet the specified tweet. The user in the path must match the user context authorizing the request.",
+        "operationId" : "usersIdRetweets",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to retweet the tweet",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UsersRetweetsCreateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersRetweetsCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/retweets/{source_tweet_id}" : {
+      "delete" : {
+        "tags" : [ "Tweets" ],
+        "summary" : "Causes the user (in the path) to unretweet the specified tweet",
+        "description" : "Causes the user (in the path) to unretweet the specified tweet. The user must match the user context authorizing the request",
+        "operationId" : "usersIdUnretweets",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user that is requesting to unretweet the tweet",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "source_tweet_id",
+          "in" : "path",
+          "description" : "The ID of the tweet that the user is requesting to unretweet",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersRetweetsDeleteResponse"
                 }
               }
             }
@@ -1589,7 +1712,7 @@
           "BearerToken" : [ ],
           "UserToken" : [ ]
         } ],
-        "tags" : [ "Counts" ],
+        "tags" : [ "Tweets" ],
         "summary" : "Recent search counts",
         "description" : "Returns Tweet Counts from the last 7 days that match a search query.",
         "operationId" : "tweetCountsRecentSearch",
@@ -1679,7 +1802,7 @@
           "BearerToken" : [ ],
           "UserToken" : [ ]
         } ],
-        "tags" : [ "Counts" ],
+        "tags" : [ "Tweets" ],
         "summary" : "Full archive search counts",
         "description" : "Returns Tweet Counts that match a search query.",
         "operationId" : "tweetCountsFullArchiveSearch",
@@ -3946,7 +4069,7 @@
           }
         }
       },
-      "TweetsLikingUsersLookupResponse" : {
+      "MultipleUsersLookupResponseWithCount" : {
         "type" : "object",
         "properties" : {
           "data" : {
