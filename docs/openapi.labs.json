@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "API Reference — Labs v2",
-    "version" : "2.12",
+    "version" : "2.13",
     "title" : "Tweets and Users",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {

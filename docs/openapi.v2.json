@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.18",
+    "version" : "2.19",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -321,7 +321,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersBlockingLookupResponse"
+                  "$ref" : "#/components/schemas/GenericMultipleUsersLookupResponse"
                 }
               }
             }
@@ -515,7 +515,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersFollowersLookupResponse"
+                  "$ref" : "#/components/schemas/GenericMultipleUsersLookupResponse"
                 }
               }
             }
@@ -1572,7 +1572,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MultipleUsersLookupResponseWithCount"
+                  "$ref" : "#/components/schemas/GenericMultipleUsersLookupResponse"
                 }
               }
             }
@@ -1608,7 +1608,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MultipleUsersLookupResponseWithCount"
+                  "$ref" : "#/components/schemas/GenericMultipleUsersLookupResponse"
                 }
               }
             }
@@ -2784,6 +2784,46 @@
           }
         }
       },
+      "List" : {
+        "type" : "object",
+        "description" : "Represent a List",
+        "required" : [ "id", "name" ],
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/ListId"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The name of this list."
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "follower_count" : {
+            "type" : "integer"
+          },
+          "member_count" : {
+            "type" : "integer"
+          },
+          "visibility" : {
+            "type" : "string",
+            "enum" : [ "Public", "Private" ]
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "owner_id" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }
+      },
+      "ListId" : {
+        "type" : "string",
+        "description" : "Unique identifier of this list.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
+      },
       "CommonMediaFields" : {
         "properties" : {
           "media_key" : {
@@ -3836,7 +3876,7 @@
           }
         }
       },
-      "UsersBlockingLookupResponse" : {
+      "GenericMultipleUsersLookupResponse" : {
         "type" : "object",
         "properties" : {
           "data" : {
@@ -3893,46 +3933,6 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 1
-          }
-        }
-      },
-      "UsersFollowersLookupResponse" : {
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/User"
-            }
-          },
-          "includes" : {
-            "$ref" : "#/components/schemas/Expansions"
-          },
-          "errors" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Problem"
-            },
-            "minItems" : 1
-          },
-          "meta" : {
-            "type" : "object",
-            "properties" : {
-              "previous_token" : {
-                "description" : "The previous token",
-                "type" : "string",
-                "pattern" : "^[a-zA-Z0-9]+$"
-              },
-              "next_token" : {
-                "description" : "The next token",
-                "type" : "string",
-                "pattern" : "^[a-zA-Z0-9]+$"
-              },
-              "result_count" : {
-                "description" : "The number of user results returned in this response",
-                "type" : "integer"
-              }
-            }
           }
         }
       },
@@ -4066,36 +4066,6 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 1
-          }
-        }
-      },
-      "MultipleUsersLookupResponseWithCount" : {
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/User"
-            }
-          },
-          "includes" : {
-            "$ref" : "#/components/schemas/Expansions"
-          },
-          "errors" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Problem"
-            },
-            "minItems" : 1
-          },
-          "meta" : {
-            "type" : "object",
-            "properties" : {
-              "result_count" : {
-                "description" : "The number of user results returned in this response",
-                "type" : "integer"
-              }
-            }
           }
         }
       },
@@ -4365,6 +4335,25 @@
           "minItems" : 1,
           "uniqueItems" : true,
           "example" : [ "duration_minutes", "options", "voting_status", "end_datetime" ]
+        }
+      },
+      "ListFieldsParameter" : {
+        "name" : "list.fields",
+        "in" : "query",
+        "style" : "form",
+        "explode" : false,
+        "required" : false,
+        "description" : "A comma separated list of List fields to display.",
+        "schema" : {
+          "description" : "The list of fields you can display for a List object.",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "created_at", "description", "follower_count", "id", "member_count", "name", "owner_id", "visibility" ]
+          },
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "example" : [ "created_at", "description", "follower_count", "member_count", "name", "visibility" ]
         }
       },
       "SinceIdRequestParameter" : {
