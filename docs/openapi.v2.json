@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.19",
+    "version" : "2.20",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2875,6 +2875,9 @@
             "url" : {
               "type" : "string",
               "format" : "uri"
+            },
+            "alt_text" : {
+              "type" : "string"
             }
           }
         } ]
@@ -4292,7 +4295,7 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics", "non_public_metrics", "organic_metrics", "promoted_metrics" ]
+            "enum" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics", "non_public_metrics", "organic_metrics", "promoted_metrics", "alt_text" ]
           },
           "minItems" : 1,
           "example" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics" ],
