@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.20",
+    "version" : "2.21",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -19,11 +19,32 @@
     "url" : "https://api.twitter.com"
   } ],
   "tags" : [ {
+    "name" : "Compliance",
+    "description" : "Endpoints related to keeping Twitter data in your systems compliant",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-tweet/introduction"
+    }
+  }, {
     "name" : "General",
     "description" : "Miscellaneous endpoints for general API functionality",
     "externalDocs" : {
       "description" : "Find out more",
       "url" : "https://developer.twitter.com/en/docs/twitter-api"
+    }
+  }, {
+    "name" : "Lists",
+    "description" : "Endpoints related to retrieving, managing Lists",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://developer.twitter.com/en/docs/twitter-api/lists"
+    }
+  }, {
+    "name" : "Spaces",
+    "description" : "Endpoints related to retrieving, managing Spaces",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces"
     }
   }, {
     "name" : "Tweets",
@@ -1885,6 +1906,201 @@
           }
         }
       }
+    },
+    "/2/spaces/{id}" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Spaces" ],
+        "summary" : "Space lookup by Space ID",
+        "description" : "Returns a variety of information about the Space specified by the requested ID",
+        "operationId" : "findSpaceById",
+        "parameters" : [ {
+          "description" : "The space id to be retrieved",
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/SpaceID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/SpaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/SpaceExpansionsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SingleSpaceLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/spaces" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Spaces" ],
+        "summary" : "Space lookup up Space IDs",
+        "description" : "Returns a variety of information about the Spaces specified by the requested IDs",
+        "operationId" : "findSpacesByIds",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "ids",
+          "description" : "A list of space ids",
+          "required" : true,
+          "schema" : {
+            "minItems" : 1,
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SpaceID"
+            }
+          }
+        }, {
+          "$ref" : "#/components/parameters/SpaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/SpaceExpansionsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiSpaceLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/spaces/by/creator_ids" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Spaces" ],
+        "summary" : "Space lookup by their creators",
+        "description" : "Returns a variety of information about the Spaces created by the provided User IDs",
+        "operationId" : "findSpacesByCreatorIds",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "user_ids",
+          "description" : "The users to search through",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/UserID"
+            }
+          }
+        }, {
+          "$ref" : "#/components/parameters/SpaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/SpaceExpansionsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiSpaceLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/spaces/search" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Spaces" ],
+        "summary" : "Search for Spaces",
+        "description" : "Returns Spaces that match the provided query.",
+        "operationId" : "searchSpaces",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "query",
+          "description" : "The search query",
+          "required" : true,
+          "example" : "crypto",
+          "schema" : {
+            "description" : "The query to use in the Spaces search endpoint",
+            "example" : "crypto",
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "state",
+          "description" : "The state of spaces to search for",
+          "required" : true,
+          "schema" : {
+            "description" : "The current state of the space.",
+            "enum" : [ "live", "scheduled" ],
+            "example" : "live",
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "max_results",
+          "description" : "The number of results to return. The maximum for this value is 100.",
+          "required" : false,
+          "schema" : {
+            "description" : "The number of results to return",
+            "example" : 25,
+            "minimum" : 1,
+            "maximum" : 100,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "$ref" : "#/components/parameters/SpaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/SpaceExpansionsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiSpaceLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -2180,6 +2396,12 @@
         "description" : "Unique identifier of this User. This is returned as a string in order to avoid complications with languages and tools that cannot handle large integers.",
         "pattern" : "^[0-9]{1,19}$",
         "example" : "2244994945"
+      },
+      "SpaceID" : {
+        "description" : "The unique identifier of this Space.",
+        "example" : "1SLjjRYNejbKM",
+        "pattern" : "^[a-zA-Z0-9]{1,13}$",
+        "type" : "string"
       },
       "ReplySettings" : {
         "type" : "string",
@@ -2784,45 +3006,26 @@
           }
         }
       },
-      "List" : {
+      "TweetDeleteResponse" : {
         "type" : "object",
-        "description" : "Represent a List",
-        "required" : [ "id", "name" ],
         "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/ListId"
+          "data" : {
+            "type" : "object",
+            "required" : [ "deleted" ],
+            "properties" : {
+              "deleted" : {
+                "type" : "boolean"
+              }
+            }
           },
-          "name" : {
-            "type" : "string",
-            "description" : "The name of this list."
-          },
-          "created_at" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "follower_count" : {
-            "type" : "integer"
-          },
-          "member_count" : {
-            "type" : "integer"
-          },
-          "visibility" : {
-            "type" : "string",
-            "enum" : [ "Public", "Private" ]
-          },
-          "description" : {
-            "type" : "string"
-          },
-          "owner_id" : {
-            "$ref" : "#/components/schemas/UserID"
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
           }
         }
-      },
-      "ListId" : {
-        "type" : "string",
-        "description" : "Unique identifier of this list.",
-        "pattern" : "^[0-9]{1,19}$",
-        "example" : "1146654567674912769"
       },
       "CommonMediaFields" : {
         "properties" : {
@@ -3449,6 +3652,20 @@
           }
         } ]
       },
+      "ConflictProblem" : {
+        "description" : "You cannot create a new job if one is already in progress.",
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProblemFields"
+        }, {
+          "properties" : {
+            "type" : {
+              "type" : "string",
+              "enum" : [ "https://api.twitter.com/2/problems/conflict" ]
+            }
+          }
+        } ]
+      },
       "Problem" : {
         "description" : "An HTTP Problem Details object, as defined in IETF RFC 7807 (https://tools.ietf.org/html/rfc7807).",
         "oneOf" : [ {
@@ -3483,6 +3700,8 @@
           "$ref" : "#/components/schemas/InvalidRuleProblem"
         }, {
           "$ref" : "#/components/schemas/DuplicateRuleProblem"
+        }, {
+          "$ref" : "#/components/schemas/ConflictProblem"
         } ],
         "properties" : {
           "type" : {
@@ -3508,7 +3727,8 @@
             "https://api.twitter.com/2/problems/operational-disconnect" : "#/components/schemas/OperationalDisconnectProblem",
             "https://api.twitter.com/2/problems/rule-cap" : "#/components/schemas/RulesCapProblem",
             "https://api.twitter.com/2/problems/invalid-rules" : "#/components/schemas/InvalidRuleProblem",
-            "https://api.twitter.com/2/problems/duplicate-rules" : "#/components/schemas/DuplicateRuleProblem"
+            "https://api.twitter.com/2/problems/duplicate-rules" : "#/components/schemas/DuplicateRuleProblem",
+            "https://api.twitter.com/2/problems/conflict" : "#/components/schemas/ConflictProblem"
           }
         }
       },
@@ -4189,6 +4409,248 @@
         "type" : "string",
         "enum" : [ "minute", "hour", "day" ],
         "default" : "hour"
+      },
+      "JobId" : {
+        "type" : "string",
+        "description" : "Compliance Job ID",
+        "example" : "1372966999991541762",
+        "pattern" : "^[0-9]{1,19}$"
+      },
+      "CreatedAt" : {
+        "type" : "string",
+        "format" : "date-time",
+        "description" : "Creation time of the compliance job.",
+        "example" : "2021-01-06T18:40:40.000Z"
+      },
+      "UploadUrl" : {
+        "type" : "string",
+        "format" : "uri",
+        "description" : "URL to which the user will upload their tweet or user IDs"
+      },
+      "DownloadUrl" : {
+        "type" : "string",
+        "format" : "uri",
+        "description" : "URL from which the user will retrieve their compliance results"
+      },
+      "UploadExpiration" : {
+        "type" : "string",
+        "format" : "date-time",
+        "description" : "Expiration time of the upload URL",
+        "example" : "2021-01-06T18:40:40.000Z"
+      },
+      "DownloadExpiration" : {
+        "type" : "string",
+        "format" : "date-time",
+        "description" : "Expiration time of the download URL",
+        "example" : "2021-01-06T18:40:40.000Z"
+      },
+      "ComplianceJobName" : {
+        "type" : "string",
+        "description" : "User-provided name for a compliance job",
+        "example" : "my-job",
+        "maxLength" : 64
+      },
+      "ComplianceJobStatus" : {
+        "type" : "string",
+        "enum" : [ "created", "in_progress", "failed", "complete" ],
+        "description" : "Status of a compliance job"
+      },
+      "ComplianceJobType" : {
+        "description" : "Type of compliance job to list.",
+        "type" : "string",
+        "enum" : [ "tweets", "users" ]
+      },
+      "ComplianceJob" : {
+        "type" : "object",
+        "required" : [ "id", "type", "created_at", "upload_url", "download_url", "upload_expires_at", "download_expires_at", "status" ],
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/JobId"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/ComplianceJobType"
+          },
+          "created_at" : {
+            "$ref" : "#/components/schemas/CreatedAt"
+          },
+          "upload_url" : {
+            "$ref" : "#/components/schemas/UploadUrl"
+          },
+          "upload_expires_at" : {
+            "$ref" : "#/components/schemas/UploadExpiration"
+          },
+          "download_url" : {
+            "$ref" : "#/components/schemas/DownloadUrl"
+          },
+          "download_expires_at" : {
+            "$ref" : "#/components/schemas/DownloadExpiration"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/ComplianceJobName"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/ComplianceJobStatus"
+          }
+        }
+      },
+      "SingleComplianceJobResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/ComplianceJob"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "MultiComplianceJobResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ComplianceJob"
+            },
+            "minItems" : 0
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 0
+          }
+        }
+      },
+      "Space" : {
+        "type" : "object",
+        "description" : "",
+        "required" : [ "id", "state" ],
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/SpaceID"
+          },
+          "state" : {
+            "description" : "The current state of the space.",
+            "enum" : [ "live", "scheduled", "ended" ],
+            "example" : "live",
+            "type" : "string"
+          },
+          "started_at" : {
+            "description" : "When the space was started as a date string",
+            "example" : "2021-7-14T04:35:55Z",
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "is_ticketed" : {
+            "description" : "Denotes if the space is a ticketed space",
+            "example" : "false",
+            "type" : "boolean"
+          },
+          "participant_count" : {
+            "description" : "The number of participants in a space",
+            "example" : 10,
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "title" : {
+            "description" : "The title of the space",
+            "example" : "Spaces are Awesome",
+            "type" : "string"
+          },
+          "host_ids" : {
+            "description" : "The user ids for the hosts of the space",
+            "items" : {
+              "$ref" : "#/components/schemas/UserID"
+            },
+            "type" : "array"
+          },
+          "updated_at" : {
+            "description" : "When the space was last updated",
+            "example" : "2021-7-14T04:35:55Z",
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "created_at" : {
+            "description" : "Creation time of the space",
+            "example" : "2021-07-06T18:40:40.000Z",
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "creator_id" : {
+            "$ref" : "#/components/schemas/UserID"
+          },
+          "lang" : {
+            "description" : "The language of the space",
+            "example" : "en",
+            "type" : "string"
+          },
+          "speaker_ids" : {
+            "description" : "An array of user ids for people who were speakers in a space",
+            "items" : {
+              "$ref" : "#/components/schemas/UserID"
+            },
+            "type" : "array"
+          },
+          "invited_user_ids" : {
+            "description" : "An array of user ids for people who were invited to a space",
+            "items" : {
+              "$ref" : "#/components/schemas/UserID"
+            },
+            "type" : "array"
+          },
+          "scheduled_start" : {
+            "description" : "A date time stamp for when a space is scheduled to begin",
+            "example" : "2021-07-06T18:40:40.000Z",
+            "format" : "date-time",
+            "type" : "string"
+          }
+        }
+      },
+      "SingleSpaceLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Space"
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "MultiSpaceLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Space"
+            },
+            "minItems" : 0
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
       }
     },
     "responses" : {
@@ -4227,6 +4689,25 @@
           "example" : [ "author_id", "referenced_tweets.id", "in_reply_to_user_id", "geo.place_id", "attachments.media_keys", "attachments.poll_ids", "entities.mentions.username", "referenced_tweets.id.author_id" ]
         }
       },
+      "SpaceFieldsParameter" : {
+        "name" : "space.fields",
+        "in" : "query",
+        "style" : "form",
+        "explode" : false,
+        "required" : false,
+        "description" : "A comma separated list of Space fields to display.",
+        "schema" : {
+          "description" : "The fields available for a Space object.",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "created_at", "creator_id", "host_ids", "invited_user_ids", "is_ticketed", "lang", "participant_count", "scheduled_start", "speaker_ids", "started_at", "title", "updated_at" ]
+          },
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "example" : [ "created_at", "creator_id", "host_ids", "invited_user_ids", "is_ticketed", "lang", "participant_count", "scheduled_start", "speaker_ids", "started_at", "title", "updated_at" ]
+        }
+      },
       "UserExpansionsParameter" : {
         "name" : "expansions",
         "in" : "query",
@@ -4243,6 +4724,24 @@
           "minItems" : 1,
           "uniqueItems" : true,
           "example" : [ "pinned_tweet_id" ]
+        }
+      },
+      "SpaceExpansionsParameter" : {
+        "name" : "expansions",
+        "in" : "query",
+        "style" : "form",
+        "explode" : false,
+        "description" : "A comma separated list of fields to expand.",
+        "schema" : {
+          "description" : "The list of fields you can expand for a [Space](#Space) object. If the field has an ID, it can be expanded into a full object.",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "creator_id", "host_ids", "invited_user_ids", "speaker_ids" ]
+          },
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "example" : [ "creator_id", "host_ids", "invited_user_ids", "speaker_ids" ]
         }
       },
       "TweetFieldsParameter" : {
@@ -4338,25 +4837,6 @@
           "minItems" : 1,
           "uniqueItems" : true,
           "example" : [ "duration_minutes", "options", "voting_status", "end_datetime" ]
-        }
-      },
-      "ListFieldsParameter" : {
-        "name" : "list.fields",
-        "in" : "query",
-        "style" : "form",
-        "explode" : false,
-        "required" : false,
-        "description" : "A comma separated list of List fields to display.",
-        "schema" : {
-          "description" : "The list of fields you can display for a List object.",
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "enum" : [ "created_at", "description", "follower_count", "id", "member_count", "name", "owner_id", "visibility" ]
-          },
-          "minItems" : 1,
-          "uniqueItems" : true,
-          "example" : [ "created_at", "description", "follower_count", "member_count", "name", "visibility" ]
         }
       },
       "SinceIdRequestParameter" : {
@@ -4455,9 +4935,5 @@
         }
       }
     }
-  },
-  "externalDocs" : {
-    "description" : "Find out more about Swagger",
-    "url" : "http://swagger.io"
   }
 }
