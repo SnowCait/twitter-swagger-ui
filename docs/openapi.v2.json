@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.21",
+    "version" : "2.22",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1897,6 +1897,136 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TweetCountsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/compliance/jobs" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        } ],
+        "tags" : [ "Compliance" ],
+        "summary" : "List compliance jobs",
+        "description" : "Returns recent compliance jobs for a given job type and optional job status",
+        "operationId" : "listBatchComplianceJobs",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "description" : "Type of compliance job to list.",
+          "required" : true,
+          "style" : "form",
+          "schema" : {
+            "$ref" : "#/components/schemas/ComplianceJobType"
+          }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Status of compliance job to list.",
+          "required" : false,
+          "style" : "form",
+          "schema" : {
+            "$ref" : "#/components/schemas/ComplianceJobStatus"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List compliance jobs response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiComplianceJobResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "post" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        } ],
+        "tags" : [ "Compliance" ],
+        "summary" : "Create compliance job",
+        "description" : "Creates a compliance for the given job type",
+        "operationId" : "createBatchComplianceJob",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "A request to create a new batch compliance job.",
+                "required" : [ "type" ],
+                "properties" : {
+                  "type" : {
+                    "$ref" : "#/components/schemas/ComplianceJobType"
+                  },
+                  "resumable" : {
+                    "description" : "If true, this endpoint will return a pre-signed URL with resumable uploads enabled",
+                    "type" : "boolean"
+                  },
+                  "name" : {
+                    "$ref" : "#/components/schemas/ComplianceJobName"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SingleComplianceJobResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/compliance/jobs/{id}" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        } ],
+        "tags" : [ "Compliance" ],
+        "summary" : "Get compliance job",
+        "description" : "Returns a single compliance job by ID",
+        "operationId" : "getBatchComplianceJob",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the compliance job to retrieve.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/JobId"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SingleComplianceJobResponse"
                 }
               }
             }
