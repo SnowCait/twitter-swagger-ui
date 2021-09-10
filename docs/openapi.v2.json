@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.22",
+    "version" : "2.23",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1130,6 +1130,28 @@
             "items" : {
               "$ref" : "#/components/schemas/RuleId"
             }
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 1000,
+            "default" : 1000
+          }
+        }, {
+          "name" : "pagination_token",
+          "in" : "query",
+          "description" : "This value is populated by passing the 'next_token' returned in a request to paginate through results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 16,
+            "maxLength" : 16
           }
         } ],
         "responses" : {
@@ -3832,6 +3854,8 @@
           "$ref" : "#/components/schemas/DuplicateRuleProblem"
         }, {
           "$ref" : "#/components/schemas/ConflictProblem"
+        }, {
+          "$ref" : "#/components/schemas/NonCompliantRulesProblem"
         } ],
         "properties" : {
           "type" : {
@@ -3858,7 +3882,8 @@
             "https://api.twitter.com/2/problems/rule-cap" : "#/components/schemas/RulesCapProblem",
             "https://api.twitter.com/2/problems/invalid-rules" : "#/components/schemas/InvalidRuleProblem",
             "https://api.twitter.com/2/problems/duplicate-rules" : "#/components/schemas/DuplicateRuleProblem",
-            "https://api.twitter.com/2/problems/conflict" : "#/components/schemas/ConflictProblem"
+            "https://api.twitter.com/2/problems/conflict" : "#/components/schemas/ConflictProblem",
+            "https://api.twitter.com/2/problems/noncompliant-rules" : "#/components/schemas/NonCompliantRulesProblem"
           }
         }
       },
