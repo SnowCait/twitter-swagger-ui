@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.23",
+    "version" : "2.24",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2212,11 +2212,12 @@
           "in" : "query",
           "name" : "state",
           "description" : "The state of spaces to search for",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "description" : "The current state of the space.",
-            "enum" : [ "live", "scheduled" ],
+            "enum" : [ "live", "scheduled", "all" ],
             "example" : "live",
+            "default" : "all",
             "type" : "string"
           }
         }, {
