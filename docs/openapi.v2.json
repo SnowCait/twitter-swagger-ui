@@ -3726,7 +3726,7 @@
             },
             "connection_issue" : {
               "type" : "string",
-              "enum" : [ "TooManyConnections", "ProvisioningSubscription", "RuleConfigurationIssue" ]
+              "enum" : [ "TooManyConnections", "ProvisioningSubscription", "RuleConfigurationIssue", "RulesInvalidIssue" ]
             }
           }
         } ]
@@ -3758,7 +3758,7 @@
             },
             "disconnect_type" : {
               "type" : "string",
-              "enum" : [ "OperationalDisconnect", "UpstreamOperationalDisconnect", "ForceDisconnect", "UpstreamUncleanDisconnect", "SlowReader", "InternalError", "PackageUpgraded", "PackageDowngraded", "ClientApplicationStateDegraded" ]
+              "enum" : [ "OperationalDisconnect", "UpstreamOperationalDisconnect", "ForceDisconnect", "UpstreamUncleanDisconnect", "SlowReader", "InternalError", "ClientApplicationStateDegraded", "InvalidRules" ]
             }
           }
         } ]
@@ -3815,6 +3815,20 @@
             "type" : {
               "type" : "string",
               "enum" : [ "https://api.twitter.com/2/problems/conflict" ]
+            }
+          }
+        } ]
+      },
+      "NonCompliantRulesProblem" : {
+        "description" : "A problem that indicates the user's rule set is not compliant.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProblemFields"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "type" : {
+              "type" : "string",
+              "enum" : [ "https://api.twitter.com/2/problems/noncompliant-rules" ]
             }
           }
         } ]
