@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.24",
+    "version" : "2.25",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -480,6 +480,53 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersMutingMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that are muted by the provided user ID",
+        "description" : "Returns a list of users that are muted by the provided user ID",
+        "operationId" : "usersIdMuting",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 1000,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GenericMultipleUsersLookupResponse"
                 }
               }
             }
