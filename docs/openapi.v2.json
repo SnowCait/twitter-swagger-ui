@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.26",
+    "version" : "2.27",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -733,6 +733,180 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersFollowingDeleteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/followed_lists" : {
+      "post" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Follow a List",
+        "description" : "Causes a user to follow a List.",
+        "operationId" : "listUserFollow",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the authenticated source user that will follow the List",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ListFollowRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListFollowedResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/followed_lists/{list_id}" : {
+      "delete" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Unfollow a List",
+        "description" : "Causes a user to unfollow a List.",
+        "operationId" : "listUserUnfollow",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the authenticated source user that will unfollow the List",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "list_id",
+          "in" : "path",
+          "description" : "The ID of the List to unfollow",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListFollowedResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/pinned_lists" : {
+      "post" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Pin a List",
+        "description" : "Causes a user to pin a List.",
+        "operationId" : "listUserPin",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the authenticated source user that will pin the List",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ListPinRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListPinnedResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/pinned_lists/{list_id}" : {
+      "delete" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Unpin a List",
+        "description" : "Causes a user to remove a pinned List.",
+        "operationId" : "listUserUnpin",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the authenticated source user that will remove the pinned List",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "list_id",
+          "in" : "path",
+          "description" : "The ID of the List to unpin",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListPinnedResponse"
                 }
               }
             }
@@ -2106,6 +2280,119 @@
         }
       }
     },
+    "/2/lists" : {
+      "post" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Create List",
+        "description" : "Creates a new List.",
+        "operationId" : "listIdCreate",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ListCreateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/lists/{id}" : {
+      "delete" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Delete List",
+        "description" : "Delete a List that you own.",
+        "operationId" : "listIdDelete",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to delete",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListDeleteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Update List",
+        "description" : "Update a List that you own.",
+        "operationId" : "listIdUpdate",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to modify",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ListUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListUpdateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
     "/2/spaces/{id}" : {
       "get" : {
         "security" : [ {
@@ -3203,6 +3490,174 @@
           "votes" : {
             "type" : "integer",
             "description" : "Number of users who voted for this choice."
+          }
+        }
+      },
+      "ListCreateRequest" : {
+        "type" : "object",
+        "required" : [ "name" ],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "private" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "ListCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/List"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "ListDeleteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "deleted" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "ListUpdateRequest" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "private" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "ListUpdateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "updated" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "ListAddMemberRequest" : {
+        "type" : "object",
+        "properties" : {
+          "user_id" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }
+      },
+      "ListMemberResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "member" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "ListFollowRequest" : {
+        "type" : "object",
+        "properties" : {
+          "list_id" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }
+      },
+      "ListFollowedResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "following" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "ListPinRequest" : {
+        "type" : "object",
+        "properties" : {
+          "list_id" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }
+      },
+      "ListPinnedResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "pinned" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
           }
         }
       },
