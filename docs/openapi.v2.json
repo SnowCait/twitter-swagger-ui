@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.27",
+    "version" : "2.28",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -970,6 +970,119 @@
             "$ref" : "#/components/responses/HttpErrorResponse"
           }
         }
+      },
+      "post" : {
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Tweets" ],
+        "summary" : "Creation of a Tweet",
+        "description" : "Causes the user to create a tweet under the authorized account.",
+        "operationId" : "createTweet",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "text" : {
+                    "$ref" : "#/components/schemas/TweetText"
+                  },
+                  "direct_message_deep_link" : {
+                    "type" : "string",
+                    "description" : "Link to take the conversation from the public timeline to a private Direct Message."
+                  },
+                  "quote_tweet_id" : {
+                    "$ref" : "#/components/schemas/TweetID",
+                    "description" : "Link to the Tweet being quoted. This is mutually exclusive from Poll and Media."
+                  },
+                  "for_super_followers_only" : {
+                    "type" : "boolean",
+                    "description" : "Exclusive Tweet for super followers."
+                  },
+                  "reply" : {
+                    "type" : "object",
+                    "description" : "Tweet information of the Tweet being replied to.",
+                    "properties" : {
+                      "in_reply_to_tweet_id" : {
+                        "$ref" : "#/components/schemas/TweetID"
+                      },
+                      "exclude_reply_user_ids" : {
+                        "type" : "array",
+                        "description" : "A list of User Ids to be excluded from the reply Tweet.",
+                        "items" : {
+                          "$ref" : "#/components/schemas/UserID"
+                        }
+                      }
+                    }
+                  },
+                  "media" : {
+                    "type" : "object",
+                    "description" : "Media information being attached to created Tweet. This is mutually exclusive from Quote Tweet Id and Poll.",
+                    "properties" : {
+                      "media_ids" : {
+                        "type" : "array",
+                        "description" : "A list of Media Ids to be attached to a created Tweet.",
+                        "items" : {
+                          "$ref" : "#/components/schemas/MediaId"
+                        }
+                      },
+                      "tagged_user_ids" : {
+                        "type" : "array",
+                        "description" : "A list of User Ids to be tagged in the media for created Tweet.",
+                        "items" : {
+                          "$ref" : "#/components/schemas/UserID"
+                        }
+                      }
+                    }
+                  },
+                  "poll" : {
+                    "type" : "object",
+                    "description" : "Poll options for a Tweet with a poll. This is mutually exclusive from Media and Quote Tweet Id.",
+                    "properties" : {
+                      "options" : {
+                        "$ref" : "#/components/schemas/PollOption"
+                      },
+                      "duration_minutes" : {
+                        "$ref" : "#/components/schemas/DurationMinutes"
+                      }
+                    }
+                  },
+                  "reply_settings" : {
+                    "type" : "string",
+                    "enum" : [ "following", "mentionedUsers" ],
+                    "description" : "Settings to indicate who can reply to the Tweet."
+                  },
+                  "geo" : {
+                    "type" : "object",
+                    "description" : "Place ID being attached to the Tweet for geo location.",
+                    "properties" : {
+                      "place_id" : {
+                        "type" : "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
       }
     },
     "/2/tweets/{id}" : {
@@ -1010,6 +1123,39 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/SingleTweetLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "delete" : {
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Tweets" ],
+        "summary" : "Tweet delete by Tweet ID",
+        "description" : "Delete specified Tweet (in the path) by ID.",
+        "operationId" : "deleteTweetById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the Tweet to be deleted.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetDeleteResponse"
                 }
               }
             }
@@ -2393,6 +2539,93 @@
         }
       }
     },
+    "/2/lists/{id}/members" : {
+      "post" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Add a List member",
+        "description" : "Causes a user to become a member of a List.",
+        "operationId" : "listAddMember",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to add a member",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ListAddMemberRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListMemberResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/lists/{id}/members/{user_id}" : {
+      "delete" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Remove a List member",
+        "description" : "Causes a user to be removed from the members of a List.",
+        "operationId" : "listRemoveMember",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to remove a member",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }, {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "The ID of user that will be removed from the List",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListMemberResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
     "/2/spaces/{id}" : {
       "get" : {
         "security" : [ {
@@ -3496,6 +3729,13 @@
           }
         }
       },
+      "DurationMinutes" : {
+        "type" : "integer",
+        "format" : "int32",
+        "minimum" : 5,
+        "maximum" : 10080,
+        "description" : "Duration of the poll in minutes."
+      },
       "List" : {
         "type" : "object",
         "description" : "A Twitter List is a curated group of accounts.",
@@ -3724,6 +3964,30 @@
           }
         }
       },
+      "TweetCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "required" : [ "id", "text" ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/TweetID"
+              },
+              "text" : {
+                "$ref" : "#/components/schemas/TweetText"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
       "CommonMediaFields" : {
         "properties" : {
           "media_key" : {
@@ -3760,6 +4024,12 @@
             "animated_gif" : "#/components/schemas/AnimatedGif"
           }
         }
+      },
+      "MediaId" : {
+        "type" : "string",
+        "description" : "The unique identifier of this Media.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
       },
       "Photo" : {
         "type" : "object",
