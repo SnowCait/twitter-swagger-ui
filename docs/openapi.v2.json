@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.28",
+    "version" : "2.30",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -744,6 +744,60 @@
       }
     },
     "/2/users/{id}/followed_lists" : {
+      "get" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Get User's Followed Lists",
+        "description" : "Returns a user's followed Lists.",
+        "operationId" : "userFollowedLists",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/SignedLongPaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
       "post" : {
         "tags" : [ "Lists" ],
         "summary" : "Follow a List",
@@ -830,7 +884,158 @@
         }
       }
     },
+    "/2/users/{id}/list_memberships" : {
+      "get" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Get a User's List Memberships",
+        "description" : "Get a User's List Memberships.",
+        "operationId" : "getUserListMemberships",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/SignedLongPaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/owned_lists" : {
+      "get" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Get a User's Owned Lists",
+        "description" : "Get a User's Owned Lists.",
+        "operationId" : "listUserOwnedLists",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/SignedLongPaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiListResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
     "/2/users/{id}/pinned_lists" : {
+      "get" : {
+        "tags" : [ "Lists" ],
+        "summary" : "Get a User's Pinned Lists",
+        "description" : "Get a User's Pinned Lists.",
+        "operationId" : "listUserPinnedLists",
+        "security" : [ {
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/ListFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiListNoPaginationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
       "post" : {
         "tags" : [ "Lists" ],
         "summary" : "Pin a List",
@@ -2537,6 +2742,102 @@
             "$ref" : "#/components/responses/HttpErrorResponse"
           }
         }
+      },
+      "get" : {
+        "tags" : [ "Lists" ],
+        "summary" : "List lookup by List ID",
+        "description" : "Returns a List",
+        "operationId" : "listIdGet",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to get",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/ListFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/ListExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SingleListLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/lists/{id}/followers" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that follow a List by the provided List ID",
+        "description" : "Returns a list of users that follow a List by the provided List ID",
+        "operationId" : "listGetFollowers",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List for which to return followers",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/SignedLongPaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListLookupMultipleUsersLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
       }
     },
     "/2/lists/{id}/members" : {
@@ -2581,6 +2882,60 @@
             "$ref" : "#/components/responses/HttpErrorResponse"
           }
         }
+      },
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Returns user objects that are members of a List by the provided List ID",
+        "description" : "Returns a list of users that are members of a List by the provided List ID",
+        "operationId" : "listGetMembers",
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List for which to return members",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/SignedLongPaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListLookupMultipleUsersLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
       }
     },
     "/2/lists/{id}/members/{user_id}" : {
@@ -2616,6 +2971,107 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ListMemberResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/lists/{id}/tweets" : {
+      "get" : {
+        "tags" : [ "Tweets" ],
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "summary" : "List Tweets timeline by List ID",
+        "description" : "Returns a list of Tweets associated with the provided List ID",
+        "operationId" : "listsIdTweets",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the List to list Tweets of",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ListID"
+          }
+        }, {
+          "name" : "max_results",
+          "in" : "query",
+          "description" : "The maximum number of results",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 1,
+            "maximum" : 100,
+            "default" : 100
+          }
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Tweet"
+                      },
+                      "minItems" : 1
+                    },
+                    "includes" : {
+                      "$ref" : "#/components/schemas/Expansions"
+                    },
+                    "errors" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Problem"
+                      },
+                      "minItems" : 1
+                    },
+                    "meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "previous_token" : {
+                          "description" : "The previous token",
+                          "type" : "string",
+                          "pattern" : "^[a-zA-Z0-9]+$"
+                        },
+                        "next_token" : {
+                          "description" : "The next token",
+                          "type" : "string",
+                          "pattern" : "^[a-zA-Z0-9]+$"
+                        },
+                        "result_count" : {
+                          "description" : "Number of Tweets in result set",
+                          "type" : "integer",
+                          "format" : "int32"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2812,6 +3268,45 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/MultiSpaceLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/spaces/{id}/buyers" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ],
+          "UserToken" : [ ]
+        } ],
+        "tags" : [ "Spaces", "Tweets" ],
+        "summary" : "Retrieve the list of users who purchased a ticket to the given space",
+        "description" : "Retrieves the list of users who purchased a ticket to the given space",
+        "operationId" : "spaceBuyers",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "The space id from which tweets will be retrieved",
+          "required" : true,
+          "example" : "1YqKDqWqdPLsV",
+          "schema" : {
+            "$ref" : "#/components/schemas/SpaceID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiUserLookupResponse"
                 }
               }
             }
@@ -3540,8 +4035,7 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/Tweet"
-            },
-            "minItems" : 1
+            }
           },
           "includes" : {
             "$ref" : "#/components/schemas/Expansions"
@@ -3931,6 +4425,87 @@
             "properties" : {
               "pinned" : {
                 "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "SingleListLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/List"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "MultiListResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/List"
+            },
+            "minItems" : 0
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^-?[0-9]{1,19}$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^-?[0-9]{1,19}$"
+              },
+              "result_count" : {
+                "description" : "The number of list results returned in this response",
+                "type" : "integer"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "MultiListNoPaginationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/List"
+            },
+            "minItems" : 0
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "result_count" : {
+                "description" : "The number of list results returned in this response",
+                "type" : "integer"
               }
             }
           },
@@ -5123,6 +5698,46 @@
           }
         }
       },
+      "ListLookupMultipleUsersLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "previous_token" : {
+                "description" : "The previous token",
+                "type" : "string",
+                "pattern" : "^-?[0-9]{1,19}$"
+              },
+              "next_token" : {
+                "description" : "The next token",
+                "type" : "string",
+                "pattern" : "^-?[0-9]{1,19}$"
+              },
+              "result_count" : {
+                "description" : "The number of user results returned in this response",
+                "type" : "integer"
+              }
+            }
+          }
+        }
+      },
       "UsersMutingMutationResponse" : {
         "type" : "object",
         "properties" : {
@@ -5593,6 +6208,40 @@
             "example" : "2021-07-06T18:40:40.000Z",
             "format" : "date-time",
             "type" : "string"
+          },
+          "ended_at" : {
+            "description" : "End time of the space",
+            "example" : "2021-07-06T18:40:40.000Z",
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "topics" : {
+            "description" : "The topics of a space, as selected by its creator",
+            "items" : {
+              "description" : "The Twitter Topic object",
+              "type" : "object",
+              "required" : [ "id", "name" ],
+              "properties" : {
+                "id" : {
+                  "type" : "string",
+                  "description" : "An ID suitable for use in the REST API."
+                },
+                "description" : {
+                  "type" : "string",
+                  "description" : "The description of the given topic."
+                },
+                "name" : {
+                  "type" : "string",
+                  "description" : "The name of the given topic."
+                }
+              },
+              "example" : {
+                "id" : "848920371311001600",
+                "description" : "All about technology",
+                "name" : "Technology"
+              }
+            },
+            "type" : "array"
           }
         }
       },
@@ -5728,6 +6377,24 @@
           "example" : [ "creator_id", "host_ids", "invited_user_ids", "speaker_ids" ]
         }
       },
+      "ListExpansionsParameter" : {
+        "name" : "expansions",
+        "in" : "query",
+        "style" : "form",
+        "explode" : false,
+        "description" : "A comma separated list of fields to expand.",
+        "schema" : {
+          "description" : "The list of fields you can expand for a [List](#List) object. If the field has an ID, it can be expanded into a full object.",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "owner_id" ]
+          },
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "example" : [ "owner_id" ]
+        }
+      },
       "TweetFieldsParameter" : {
         "name" : "tweet.fields",
         "in" : "query",
@@ -5823,6 +6490,25 @@
           "example" : [ "duration_minutes", "options", "voting_status", "end_datetime" ]
         }
       },
+      "ListFieldsParameter" : {
+        "name" : "list.fields",
+        "in" : "query",
+        "style" : "form",
+        "explode" : false,
+        "required" : false,
+        "description" : "A comma separated list of List fields to display.",
+        "schema" : {
+          "description" : "The fields available for a List object.",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "created_at", "description", "follower_count", "id", "member_count", "name", "owner_id", "private" ]
+          },
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "example" : [ "created_at", "description", "follower_count", "member_count", "name", "private" ]
+        }
+      },
       "SinceIdRequestParameter" : {
         "name" : "since_id",
         "in" : "query",
@@ -5851,6 +6537,16 @@
         "schema" : {
           "type" : "string",
           "minLength" : 1
+        }
+      },
+      "SignedLongPaginationTokenRequestParameter" : {
+        "name" : "pagination_token",
+        "in" : "query",
+        "description" : "This parameter is used to get a specified 'page' of results.",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int64"
         }
       },
       "MaxResultsRequestParameter" : {
