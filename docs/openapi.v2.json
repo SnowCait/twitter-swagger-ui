@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.30",
+    "version" : "2.31",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1246,7 +1246,10 @@
                     "description" : "Poll options for a Tweet with a poll. This is mutually exclusive from Media and Quote Tweet Id.",
                     "properties" : {
                       "options" : {
-                        "$ref" : "#/components/schemas/PollOption"
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/PollOptionLabel"
+                        }
                       },
                       "duration_minutes" : {
                         "$ref" : "#/components/schemas/DurationMinutes"
@@ -3249,12 +3252,7 @@
           "description" : "The number of results to return. The maximum for this value is 100.",
           "required" : false,
           "schema" : {
-            "description" : "The number of results to return",
-            "example" : 25,
-            "minimum" : 1,
-            "maximum" : 100,
-            "type" : "integer",
-            "format" : "int32"
+            "$ref" : "#/components/schemas/MaxResults"
           }
         }, {
           "$ref" : "#/components/parameters/SpaceFieldsParameter"
@@ -4214,14 +4212,19 @@
             "description" : "Position of this choice in the poll."
           },
           "label" : {
-            "type" : "string",
-            "description" : "The text of a poll choice."
+            "$ref" : "#/components/schemas/PollOptionLabel"
           },
           "votes" : {
             "type" : "integer",
             "description" : "Number of users who voted for this choice."
           }
         }
+      },
+      "PollOptionLabel" : {
+        "type" : "string",
+        "description" : "The text of a poll choice.",
+        "minLength" : 1,
+        "maxLength" : 25
       },
       "DurationMinutes" : {
         "type" : "integer",
@@ -6284,6 +6287,14 @@
             "minItems" : 1
           }
         }
+      },
+      "MaxResults" : {
+        "description" : "The number of results to return",
+        "example" : 25,
+        "minimum" : 1,
+        "maximum" : 100,
+        "type" : "integer",
+        "format" : "int32"
       }
     },
     "responses" : {
