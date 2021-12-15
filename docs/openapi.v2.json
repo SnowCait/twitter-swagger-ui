@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.31",
+    "version" : "2.32",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -65,8 +65,11 @@
     "/2/users" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Users" ],
         "summary" : "User lookup by IDs",
@@ -115,8 +118,11 @@
     "/2/users/{id}" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Users" ],
         "summary" : "User lookup by ID",
@@ -158,8 +164,11 @@
     "/2/users/by" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Users" ],
         "summary" : "User lookup by usernames",
@@ -205,11 +214,49 @@
         }
       }
     },
+    "/2/users/me" : {
+      "get" : {
+        "security" : [ {
+          "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
+        } ],
+        "tags" : [ "Users" ],
+        "summary" : "User lookup me",
+        "description" : "This endpoint returns information about the requesting user.",
+        "operationId" : "findMyUser",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/UserExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SingleUserLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
     "/2/users/by/username/{username}" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Users" ],
         "summary" : "User lookup by username",
@@ -256,6 +303,8 @@
         "operationId" : "usersIdBlock",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "block.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -305,6 +354,8 @@
         "operationId" : "usersIdBlocking",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "block.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -361,6 +412,8 @@
         "operationId" : "usersIdUnblock",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "block.write" ]
         } ],
         "parameters" : [ {
           "name" : "source_user_id",
@@ -404,6 +457,8 @@
         "operationId" : "usersIdUnmute",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "mute.write" ]
         } ],
         "parameters" : [ {
           "name" : "source_user_id",
@@ -447,6 +502,8 @@
         "operationId" : "usersIdMute",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "mute.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -496,6 +553,8 @@
         "operationId" : "usersIdMuting",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "mute.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -544,8 +603,11 @@
         "description" : "Returns a list of users that follow the provided user ID",
         "operationId" : "usersIdFollowers",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "follows.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -597,8 +659,11 @@
     "/2/users/{id}/following" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "follows.read" ]
         } ],
         "tags" : [ "Users" ],
         "summary" : "Following by User ID",
@@ -657,6 +722,8 @@
         "operationId" : "usersIdFollow",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "follows.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -708,6 +775,8 @@
         "operationId" : "usersIdUnfollow",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "follows.write" ]
         } ],
         "parameters" : [ {
           "name" : "source_user_id",
@@ -750,8 +819,11 @@
         "description" : "Returns a user's followed Lists.",
         "operationId" : "userFollowedLists",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -805,6 +877,8 @@
         "operationId" : "listUserFollow",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -849,6 +923,8 @@
         "operationId" : "listUserUnfollow",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -891,8 +967,11 @@
         "description" : "Get a User's List Memberships.",
         "operationId" : "getUserListMemberships",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -947,8 +1026,11 @@
         "description" : "Get a User's Owned Lists.",
         "operationId" : "listUserOwnedLists",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -1004,6 +1086,8 @@
         "operationId" : "listUserPinnedLists",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -1043,6 +1127,8 @@
         "operationId" : "listUserPin",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -1087,6 +1173,8 @@
         "operationId" : "listUserUnpin",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -1125,8 +1213,11 @@
     "/2/tweets" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Tweet lookup by Tweet IDs",
@@ -1179,6 +1270,8 @@
       "post" : {
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "tweet.write" ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Creation of a Tweet",
@@ -1296,8 +1389,11 @@
     "/2/tweets/{id}" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Tweet lookup by Tweet ID",
@@ -1343,6 +1439,8 @@
       "delete" : {
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "tweet.write" ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Tweet delete by Tweet ID",
@@ -1382,6 +1480,8 @@
         "operationId" : "hideReplyById",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "tweet.moderate.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -1436,8 +1536,11 @@
     "/2/tweets/search/recent" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Recent search",
@@ -1869,8 +1972,11 @@
       "get" : {
         "tags" : [ "Tweets" ],
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "summary" : "User Tweets timeline by User ID",
         "description" : "Returns a list of Tweets authored by the provided User ID",
@@ -1931,8 +2037,11 @@
       "get" : {
         "tags" : [ "Tweets" ],
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "summary" : "User mention timeline by User ID",
         "description" : "Returns Tweet objects that mention username associated to the provided User ID",
@@ -1995,6 +2104,8 @@
         "operationId" : "usersIdLike",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "like.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2039,6 +2150,8 @@
         "operationId" : "usersIdUnlike",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "like.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2081,8 +2194,11 @@
         "description" : "Returns a list of Tweets liked by the provided User ID",
         "operationId" : "usersIdLikedTweets",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "like.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2172,8 +2288,11 @@
         "description" : "Returns a list of users that have liked the provided Tweet ID",
         "operationId" : "tweetsIdLikingUsers",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "like.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2208,8 +2327,11 @@
         "description" : "Returns a list of users that have retweeted the provided Tweet ID",
         "operationId" : "tweetsIdRetweetingUsers",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2245,6 +2367,8 @@
         "operationId" : "usersIdRetweets",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "tweet.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2289,6 +2413,8 @@
         "operationId" : "usersIdUnretweets",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "tweet.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2327,8 +2453,7 @@
     "/2/tweets/counts/recent" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Recent search counts",
@@ -2417,8 +2542,7 @@
     "/2/tweets/counts/all" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
         } ],
         "tags" : [ "Tweets" ],
         "summary" : "Full archive search counts",
@@ -2642,6 +2766,8 @@
         "operationId" : "listIdCreate",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write", "list.read" ]
         } ],
         "parameters" : [ ],
         "requestBody" : {
@@ -2678,6 +2804,8 @@
         "operationId" : "listIdDelete",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2711,6 +2839,8 @@
         "operationId" : "listIdUpdate",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2752,8 +2882,11 @@
         "description" : "Returns a List",
         "operationId" : "listIdGet",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2794,8 +2927,11 @@
         "description" : "Returns a list of users that follow a List by the provided List ID",
         "operationId" : "listGetFollowers",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2851,6 +2987,8 @@
         "operationId" : "listAddMember",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2892,8 +3030,11 @@
         "description" : "Returns a list of users that are members of a List by the provided List ID",
         "operationId" : "listGetMembers",
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2949,6 +3090,8 @@
         "operationId" : "listRemoveMember",
         "security" : [ {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.write" ]
         } ],
         "parameters" : [ {
           "name" : "id",
@@ -2988,8 +3131,11 @@
       "get" : {
         "tags" : [ "Tweets" ],
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "list.read" ]
         } ],
         "summary" : "List Tweets timeline by List ID",
         "description" : "Returns a list of Tweets associated with the provided List ID",
@@ -3088,8 +3234,9 @@
     "/2/spaces/{id}" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
         } ],
         "tags" : [ "Spaces" ],
         "summary" : "Space lookup by Space ID",
@@ -3128,8 +3275,9 @@
     "/2/spaces" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
         } ],
         "tags" : [ "Spaces" ],
         "summary" : "Space lookup up Space IDs",
@@ -3172,8 +3320,9 @@
     "/2/spaces/by/creator_ids" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
         } ],
         "tags" : [ "Spaces" ],
         "summary" : "Space lookup by their creators",
@@ -3216,8 +3365,9 @@
     "/2/spaces/search" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
-          "UserToken" : [ ]
+          "BearerToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
         } ],
         "tags" : [ "Spaces" ],
         "summary" : "Search for Spaces",
@@ -3279,8 +3429,11 @@
     "/2/spaces/{id}/buyers" : {
       "get" : {
         "security" : [ {
-          "BearerToken" : [ ],
+          "BearerToken" : [ ]
+        }, {
           "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
         } ],
         "tags" : [ "Spaces", "Tweets" ],
         "summary" : "Retrieve the list of users who purchased a ticket to the given space",
@@ -3325,6 +3478,33 @@
       "UserToken" : {
         "type" : "http",
         "scheme" : "OAuth"
+      },
+      "OAuth2UserToken" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://api.twitter.com/2/oauth2/authorize",
+            "tokenUrl" : "https://api.twitter.com/2/oauth2/token",
+            "scopes" : {
+              "tweet.read" : "Allows the app to view any Tweets the authenticated user can see, including Tweets from protected accounts.",
+              "tweet.write" : "Allows the app to tweet and retweet for the authenticated user.",
+              "users.read" : "Allows the app to view any account the authenticated user can see, including protected accounts.",
+              "list.write" : "Allows the app to create and manage lists for the authenticated user.",
+              "list.read" : "Allows the app to view any lists the authenticated user has created and lists they are a member of, including private lists.",
+              "like.read" : "Allows the app to read Tweets that the authenticated user has liked.",
+              "like.write" : "Allows the app to like and un-likes Tweets for the authenticated user.",
+              "mute.read" : "Allows the app to read the users the authenticated user has muted.",
+              "mute.write" : "Allows the app to mute and unmute users for the authenticated user.",
+              "block.read" : "Allows the app to read the users the authenticated user has blocked.",
+              "block.write" : "Allows the app to block and unblock users for the authenticated user.",
+              "tweet.moderate.write" : "Allows the app to hide and unhide replies to the authenticated user's Tweets.",
+              "follows.read" : "Allows the app to read the users who follow the authenticated user and users that they follow.",
+              "follows.write" : "Allows the app to follow and unfollow users for the authenticated user.",
+              "space.read" : "Allows the app to read the Spaces the authenticated user can see.",
+              "offline.access" : "Allows the app to request a refresh token."
+            }
+          }
+        }
       }
     },
     "schemas" : {
@@ -6570,6 +6750,19 @@
           "format" : "int32",
           "minimum" : 5,
           "maximum" : 100
+        }
+      },
+      "DefaultMaxResultsRequestParameter" : {
+        "name" : "max_results",
+        "in" : "query",
+        "description" : "The maximum number of results",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 1,
+          "maximum" : 100,
+          "default" : 100
         }
       },
       "StartTimeRequestParameter" : {
