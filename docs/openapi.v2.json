@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.32",
+    "version" : "2.33",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -4746,8 +4746,20 @@
           }
         }
       },
-      "CommonMediaFields" : {
+      "Media" : {
+        "discriminator" : {
+          "propertyName" : "type",
+          "mapping" : {
+            "photo" : "#/components/schemas/Photo",
+            "video" : "#/components/schemas/Video",
+            "animated_gif" : "#/components/schemas/AnimatedGif"
+          }
+        },
+        "required" : [ "type" ],
         "properties" : {
+          "type" : {
+            "type" : "string"
+          },
           "media_key" : {
             "$ref" : "#/components/schemas/MediaKey"
           },
@@ -4756,30 +4768,6 @@
           },
           "width" : {
             "$ref" : "#/components/schemas/MediaWidth"
-          }
-        }
-      },
-      "Media" : {
-        "type" : "object",
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/Photo"
-        }, {
-          "$ref" : "#/components/schemas/Video"
-        }, {
-          "$ref" : "#/components/schemas/AnimatedGif"
-        } ],
-        "properties" : {
-          "type" : {
-            "type" : "string"
-          }
-        },
-        "required" : [ "type" ],
-        "discriminator" : {
-          "propertyName" : "type",
-          "mapping" : {
-            "photo" : "#/components/schemas/Photo",
-            "video" : "#/components/schemas/Video",
-            "animated_gif" : "#/components/schemas/AnimatedGif"
           }
         }
       },
@@ -4792,14 +4780,10 @@
       "Photo" : {
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/CommonMediaFields"
+          "$ref" : "#/components/schemas/Media"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "photo" ]
-            },
             "url" : {
               "type" : "string",
               "format" : "uri"
@@ -4813,14 +4797,10 @@
       "Video" : {
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/CommonMediaFields"
+          "$ref" : "#/components/schemas/Media"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "video" ]
-            },
             "preview_image_url" : {
               "type" : "string",
               "format" : "uri"
@@ -4948,14 +4928,10 @@
       "AnimatedGif" : {
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/CommonMediaFields"
+          "$ref" : "#/components/schemas/Media"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "animated_gif" ]
-            },
             "preview_image_url" : {
               "type" : "string",
               "format" : "uri"
@@ -5020,30 +4996,14 @@
         "description" : "A two-letter ISO 3166-1 alpha-2 country code",
         "example" : "US"
       },
-      "ProblemFields" : {
-        "type" : "object",
-        "required" : [ "title", "detail" ],
-        "properties" : {
-          "title" : {
-            "type" : "string"
-          },
-          "detail" : {
-            "type" : "string"
-          }
-        }
-      },
       "GenericProblem" : {
         "description" : "A generic problem with no additional information beyond that provided by the HTTP status code.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "required" : [ "status" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "about:blank" ]
-            },
             "status" : {
               "type" : "integer"
             }
@@ -5053,14 +5013,10 @@
       "InvalidRequestProblem" : {
         "description" : "A problem that indicates this request is invalid.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/invalid-request" ]
-            },
             "errors" : {
               "type" : "array",
               "items" : {
@@ -5087,14 +5043,10 @@
       "ResourceNotFoundProblem" : {
         "description" : "A problem that indicates that a given Tweet, User, etc. does not exist.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "required" : [ "parameter", "value", "resource_id", "resource_type" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/resource-not-found" ]
-            },
             "parameter" : {
               "type" : "string",
               "minLength" : 1
@@ -5116,15 +5068,11 @@
         "description" : "A problem that indicates you are not allowed to see a particular Tweet, User, etc.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "required" : [ "value", "resource_id", "resource_type", "section", "parameter" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/not-authorized-for-resource" ]
-            },
             "value" : {
               "type" : "string"
             },
@@ -5148,14 +5096,10 @@
       "ResourceUnavailableProblem" : {
         "description" : "A problem that indicates a particular Tweet, User, etc. is not available to you.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "required" : [ "parameter", "resource_id", "resource_type" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/resource-unavailable" ]
-            },
             "parameter" : {
               "type" : "string",
               "minLength" : 1
@@ -5174,15 +5118,11 @@
         "description" : "A problem that indicates that you are not allowed to see a particular field on a Tweet, User, etc.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "required" : [ "resource_type", "field", "section" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/not-authorized-for-field" ]
-            },
             "section" : {
               "type" : "string",
               "enum" : [ "data", "includes" ]
@@ -5201,14 +5141,10 @@
         "description" : "A problem that indicates your client is forbidden from making this request.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/client-forbidden" ]
-            },
             "reason" : {
               "type" : "string",
               "enum" : [ "official-client-forbidden", "client-not-enrolled" ]
@@ -5224,15 +5160,11 @@
         "description" : "A problem that indicates that the resource requested violates the precepts of this API.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "required" : [ "resource_id", "resource_type", "section" ],
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/disallowed-resource" ]
-            },
             "resource_id" : {
               "type" : "string"
             },
@@ -5251,29 +5183,17 @@
         "description" : "A problem that indicates that the authentication used is not supported.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/unsupported-authentication" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "UsageCapExceededProblem" : {
         "description" : "A problem that indicates that a usage cap has been exceeded.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "type" : "object",
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/usage-capped" ]
-            },
             "period" : {
               "type" : "string",
               "enum" : [ "Daily", "Monthly" ]
@@ -5289,13 +5209,9 @@
         "description" : "A problem that indicates something is wrong with the connection",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/streaming-connection" ]
-            },
             "connection_issue" : {
               "type" : "string",
               "enum" : [ "TooManyConnections", "ProvisioningSubscription", "RuleConfigurationIssue", "RulesInvalidIssue" ]
@@ -5307,27 +5223,16 @@
         "description" : "Your client has gone away.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/client-disconnected" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "OperationalDisconnectProblem" : {
         "description" : "You have been disconnected for operational reasons.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/operational-disconnect" ]
-            },
             "disconnect_type" : {
               "type" : "string",
               "enum" : [ "OperationalDisconnect", "UpstreamOperationalDisconnect", "ForceDisconnect", "UpstreamUncleanDisconnect", "SlowReader", "InternalError", "ClientApplicationStateDegraded", "InvalidRules" ]
@@ -5339,40 +5244,28 @@
         "description" : "You have exceeded the maximum number of rules.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/rule-cap" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "InvalidRuleProblem" : {
         "description" : "The rule you have submitted is invalid.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/invalid-rules" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "DuplicateRuleProblem" : {
         "description" : "The rule you have submitted is a duplicate.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
+          "$ref" : "#/components/schemas/Problem"
         }, {
           "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/duplicate-rules" ]
+            "value" : {
+              "type" : "string"
+            },
+            "id" : {
+              "type" : "string"
             }
           }
         } ]
@@ -5381,75 +5274,18 @@
         "description" : "You cannot create a new job if one is already in progress.",
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/conflict" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "NonCompliantRulesProblem" : {
         "description" : "A problem that indicates the user's rule set is not compliant.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProblemFields"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "type" : {
-              "type" : "string",
-              "enum" : [ "https://api.twitter.com/2/problems/noncompliant-rules" ]
-            }
-          }
+          "$ref" : "#/components/schemas/Problem"
         } ]
       },
       "Problem" : {
         "description" : "An HTTP Problem Details object, as defined in IETF RFC 7807 (https://tools.ietf.org/html/rfc7807).",
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/GenericProblem"
-        }, {
-          "$ref" : "#/components/schemas/InvalidRequestProblem"
-        }, {
-          "$ref" : "#/components/schemas/ClientForbiddenProblem"
-        }, {
-          "$ref" : "#/components/schemas/ResourceNotFoundProblem"
-        }, {
-          "$ref" : "#/components/schemas/ResourceUnavailableProblem"
-        }, {
-          "$ref" : "#/components/schemas/ResourceUnauthorizedProblem"
-        }, {
-          "$ref" : "#/components/schemas/FieldUnauthorizedProblem"
-        }, {
-          "$ref" : "#/components/schemas/DisallowedResourceProblem"
-        }, {
-          "$ref" : "#/components/schemas/UnsupportedAuthenticationProblem"
-        }, {
-          "$ref" : "#/components/schemas/UsageCapExceededProblem"
-        }, {
-          "$ref" : "#/components/schemas/ConnectionExceptionProblem"
-        }, {
-          "$ref" : "#/components/schemas/ClientDisconnectedProblem"
-        }, {
-          "$ref" : "#/components/schemas/OperationalDisconnectProblem"
-        }, {
-          "$ref" : "#/components/schemas/RulesCapProblem"
-        }, {
-          "$ref" : "#/components/schemas/InvalidRuleProblem"
-        }, {
-          "$ref" : "#/components/schemas/DuplicateRuleProblem"
-        }, {
-          "$ref" : "#/components/schemas/ConflictProblem"
-        }, {
-          "$ref" : "#/components/schemas/NonCompliantRulesProblem"
-        } ],
-        "properties" : {
-          "type" : {
-            "type" : "string"
-          }
-        },
-        "required" : [ "type" ],
+        "type" : "object",
         "discriminator" : {
           "propertyName" : "type",
           "mapping" : {
@@ -5472,7 +5308,28 @@
             "https://api.twitter.com/2/problems/conflict" : "#/components/schemas/ConflictProblem",
             "https://api.twitter.com/2/problems/noncompliant-rules" : "#/components/schemas/NonCompliantRulesProblem"
           }
+        },
+        "required" : [ "type", "title" ],
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          }
         }
+      },
+      "ProblemOrError" : {
+        "type" : "object",
+        "description" : "Represents the response in case of throwing an exception. Mainly for the openapi-generator",
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/Error"
+        }, {
+          "$ref" : "#/components/schemas/Problem"
+        } ]
       },
       "TweetSearchResponse" : {
         "type" : "object",
@@ -5721,7 +5578,7 @@
       "AddRulesResponse" : {
         "type" : "object",
         "description" : "A response from adding user-specified stream filtering rules.",
-        "required" : [ "data", "meta" ],
+        "required" : [ "meta" ],
         "properties" : {
           "data" : {
             "type" : "array",
@@ -5732,6 +5589,12 @@
           },
           "meta" : {
             "$ref" : "#/components/schemas/RulesResponseMetadata"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
           }
         }
       },
@@ -5768,6 +5631,12 @@
         "properties" : {
           "meta" : {
             "$ref" : "#/components/schemas/RulesResponseMetadata"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
           }
         }
       },
