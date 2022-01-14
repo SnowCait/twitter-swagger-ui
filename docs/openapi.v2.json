@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.33",
+    "version" : "2.34",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -3426,6 +3426,54 @@
         }
       }
     },
+    "/2/spaces/{id}/tweets" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "users.read", "tweet.read", "space.read" ]
+        } ],
+        "tags" : [ "Spaces", "Tweets" ],
+        "summary" : "Retrieve tweets from a Space",
+        "description" : "Retrieves tweets shared in the specified space",
+        "operationId" : "spaceTweets",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "max_results",
+          "description" : "The number of tweets to fetch from the provided space. If not provided, the value will default to the maximum of 100",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/MaxResults"
+          }
+        }, {
+          "in" : "path",
+          "name" : "id",
+          "description" : "The space id from which tweets will be retrieved",
+          "required" : true,
+          "example" : "1YqKDqWqdPLsV",
+          "schema" : {
+            "$ref" : "#/components/schemas/SpaceID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MultiTweetLookupResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
     "/2/spaces/{id}/buyers" : {
       "get" : {
         "security" : [ {
@@ -6294,6 +6342,12 @@
               }
             },
             "type" : "array"
+          },
+          "subscriber_count" : {
+            "description" : "The number of people who have either purchased a ticket or set a reminder for this space.",
+            "example" : "10",
+            "format" : "int32",
+            "type" : "integer"
           }
         }
       },
