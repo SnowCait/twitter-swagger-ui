@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.34",
+    "version" : "2.35",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2302,6 +2302,10 @@
           "schema" : {
             "$ref" : "#/components/schemas/TweetID"
           }
+        }, {
+          "$ref" : "#/components/parameters/DefaultMaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
         } ],
         "responses" : {
           "200" : {
@@ -2341,6 +2345,10 @@
           "schema" : {
             "$ref" : "#/components/schemas/TweetID"
           }
+        }, {
+          "$ref" : "#/components/parameters/DefaultMaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
         } ],
         "responses" : {
           "200" : {
