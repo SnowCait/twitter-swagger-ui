@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.35",
+    "version" : "2.36",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1605,12 +1605,33 @@
           }
         }, {
           "in" : "query",
+          "name" : "sort_order",
+          "description" : "This order in which to return results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "recency", "relevancy" ],
+            "x-version" : "[2.36,]"
+          }
+        }, {
+          "in" : "query",
           "name" : "next_token",
           "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
           "required" : false,
           "schema" : {
             "type" : "string",
             "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "pagination_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "x-renames-parameter" : "next_token",
+            "x-version" : "[2.36,]"
           }
         }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
@@ -1710,12 +1731,33 @@
           }
         }, {
           "in" : "query",
+          "name" : "sort_order",
+          "description" : "This order in which to return results.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "recency", "relevancy" ],
+            "x-version" : "[2.36,]"
+          }
+        }, {
+          "in" : "query",
           "name" : "next_token",
           "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
           "required" : false,
           "schema" : {
             "type" : "string",
             "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "pagination_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "x-renames-parameter" : "next_token",
+            "x-version" : "[2.36,]"
           }
         }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
@@ -2523,6 +2565,17 @@
           }
         }, {
           "in" : "query",
+          "name" : "pagination_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "x-renames-parameter" : "next_token",
+            "x-version" : "[2.36,]"
+          }
+        }, {
+          "in" : "query",
           "name" : "granularity",
           "description" : "The granularity for the search counts results.",
           "required" : false,
@@ -2609,6 +2662,17 @@
           "schema" : {
             "type" : "string",
             "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "pagination_token",
+          "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1,
+            "x-renames-parameter" : "next_token",
+            "x-version" : "[2.36,]"
           }
         }, {
           "in" : "query",
