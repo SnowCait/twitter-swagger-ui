@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.36",
+    "version" : "2.37",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1549,12 +1549,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 512 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Refer to https:\\/\\/t.co\\/rulelength to identify the max query length",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 512,
+            "maxLength" : 2048,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -1675,12 +1675,12 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 1024 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Refer to https:\\/\\/t.co\\/rulelength to identify the max query length",
           "required" : true,
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 1024,
+            "maxLength" : 2048,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -2512,7 +2512,7 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Refer to https:\\/\\/t.co\\/rulelength to identify the max query length",
           "required" : true,
           "schema" : {
             "type" : "string",
@@ -2612,7 +2612,7 @@
         "parameters" : [ {
           "in" : "query",
           "name" : "query",
-          "description" : "One query/rule/filter for matching Tweets. Up to 2048 characters.",
+          "description" : "One query/rule/filter for matching Tweets. Refer to https:\\/\\/t.co\\/rulelength to identify the max query length",
           "required" : true,
           "schema" : {
             "type" : "string",
@@ -3621,7 +3621,9 @@
               "follows.read" : "Allows the app to read the users who follow the authenticated user and users that they follow.",
               "follows.write" : "Allows the app to follow and unfollow users for the authenticated user.",
               "space.read" : "Allows the app to read the Spaces the authenticated user can see.",
-              "offline.access" : "Allows the app to request a refresh token."
+              "offline.access" : "Allows the app to request a refresh token.",
+              "bookmark.read" : "Allows the app to read bookmarked Tweets",
+              "bookmark.write" : "Allows the app to add/remove Tweets to/from bookmarks"
             }
           }
         }
@@ -4338,6 +4340,15 @@
           "includes" : {
             "$ref" : "#/components/schemas/Expansions"
           },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "result_count" : {
+                "description" : "The number of spaces results returned in this response",
+                "type" : "integer"
+              }
+            }
+          },
           "errors" : {
             "type" : "array",
             "items" : {
@@ -4670,7 +4681,7 @@
           "data" : {
             "type" : "object",
             "properties" : {
-              "member" : {
+              "is_member" : {
                 "type" : "boolean"
               }
             }
@@ -4746,6 +4757,18 @@
           "data" : {
             "$ref" : "#/components/schemas/List"
           },
+          "includes" : {
+            "type" : "object",
+            "properties" : {
+              "users" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/User"
+                },
+                "minItems" : 1
+              }
+            }
+          },
           "errors" : {
             "type" : "array",
             "items" : {
@@ -4764,6 +4787,18 @@
               "$ref" : "#/components/schemas/List"
             },
             "minItems" : 0
+          },
+          "includes" : {
+            "type" : "object",
+            "properties" : {
+              "users" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/User"
+                },
+                "minItems" : 1
+              }
+            }
           },
           "meta" : {
             "type" : "object",
@@ -5120,14 +5155,6 @@
         "description" : "A generic problem with no additional information beyond that provided by the HTTP status code.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/Problem"
-        }, {
-          "type" : "object",
-          "required" : [ "status" ],
-          "properties" : {
-            "status" : {
-              "type" : "integer"
-            }
-          }
         } ]
       },
       "InvalidRequestProblem" : {
@@ -5179,7 +5206,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "user", "tweet", "media" ]
+              "enum" : [ "user", "tweet", "media", "list" ]
             }
           }
         } ]
@@ -5439,6 +5466,9 @@
           },
           "detail" : {
             "type" : "string"
+          },
+          "status" : {
+            "type" : "integer"
           }
         }
       },
@@ -5499,21 +5529,21 @@
       },
       "StreamingTweet" : {
         "type" : "object",
-        "description" : "A tweet or error that can be returned by the streaming tweet API.",
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/SingleTweetLookupResponse"
-        }, {
-          "type" : "object",
-          "required" : [ "errors" ],
-          "properties" : {
-            "errors" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/Problem"
-              }
-            }
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Tweet"
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
           }
-        } ]
+        }
       },
       "FilteredStreamingTweet" : {
         "type" : "object",
@@ -5676,28 +5706,7 @@
       },
       "AddOrDeleteRulesResponse" : {
         "type" : "object",
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/AddRulesResponse"
-        }, {
-          "$ref" : "#/components/schemas/DeleteRulesResponse"
-        } ]
-      },
-      "AddRulesRequest" : {
-        "type" : "object",
-        "description" : "A request to add a user-specified stream filtering rule.",
-        "required" : [ "add" ],
-        "properties" : {
-          "add" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/RuleNoId"
-            }
-          }
-        }
-      },
-      "AddRulesResponse" : {
-        "type" : "object",
-        "description" : "A response from adding user-specified stream filtering rules.",
+        "description" : "A response from modifying user-specified stream filtering rules.",
         "required" : [ "meta" ],
         "properties" : {
           "data" : {
@@ -5714,6 +5723,19 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "AddRulesRequest" : {
+        "type" : "object",
+        "description" : "A request to add a user-specified stream filtering rule.",
+        "required" : [ "add" ],
+        "properties" : {
+          "add" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RuleNoId"
             }
           }
         }
@@ -5741,21 +5763,6 @@
                   "$ref" : "#/components/schemas/RuleValue"
                 }
               }
-            }
-          }
-        }
-      },
-      "DeleteRulesResponse" : {
-        "type" : "object",
-        "required" : [ "meta" ],
-        "properties" : {
-          "meta" : {
-            "$ref" : "#/components/schemas/RulesResponseMetadata"
-          },
-          "errors" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Problem"
             }
           }
         }
@@ -6453,6 +6460,15 @@
           },
           "includes" : {
             "$ref" : "#/components/schemas/Expansions"
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "result_count" : {
+                "description" : "The number of spaces results returned in this response",
+                "type" : "integer"
+              }
+            }
           },
           "errors" : {
             "type" : "array",
