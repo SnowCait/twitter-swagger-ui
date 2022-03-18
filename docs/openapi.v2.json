@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.37",
+    "version" : "2.38",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1462,6 +1462,69 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TweetDeleteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/tweets/{id}/quote_tweets" : {
+      "get" : {
+        "security" : [ {
+          "BearerToken" : [ ]
+        }, {
+          "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
+        } ],
+        "tags" : [ "Tweets" ],
+        "summary" : "Retrieve tweets that quote a tweet.",
+        "description" : "Returns a variety of information about each tweet that quotes the Tweet specified by the requested ID.",
+        "operationId" : "findTweetsThatQuoteATweet",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "The ID of the Quoted Tweet.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }, {
+          "in" : "query",
+          "name" : "max_results",
+          "description" : "The maximum number of results to be returned.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 10,
+            "maximum" : 100,
+            "default" : 10
+          }
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuoteTweetLookupResponse"
                 }
               }
             }
@@ -4358,6 +4421,40 @@
           }
         }
       },
+      "QuoteTweetLookupResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Tweet"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "description" : "This value is used to get the next 'page' of results by providing it to the pagination_token parameter.",
+                "type" : "string"
+              },
+              "result_count" : {
+                "description" : "The number of quoting tweets returned in this response",
+                "type" : "integer"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
       "SingleTweetLookupResponse" : {
         "type" : "object",
         "properties" : {
@@ -4844,6 +4941,35 @@
               "result_count" : {
                 "description" : "The number of list results returned in this response",
                 "type" : "integer"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            },
+            "minItems" : 1
+          }
+        }
+      },
+      "AddBookmarkRequest" : {
+        "type" : "object",
+        "required" : [ "tweet_id" ],
+        "properties" : {
+          "tweet_id" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        }
+      },
+      "BookmarkMutationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "bookmarked" : {
+                "type" : "boolean"
               }
             }
           },
