@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.38",
+    "version" : "2.39",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -19,6 +19,13 @@
     "url" : "https://api.twitter.com"
   } ],
   "tags" : [ {
+    "name" : "Bookmarks",
+    "description" : "Endpoints related to retrieving, managing bookmarks of a user",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://developer.twitter.com/en/docs/twitter-api/bookmarks"
+    }
+  }, {
     "name" : "Compliance",
     "description" : "Endpoints related to keeping Twitter data in your systems compliant",
     "externalDocs" : {
@@ -439,6 +446,143 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/UsersBlockingMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/bookmarks" : {
+      "get" : {
+        "tags" : [ "Bookmarks" ],
+        "summary" : "Bookmarks by User",
+        "description" : "Returns Tweet objects that have been bookmarked by the requesting user",
+        "operationId" : "getUsersIdBookmarks",
+        "security" : [ {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "bookmark.read" ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to return results",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/MaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GenericTweetsTimelineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Bookmarks" ],
+        "summary" : "Add Tweet to Bookmarks",
+        "description" : "Adds a Tweet (ID in the body) to the requesting user's (in the path) bookmarks",
+        "operationId" : "postUsersIdBookmarks",
+        "security" : [ {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "bookmark.write" ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user for whom to add bookmarks",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddBookmarkRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookmarkMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
+          }
+        }
+      }
+    },
+    "/2/users/{id}/bookmarks/{tweet_id}" : {
+      "delete" : {
+        "tags" : [ "Bookmarks" ],
+        "summary" : "Remove a bookmarked Tweet",
+        "description" : "Removes a Tweet from the requesting user's bookmarked Tweets.",
+        "operationId" : "usersIdBookmarksDelete",
+        "security" : [ {
+          "OAuth2UserToken" : [ "tweet.read", "users.read", "bookmark.write" ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the user whose bookmark is to be removed.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "name" : "tweet_id",
+          "in" : "path",
+          "description" : "The ID of the tweet that the user is removing from bookmarks",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/TweetID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookmarkMutationResponse"
                 }
               }
             }
@@ -5332,7 +5476,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "user", "tweet", "media", "list" ]
+              "enum" : [ "user", "tweet", "media", "list", "space" ]
             }
           }
         } ]
@@ -5361,7 +5505,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "tweet", "user", "media" ]
+              "enum" : [ "tweet", "user", "media", "list", "space" ]
             }
           }
         } ]
@@ -5382,7 +5526,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "user", "tweet", "media" ]
+              "enum" : [ "user", "tweet", "media", "list", "space" ]
             }
           }
         } ]
@@ -5402,7 +5546,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "tweet", "media" ]
+              "enum" : [ "tweet", "user", "media", "list", "space" ]
             },
             "field" : {
               "type" : "string"
@@ -5443,7 +5587,7 @@
             },
             "resource_type" : {
               "type" : "string",
-              "enum" : [ "tweet", "media" ]
+              "enum" : [ "tweet", "user", "media", "list", "space" ]
             },
             "section" : {
               "type" : "string",
