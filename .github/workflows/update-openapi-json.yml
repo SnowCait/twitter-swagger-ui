@@ -42,7 +42,7 @@ jobs:
     
     steps:
       - name: Tweet
-        uses: snow-actions/tweet@v1.1.0
+        uses: snow-actions/tweet@v1.2.0
         env:
           CONSUMER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_API_KEY_SECRET }}
