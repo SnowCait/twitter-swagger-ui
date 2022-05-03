@@ -17,7 +17,7 @@ jobs:
       changes-count: ${{ steps.changes.outputs.count }}
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download openapi.json
         run: |
           curl --fail --output docs/openapi.v2.json https://api.twitter.com/2/openapi.json
