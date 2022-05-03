@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changes-count: ${{ steps.changes.outputs.count }}
+      sha: ${{ steps.commit.outputs.sha }}
     
     steps:
       - uses: actions/checkout@v3
@@ -31,6 +32,9 @@ jobs:
           git commit -m "Update openapi.json"
           git push
         if: steps.changes.outputs.count > 0
+      - name: SHA
+        id: commit
+        run: echo "::set-output name=sha::$(git log -1 --format='%H')"
 
   tweet:
     runs-on: ubuntu-latest
@@ -51,4 +55,4 @@ jobs:
             https://snowcait.github.io/twitter-swagger-ui/
 
             差分
-            https://github.com/SnowCait/twitter-swagger-ui/commit/HEAD
+            https://github.com/SnowCait/twitter-swagger-ui/commit/${{ needs.update.outputs.sha }}
