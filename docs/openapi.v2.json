@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.39",
+    "version" : "2.40",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -3991,6 +3991,9 @@
               "$ref" : "#/components/schemas/URLImage"
             },
             "minItems" : 1
+          },
+          "media_key" : {
+            "$ref" : "#/components/schemas/MediaKey"
           }
         }
       },
@@ -5233,6 +5236,28 @@
             "duration_ms" : {
               "type" : "integer"
             },
+            "variants" : {
+              "type" : "array",
+              "description" : "An array of all available variants of the media",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "bit_rate" : {
+                    "type" : "integer",
+                    "description" : "The bit rate of the media"
+                  },
+                  "content_type" : {
+                    "type" : "string",
+                    "description" : "The content type of the media"
+                  },
+                  "url" : {
+                    "type" : "string",
+                    "description" : "The url to the media",
+                    "format" : "uri"
+                  }
+                }
+              }
+            },
             "public_metrics" : {
               "type" : "object",
               "description" : "Engagement metrics for the Media at the time of the request.",
@@ -5360,6 +5385,28 @@
             "preview_image_url" : {
               "type" : "string",
               "format" : "uri"
+            },
+            "variants" : {
+              "type" : "array",
+              "description" : "An array of all available variants of the media",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "bit_rate" : {
+                    "type" : "integer",
+                    "description" : "The bit rate of the media"
+                  },
+                  "content_type" : {
+                    "type" : "string",
+                    "description" : "The content type of the media"
+                  },
+                  "url" : {
+                    "type" : "string",
+                    "description" : "The url to the media",
+                    "format" : "uri"
+                  }
+                }
+              }
             }
           }
         } ]
@@ -6917,10 +6964,10 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics", "non_public_metrics", "organic_metrics", "promoted_metrics", "alt_text" ]
+            "enum" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics", "non_public_metrics", "organic_metrics", "promoted_metrics", "alt_text", "variants" ]
           },
           "minItems" : 1,
-          "example" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics" ],
+          "example" : [ "media_key", "duration_ms", "height", "preview_image_url", "type", "url", "width", "public_metrics", "non_public_metrics", "organic_metrics", "promoted_metrics", "alt_text", "variants" ],
           "uniqueItems" : true
         }
       },
