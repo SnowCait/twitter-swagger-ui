@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.40",
+    "version" : "2.42",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1650,6 +1650,8 @@
             "default" : 10
           }
         }, {
+          "$ref" : "#/components/parameters/TweetTypeExcludesRequestParameter"
+        }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
         }, {
           "$ref" : "#/components/parameters/TweetFieldsParameter"
@@ -1761,7 +1763,7 @@
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 4096,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -1887,7 +1889,7 @@
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 4096,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -2724,7 +2726,7 @@
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 4096,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -2824,7 +2826,7 @@
           "schema" : {
             "type" : "string",
             "minLength" : 1,
-            "maxLength" : 2048,
+            "maxLength" : 4096,
             "example" : "(from:TwitterDev OR from:TwitterAPI) has:media -is:retweet"
           }
         }, {
@@ -5961,6 +5963,16 @@
           },
           "summary" : {
             "$ref" : "#/components/schemas/RulesRequestSummary"
+          },
+          "next_token" : {
+            "description" : "This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.",
+            "type" : "string",
+            "minLength" : 1
+          },
+          "result_count" : {
+            "description" : "Number of Rules in result set",
+            "type" : "integer",
+            "format" : "int32"
           }
         }
       },
@@ -6619,6 +6631,17 @@
               "$ref" : "#/components/schemas/Problem"
             },
             "minItems" : 0
+          },
+          "meta" : {
+            "type" : "object",
+            "x-version" : "[2.41,]",
+            "properties" : {
+              "result_count" : {
+                "description" : "Number of compliance jobs returned",
+                "type" : "integer",
+                "format" : "int32"
+              }
+            }
           }
         }
       },
