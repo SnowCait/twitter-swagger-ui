@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.42",
+    "version" : "2.43",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2215,6 +2215,69 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/2/users/{id}/timelines/reverse_chronological" : {
+      "get" : {
+        "tags" : [ "Tweets" ],
+        "security" : [ {
+          "UserToken" : [ ]
+        }, {
+          "OAuth2UserToken" : [ "tweet.read", "users.read" ]
+        } ],
+        "summary" : "User home timeline by User ID",
+        "description" : "Returns Tweet objects that appears in the provided User ID's home timeline",
+        "operationId" : "usersIdTimeline",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the User to list Reverse Chronological Timeline Tweets of",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/UserID"
+          }
+        }, {
+          "$ref" : "#/components/parameters/SinceIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/UntilIdRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/MaxResultsRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetTypeExcludesRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/StartTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/EndTimeRequestParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetExpansionsParameter"
+        }, {
+          "$ref" : "#/components/parameters/TweetFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/UserFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/MediaFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PlaceFieldsParameter"
+        }, {
+          "$ref" : "#/components/parameters/PollFieldsParameter"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The request was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GenericTweetsTimelineResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "$ref" : "#/components/responses/HttpErrorResponse"
           }
         }
       }
