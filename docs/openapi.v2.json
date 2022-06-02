@@ -1650,6 +1650,8 @@
             "default" : 10
           }
         }, {
+          "$ref" : "#/components/parameters/PaginationTokenRequestParameter"
+        }, {
           "$ref" : "#/components/parameters/TweetTypeExcludesRequestParameter"
         }, {
           "$ref" : "#/components/parameters/TweetExpansionsParameter"
