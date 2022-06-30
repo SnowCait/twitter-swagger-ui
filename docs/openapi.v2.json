@@ -6325,7 +6325,8 @@
           "created",
           "in_progress",
           "failed",
-          "complete"
+          "complete",
+          "expired"
         ]
       },
       "ComplianceJobType" : {
