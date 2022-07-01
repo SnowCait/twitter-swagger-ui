@@ -8531,8 +8531,7 @@
         "type" : "object",
         "description" : "Represent the portion of text recognized as a User mention, and its start and end position within the text.",
         "required" : [
-          "username",
-          "id"
+          "username"
         ],
         "properties" : {
           "id" : {
