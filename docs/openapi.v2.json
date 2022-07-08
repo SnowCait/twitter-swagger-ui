@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.45",
+    "version" : "2.46",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1605,6 +1605,101 @@
         }
       }
     },
+    "/2/tweets/compliance/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Compliance"
+        ],
+        "summary" : "Tweets Compliance stream",
+        "description" : "Streams 100% of compliance data for Tweets",
+        "operationId" : "getTweetsComplianceStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 4,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweet Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweet Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetComplianceStreamResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
+      }
+    },
     "/2/tweets/counts/all" : {
       "get" : {
         "security" : [
@@ -1881,6 +1976,119 @@
         }
       }
     },
+    "/2/tweets/firehose/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Tweets"
+        ],
+        "summary" : "Firehose stream",
+        "description" : "Streams 100% of public Tweets.",
+        "operationId" : "getTweetsFirehoseStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 20,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PollFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PlaceFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StreamingTweetResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
+      }
+    },
     "/2/tweets/sample/stream" : {
       "get" : {
         "security" : [
@@ -1934,6 +2142,119 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/StreamingTweetResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
+      }
+    },
+    "/2/tweets/sample10/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Tweets"
+        ],
+        "summary" : "Sample 10% stream",
+        "description" : "Streams a deterministic 10% of public Tweets.",
+        "operationId" : "getTweetsSample10Stream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 2,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PollFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PlaceFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2TweetsSample10StreamResponse"
                 }
               }
             }
@@ -2320,6 +2641,30 @@
               "minimum" : 0,
               "maximum" : 5,
               "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
             },
             "style" : "form"
           },
@@ -3281,6 +3626,101 @@
             }
           }
         }
+      }
+    },
+    "/2/users/compliance/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Compliance"
+        ],
+        "summary" : "Users Compliance stream",
+        "description" : "Streams 100% of compliance data for Users",
+        "operationId" : "getUsersComplianceStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 4,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the User Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the User Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserComplianceStreamResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
       }
     },
     "/2/users/me" : {
@@ -7289,6 +7729,24 @@
           }
         }
       },
+      "Get2TweetsFirehoseStreamResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Tweet"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          }
+        }
+      },
       "Get2TweetsIdLikingUsersResponse" : {
         "type" : "object",
         "properties" : {
@@ -7421,6 +7879,24 @@
             "items" : {
               "$ref" : "#/components/schemas/Tweet"
             }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          }
+        }
+      },
+      "Get2TweetsSample10StreamResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Tweet"
           },
           "errors" : {
             "type" : "array",
@@ -9654,6 +10130,85 @@
           "text" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
         }
       },
+      "TweetComplianceData" : {
+        "description" : "Tweet compliance data.",
+        "oneOf" : [
+          {
+            "$ref" : "#/components/schemas/TweetDeleteComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/TweetWithheldComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/TweetDropComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/TweetUndropComplianceSchema"
+          }
+        ]
+      },
+      "TweetComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "tweet",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "tweet" : {
+            "type" : "object",
+            "required" : [
+              "id",
+              "author_id"
+            ],
+            "properties" : {
+              "author_id" : {
+                "$ref" : "#/components/schemas/UserId"
+              },
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              }
+            }
+          }
+        }
+      },
+      "TweetComplianceStreamResponse" : {
+        "description" : "Tweet compliance stream events.",
+        "oneOf" : [
+          {
+            "type" : "object",
+            "description" : "Compliance event.",
+            "required" : [
+              "data"
+            ],
+            "properties" : {
+              "data" : {
+                "$ref" : "#/components/schemas/TweetComplianceData"
+              }
+            }
+          },
+          {
+            "type" : "object",
+            "required" : [
+              "errors"
+            ],
+            "properties" : {
+              "errors" : {
+                "type" : "array",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        ]
+      },
       "TweetCount" : {
         "type" : "integer",
         "description" : "The count for the bucket."
@@ -9808,6 +10363,17 @@
           }
         }
       },
+      "TweetDeleteComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "delete"
+        ],
+        "properties" : {
+          "delete" : {
+            "$ref" : "#/components/schemas/TweetComplianceSchema"
+          }
+        }
+      },
       "TweetDeleteResponse" : {
         "type" : "object",
         "properties" : {
@@ -9828,6 +10394,17 @@
             "items" : {
               "$ref" : "#/components/schemas/Problem"
             }
+          }
+        }
+      },
+      "TweetDropComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "drop"
+        ],
+        "properties" : {
+          "drop" : {
+            "$ref" : "#/components/schemas/TweetComplianceSchema"
           }
         }
       },
@@ -9861,10 +10438,59 @@
         "pattern" : "^[0-9]{1,19}$",
         "example" : "1346889436626259968"
       },
+      "TweetTakedownComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "tweet",
+          "withheld_in_countries",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "tweet" : {
+            "type" : "object",
+            "required" : [
+              "id",
+              "author_id"
+            ],
+            "properties" : {
+              "author_id" : {
+                "$ref" : "#/components/schemas/UserId"
+              },
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              }
+            }
+          },
+          "withheld_in_countries" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/CountryCode"
+            }
+          }
+        }
+      },
       "TweetText" : {
         "type" : "string",
         "description" : "The content of the Tweet.",
         "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+      },
+      "TweetUndropComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "undrop"
+        ],
+        "properties" : {
+          "undrop" : {
+            "$ref" : "#/components/schemas/TweetComplianceSchema"
+          }
+        }
       },
       "TweetWithheld" : {
         "type" : "object",
@@ -9894,6 +10520,17 @@
               "tweet",
               "user"
             ]
+          }
+        }
+      },
+      "TweetWithheldComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "withheld"
+        ],
+        "properties" : {
+          "withheld" : {
+            "$ref" : "#/components/schemas/TweetTakedownComplianceSchema"
           }
         }
       },
@@ -10138,6 +10775,104 @@
           "username" : "TwitterDev"
         }
       },
+      "UserComplianceData" : {
+        "description" : "User compliance data.",
+        "oneOf" : [
+          {
+            "$ref" : "#/components/schemas/UserProtectComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserUnprotectComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserDeleteComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserUndeleteComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserSuspendComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserUnsuspendComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserWithheldComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserScrubGeoSchema"
+          }
+        ]
+      },
+      "UserComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "user" : {
+            "type" : "object",
+            "required" : [
+              "id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
+          }
+        }
+      },
+      "UserComplianceStreamResponse" : {
+        "description" : "User compliance stream events.",
+        "oneOf" : [
+          {
+            "type" : "object",
+            "description" : "User compliance event.",
+            "required" : [
+              "data"
+            ],
+            "properties" : {
+              "data" : {
+                "$ref" : "#/components/schemas/UserComplianceData"
+              }
+            }
+          },
+          {
+            "type" : "object",
+            "required" : [
+              "errors"
+            ],
+            "properties" : {
+              "errors" : {
+                "type" : "array",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "UserDeleteComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_delete"
+        ],
+        "properties" : {
+          "user_delete" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
+      },
       "UserId" : {
         "type" : "string",
         "description" : "Unique identifier of this User. This is returned as a string in order to avoid complications with languages and tools that cannot handle large integers.",
@@ -10153,6 +10888,136 @@
         "type" : "string",
         "description" : "The Twitter handle (screen name) of this user.",
         "pattern" : "^[A-Za-z0-9_]{1,15}$"
+      },
+      "UserProtectComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_protect"
+        ],
+        "properties" : {
+          "user_protect" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
+      },
+      "UserScrubGeoObjectSchema" : {
+        "type" : "object",
+        "required" : [
+          "user",
+          "up_to_tweet_id",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "up_to_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
+          "user" : {
+            "type" : "object",
+            "required" : [
+              "id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
+          }
+        }
+      },
+      "UserScrubGeoSchema" : {
+        "type" : "object",
+        "required" : [
+          "scrub_geo"
+        ],
+        "properties" : {
+          "scrub_geo" : {
+            "$ref" : "#/components/schemas/UserScrubGeoObjectSchema"
+          }
+        }
+      },
+      "UserSuspendComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_suspend"
+        ],
+        "properties" : {
+          "user_suspend" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
+      },
+      "UserTakedownComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user",
+          "withheld_in_countries",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "user" : {
+            "type" : "object",
+            "required" : [
+              "id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
+          },
+          "withheld_in_countries" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/CountryCode"
+            }
+          }
+        }
+      },
+      "UserUndeleteComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_undelete"
+        ],
+        "properties" : {
+          "user_undelete" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
+      },
+      "UserUnprotectComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_unprotect"
+        ],
+        "properties" : {
+          "user_unprotect" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
+      },
+      "UserUnsuspendComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_unsuspend"
+        ],
+        "properties" : {
+          "user_unsuspend" : {
+            "$ref" : "#/components/schemas/UserComplianceSchema"
+          }
+        }
       },
       "UserWithheld" : {
         "type" : "object",
@@ -10176,6 +11041,17 @@
             "enum" : [
               "user"
             ]
+          }
+        }
+      },
+      "UserWithheldComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_withheld"
+        ],
+        "properties" : {
+          "user_withheld" : {
+            "$ref" : "#/components/schemas/UserTakedownComplianceSchema"
           }
         }
       },
