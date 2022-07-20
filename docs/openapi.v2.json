@@ -6503,6 +6503,7 @@
               "list.write" : "Create and manage Lists for you.",
               "mute.read" : "Accounts you’ve muted.",
               "mute.write" : "Mute and unmute accounts for you.",
+              "offline.access" : "App can request refresh token.",
               "space.read" : "Access all of the Spaces you can see.",
               "tweet.moderate.write" : "Hide and unhide replies to your Tweets.",
               "tweet.read" : "All the Tweets you can see, including Tweets from protected accounts.",
