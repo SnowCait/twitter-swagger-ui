@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.46",
+    "version" : "2.47",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10161,6 +10161,9 @@
             "format" : "date-time",
             "example" : "2021-07-06T18:40:40.000Z"
           },
+          "quote_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
           "tweet" : {
             "type" : "object",
             "required" : [
@@ -10452,6 +10455,9 @@
             "description" : "Event time.",
             "format" : "date-time",
             "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "quote_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
           },
           "tweet" : {
             "type" : "object",
@@ -10802,6 +10808,9 @@
           },
           {
             "$ref" : "#/components/schemas/UserScrubGeoSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/UserProfileModificationComplianceSchema"
           }
         ]
       },
@@ -10889,6 +10898,51 @@
         "type" : "string",
         "description" : "The Twitter handle (screen name) of this user.",
         "pattern" : "^[A-Za-z0-9_]{1,15}$"
+      },
+      "UserProfileModificationComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "user_profile_modification"
+        ],
+        "properties" : {
+          "user_profile_modification" : {
+            "$ref" : "#/components/schemas/UserProfileModificationObjectSchema"
+          }
+        }
+      },
+      "UserProfileModificationObjectSchema" : {
+        "type" : "object",
+        "required" : [
+          "user",
+          "profile_field",
+          "new_value",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "new_value" : {
+            "type" : "string"
+          },
+          "profile_field" : {
+            "type" : "string"
+          },
+          "user" : {
+            "type" : "object",
+            "required" : [
+              "id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
+          }
+        }
       },
       "UserProtectComplianceSchema" : {
         "type" : "object",
