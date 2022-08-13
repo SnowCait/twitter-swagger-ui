@@ -5,7 +5,7 @@ window.onload = function() {
   window.ui = SwaggerUIBundle({
     urls: [
       {url: `${location.href}openapi.v2.json`, name: 'Twitter API v2'},
-      {url:`${location.href}openapi.labs.json`, name: 'Twitter API Labs'},
+      {url:　`${location.href}openapi.labs.json`, name: 'Twitter API Labs'},
     ],
     dom_id: '#swagger-ui',
     deepLinking: true,
