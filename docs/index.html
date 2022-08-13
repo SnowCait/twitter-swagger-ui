@@ -14,94 +14,16 @@
 
     <meta charset="UTF-8">
     <title>Twitter Swagger UI</title>
-    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
-    <style>
-      html
-      {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
-      }
-
-      *,
-      *:before,
-      *:after
-      {
-        box-sizing: inherit;
-      }
-
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
-
-      .swagger-ui .topbar .download-url-wrapper select {
-        width: 100%;
-        margin: 0;
-        border: 2px solid #62a03f;
-        border-radius: 4px 0 0 4px;
-        outline: none;
-        min-width: 100px;
-        padding: 8px 10px;
-        box-sizing: border-box;
-        overflow: visible;
-        font-family: sans-serif;
-        font-size: 100%;
-        line-height: 1.15;
-      }
-    </style>
   </head>
 
   <body>
     <div id="swagger-ui"></div>
-
-    <script src="./swagger-ui-bundle.js"> </script>
-    <script src="./swagger-ui-standalone-preset.js"> </script>
-    <script>
-    window.onload = function() {
-      // Begin Swagger UI call region
-      const ui = SwaggerUIBundle({
-        url: `${location.href}openapi.v2.json`,
-        dom_id: '#swagger-ui',
-        deepLinking: true,
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        plugins: [
-          SwaggerUIBundle.plugins.DownloadUrl
-        ],
-        layout: "StandaloneLayout"
-      })
-      // End Swagger UI call region
-
-      window.ui = ui
-
-      const urls = [
-        `${location.href}openapi.v2.json`,
-        `${location.href}openapi.labs.json`,
-      ]
-      const input = document.getElementsByClassName('download-url-input')[0]
-      const select = document.createElement('select')
-      select.classList = input.classList
-      urls.forEach (url => {
-          const option = document.createElement('option')
-          option.label = url
-          option.value = url
-          select.appendChild(option)
-        }
-      )
-      select.addEventListener('change', (event) => {
-        const url = event.target.value
-        ui.specActions.updateUrl(url)
-        ui.specActions.download(url)
-      });
-      input.parentElement.replaceChild(select, input)
-      document.getElementsByClassName('download-url-button')[0].remove()
-    }
-  </script>
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script src="./swagger-initializer.js" charset="UTF-8"> </script>
   </body>
 </html>
