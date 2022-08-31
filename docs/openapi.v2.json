@@ -9406,7 +9406,8 @@
               "$ref" : "#/components/schemas/UserId"
             }
           }
-        }
+        },
+        "additionalProperties" : false
       },
       "ReportUsersResponse" : {
         "type" : "object",
