@@ -27,6 +27,9 @@
         ],
         "summary" : "List Compliance Jobs",
         "description" : "Returns recent Compliance Jobs for a given job type and optional job status",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs"
+        },
         "operationId" : "listBatchComplianceJobs",
         "parameters" : [
           {
@@ -102,6 +105,9 @@
         ],
         "summary" : "Create compliance job",
         "description" : "Creates a compliance for the given job type",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/post-compliance-jobs"
+        },
         "operationId" : "createBatchComplianceJob",
         "parameters" : [ ],
         "requestBody" : {
@@ -155,6 +161,9 @@
         ],
         "summary" : "Get Compliance Job",
         "description" : "Returns a single Compliance Job by ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs-id"
+        },
         "operationId" : "getBatchComplianceJob",
         "parameters" : [
           {
@@ -220,6 +229,9 @@
         ],
         "summary" : "Create List",
         "description" : "Creates a new List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/post-lists"
+        },
         "operationId" : "listIdCreate",
         "parameters" : [ ],
         "requestBody" : {
@@ -279,6 +291,9 @@
         ],
         "summary" : "Delete List",
         "description" : "Delete a List that you own.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/delete-lists-id"
+        },
         "operationId" : "listIdDelete",
         "parameters" : [
           {
@@ -341,6 +356,9 @@
         ],
         "summary" : "List lookup by List ID.",
         "description" : "Returns a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-lists-id"
+        },
         "operationId" : "listIdGet",
         "parameters" : [
           {
@@ -409,6 +427,9 @@
         ],
         "summary" : "Update List.",
         "description" : "Update a List that you own.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/put-lists-id"
+        },
         "operationId" : "listIdUpdate",
         "parameters" : [
           {
@@ -482,6 +503,9 @@
         ],
         "summary" : "Returns User objects that follow a List by the provided List ID",
         "description" : "Returns a list of Users that follow a List by the provided List ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers"
+        },
         "operationId" : "listGetFollowers",
         "parameters" : [
           {
@@ -579,6 +603,9 @@
         ],
         "summary" : "Returns User objects that are members of a List by the provided List ID.",
         "description" : "Returns a list of Users that are members of a List by the provided List ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-users-id-list_memberships"
+        },
         "operationId" : "listGetMembers",
         "parameters" : [
           {
@@ -671,6 +698,9 @@
         ],
         "summary" : "Add a List member",
         "description" : "Causes a User to become a member of a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/post-lists-id-members"
+        },
         "operationId" : "listAddMember",
         "parameters" : [
           {
@@ -741,6 +771,9 @@
         ],
         "summary" : "Remove a List member",
         "description" : "Causes a User to be removed from the members of a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/delete-lists-id-members-user_id"
+        },
         "operationId" : "listRemoveMember",
         "parameters" : [
           {
@@ -815,6 +848,9 @@
         ],
         "summary" : "List Tweets timeline by List ID.",
         "description" : "Returns a list of Tweets associated with the provided List ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-tweets/api-reference/get-lists-id-tweets"
+        },
         "operationId" : "listsIdTweets",
         "parameters" : [
           {
@@ -941,6 +977,9 @@
         ],
         "summary" : "Space lookup up Space IDs",
         "description" : "Returns a variety of information about the Spaces specified by the requested IDs",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces"
+        },
         "operationId" : "findSpacesByIds",
         "parameters" : [
           {
@@ -1022,6 +1061,9 @@
         ],
         "summary" : "Space lookup by their creators",
         "description" : "Returns a variety of information about the Spaces created by the provided User IDs",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-by-creator-ids"
+        },
         "operationId" : "findSpacesByCreatorIds",
         "parameters" : [
           {
@@ -1100,6 +1142,9 @@
         ],
         "summary" : "Search for Spaces",
         "description" : "Returns Spaces that match the provided query.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/search/api-reference/get-spaces-search"
+        },
         "operationId" : "searchSpaces",
         "parameters" : [
           {
@@ -1207,6 +1252,9 @@
         ],
         "summary" : "Space lookup by Space ID",
         "description" : "Returns a variety of information about the Space specified by the requested ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id"
+        },
         "operationId" : "findSpaceById",
         "parameters" : [
           {
@@ -1282,6 +1330,9 @@
         ],
         "summary" : "Retrieve the list of Users who purchased a ticket to the given space",
         "description" : "Retrieves the list of Users who purchased a ticket to the given space",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-buyers"
+        },
         "operationId" : "spaceBuyers",
         "parameters" : [
           {
@@ -1381,6 +1432,9 @@
         ],
         "summary" : "Retrieve Tweets from a Space.",
         "description" : "Retrieves Tweets shared in the specified Space.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-tweets"
+        },
         "operationId" : "spaceTweets",
         "parameters" : [
           {
@@ -1481,6 +1535,9 @@
         ],
         "summary" : "Tweet lookup by Tweet IDs",
         "description" : "Returns a variety of information about the Tweet specified by the requested ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets"
+        },
         "operationId" : "findTweetsById",
         "parameters" : [
           {
@@ -1564,6 +1621,9 @@
         ],
         "summary" : "Creation of a Tweet",
         "description" : "Causes the User to create a Tweet under the authorized account.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets"
+        },
         "operationId" : "createTweet",
         "parameters" : [ ],
         "requestBody" : {
@@ -1712,6 +1772,9 @@
         ],
         "summary" : "Full archive search counts",
         "description" : "Returns Tweet Counts that match a search query.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
+        },
         "operationId" : "tweetCountsFullArchiveSearch",
         "parameters" : [
           {
@@ -1850,6 +1913,9 @@
         ],
         "summary" : "Recent search counts",
         "description" : "Returns Tweet Counts from the last 7 days that match a search query.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/counts/api-reference/get-tweets-counts-recent"
+        },
         "operationId" : "tweetCountsRecentSearch",
         "parameters" : [
           {
@@ -2101,6 +2167,9 @@
         ],
         "summary" : "Sample stream",
         "description" : "Streams a deterministic 1% of public Tweets.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/volume-streams/api-reference/get-tweets-sample-stream"
+        },
         "operationId" : "sampleStream",
         "parameters" : [
           {
@@ -2290,6 +2359,9 @@
         ],
         "summary" : "Full-archive search",
         "description" : "Returns Tweets that match a search query.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
+        },
         "operationId" : "tweetsFullarchiveSearch",
         "parameters" : [
           {
@@ -2464,6 +2536,9 @@
         ],
         "summary" : "Recent search",
         "description" : "Returns Tweets from the last 7 days that match a search query.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent"
+        },
         "operationId" : "tweetsRecentSearch",
         "parameters" : [
           {
@@ -2629,6 +2704,9 @@
         ],
         "summary" : "Filtered stream",
         "description" : "Streams Tweets matching the stream's active rule set.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream"
+        },
         "operationId" : "searchStream",
         "parameters" : [
           {
@@ -2729,6 +2807,9 @@
         ],
         "summary" : "Rules lookup",
         "description" : "Returns rules from a User's active rule set. Users can fetch all of their rules or a subset, specified by the provided rule ids.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream-rules"
+        },
         "operationId" : "getRules",
         "parameters" : [
           {
@@ -2810,6 +2891,9 @@
         ],
         "summary" : "Add/Delete rules",
         "description" : "Add or delete rules from a User's active rule set. Users can provide unique, optionally tagged rules to add. Users can delete their entire rule set or a subset specified by rule ids or values.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/post-tweets-search-stream-rules"
+        },
         "operationId" : "addOrDeleteRules",
         "parameters" : [
           {
@@ -2881,6 +2965,9 @@
         ],
         "summary" : "Tweet delete by Tweet ID",
         "description" : "Delete specified Tweet (in the path) by ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/delete-tweets-id"
+        },
         "operationId" : "deleteTweetById",
         "parameters" : [
           {
@@ -2942,6 +3029,9 @@
         ],
         "summary" : "Tweet lookup by Tweet ID",
         "description" : "Returns a variety of information about the Tweet specified by the requested ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id"
+        },
         "operationId" : "findTweetById",
         "parameters" : [
           {
@@ -3024,6 +3114,9 @@
         ],
         "summary" : "Returns User objects that have liked the provided Tweet ID",
         "description" : "Returns a list of Users that have liked the provided Tweet ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users"
+        },
         "operationId" : "tweetsIdLikingUsers",
         "parameters" : [
           {
@@ -3120,6 +3213,9 @@
         ],
         "summary" : "Retrieve Tweets that quote a Tweet.",
         "description" : "Returns a variety of information about each Tweet that quotes the Tweet specified by the requested ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/quote-tweets/api-reference/get-tweets-id-quote_tweets"
+        },
         "operationId" : "findTweetsThatQuoteATweet",
         "parameters" : [
           {
@@ -3249,6 +3345,9 @@
         ],
         "summary" : "Returns User objects that have retweeted the provided Tweet ID",
         "description" : "Returns a list of Users that have retweeted the provided Tweet ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweeted_by"
+        },
         "operationId" : "tweetsIdRetweetingUsers",
         "parameters" : [
           {
@@ -3343,6 +3442,9 @@
         ],
         "summary" : "Hide replies",
         "description" : "Hides or unhides a reply to an owned conversation.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/hide-replies/api-reference/put-tweets-id-hidden"
+        },
         "operationId" : "hideReplyById",
         "parameters" : [
           {
@@ -3415,6 +3517,9 @@
         ],
         "summary" : "User lookup by IDs",
         "description" : "This endpoint returns information about Users. Specify Users by their ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users"
+        },
         "operationId" : "findUsersById",
         "parameters" : [
           {
@@ -3494,6 +3599,9 @@
         ],
         "summary" : "User lookup by usernames",
         "description" : "This endpoint returns information about Users. Specify Users by their username.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-by"
+        },
         "operationId" : "findUsersByUsername",
         "parameters" : [
           {
@@ -3575,6 +3683,9 @@
         ],
         "summary" : "User lookup by username",
         "description" : "This endpoint returns information about a User. Specify User by username.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-by-username-username"
+        },
         "operationId" : "findUserByUsername",
         "parameters" : [
           {
@@ -3741,6 +3852,9 @@
         ],
         "summary" : "User lookup me",
         "description" : "This endpoint returns information about the requesting User.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-me"
+        },
         "operationId" : "findMyUser",
         "parameters" : [
           {
@@ -3803,6 +3917,9 @@
         ],
         "summary" : "User lookup by ID",
         "description" : "This endpoint returns information about a User. Specify User by ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-id"
+        },
         "operationId" : "findUserById",
         "parameters" : [
           {
@@ -3874,6 +3991,9 @@
         ],
         "summary" : "Returns User objects that are blocked by provided User ID",
         "description" : "Returns a list of Users that are blocked by the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/get-users-blocking"
+        },
         "operationId" : "usersIdBlocking",
         "parameters" : [
           {
@@ -3965,6 +4085,9 @@
         ],
         "summary" : "Block User by User ID",
         "description" : "Causes the User (in the path) to block the target User. The User (in the path) must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/post-users-user_id-blocking"
+        },
         "operationId" : "usersIdBlock",
         "parameters" : [
           {
@@ -4033,6 +4156,9 @@
         ],
         "summary" : "Bookmarks by User",
         "description" : "Returns Tweet objects that have been bookmarked by the requesting User",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/get-users-id-bookmarks"
+        },
         "operationId" : "getUsersIdBookmarks",
         "parameters" : [
           {
@@ -4130,6 +4256,9 @@
         ],
         "summary" : "Add Tweet to Bookmarks",
         "description" : "Adds a Tweet (ID in the body) to the requesting User's (in the path) bookmarks",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/post-users-id-bookmarks"
+        },
         "operationId" : "postUsersIdBookmarks",
         "parameters" : [
           {
@@ -4198,6 +4327,9 @@
         ],
         "summary" : "Remove a bookmarked Tweet",
         "description" : "Removes a Tweet from the requesting User's bookmarked Tweets.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/delete-users-id-bookmarks-tweet_id"
+        },
         "operationId" : "usersIdBookmarksDelete",
         "parameters" : [
           {
@@ -4272,6 +4404,9 @@
         ],
         "summary" : "Get User's Followed Lists",
         "description" : "Returns a User's followed Lists.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/get-users-id-followed_lists"
+        },
         "operationId" : "userFollowedLists",
         "parameters" : [
           {
@@ -4365,6 +4500,9 @@
         ],
         "summary" : "Follow a List",
         "description" : "Causes a User to follow a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/post-users-id-followed-lists"
+        },
         "operationId" : "listUserFollow",
         "parameters" : [
           {
@@ -4435,6 +4573,9 @@
         ],
         "summary" : "Unfollow a List",
         "description" : "Causes a User to unfollow a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/delete-users-id-followed-lists-list_id"
+        },
         "operationId" : "listUserUnfollow",
         "parameters" : [
           {
@@ -4509,6 +4650,9 @@
         ],
         "summary" : "Followers by User ID",
         "description" : "Returns a list of Users who are followers of the specified User ID.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers"
+        },
         "operationId" : "usersIdFollowers",
         "parameters" : [
           {
@@ -4606,6 +4750,9 @@
         ],
         "summary" : "Following by User ID",
         "description" : "Returns a list of Users that are being followed by the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-following"
+        },
         "operationId" : "usersIdFollowing",
         "parameters" : [
           {
@@ -4698,6 +4845,9 @@
         ],
         "summary" : "Follow User",
         "description" : "Causes the User(in the path) to follow, or “request to follow” for protected Users, the target User. The User(in the path) must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/post-users-source_user_id-following"
+        },
         "operationId" : "usersIdFollow",
         "parameters" : [
           {
@@ -4771,6 +4921,9 @@
         ],
         "summary" : "Returns Tweet objects liked by the provided User ID",
         "description" : "Returns a list of Tweets liked by the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-users-id-liked_tweets"
+        },
         "operationId" : "usersIdLikedTweets",
         "parameters" : [
           {
@@ -4874,6 +5027,9 @@
         ],
         "summary" : "Causes the User (in the path) to like the specified Tweet",
         "description" : "Causes the User (in the path) to like the specified Tweet. The User in the path must match the User context authorizing the request.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/post-users-id-likes"
+        },
         "operationId" : "usersIdLike",
         "parameters" : [
           {
@@ -4944,6 +5100,9 @@
         ],
         "summary" : "Causes the User (in the path) to unlike the specified Tweet",
         "description" : "Causes the User (in the path) to unlike the specified Tweet. The User must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/delete-users-id-likes-tweet_id"
+        },
         "operationId" : "usersIdUnlike",
         "parameters" : [
           {
@@ -5018,6 +5177,9 @@
         ],
         "summary" : "Get a User's List Memberships",
         "description" : "Get a User's List Memberships.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-users-id-list_memberships"
+        },
         "operationId" : "getUserListMemberships",
         "parameters" : [
           {
@@ -5115,6 +5277,9 @@
         ],
         "summary" : "User mention timeline by User ID",
         "description" : "Returns Tweet objects that mention username associated to the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-mentions"
+        },
         "operationId" : "usersIdMentions",
         "parameters" : [
           {
@@ -5263,6 +5428,9 @@
         ],
         "summary" : "Returns User objects that are muted by the provided User ID",
         "description" : "Returns a list of Users that are muted by the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/get-users-muting"
+        },
         "operationId" : "usersIdMuting",
         "parameters" : [
           {
@@ -5355,6 +5523,9 @@
         ],
         "summary" : "Mute User by User ID.",
         "description" : "Causes the User (in the path) to mute the target User. The User (in the path) must match the User context authorizing the request.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/post-users-user_id-muting"
+        },
         "operationId" : "usersIdMute",
         "parameters" : [
           {
@@ -5428,6 +5599,9 @@
         ],
         "summary" : "Get a User's Owned Lists.",
         "description" : "Get a User's Owned Lists.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-users-id-owned_lists"
+        },
         "operationId" : "listUserOwnedLists",
         "parameters" : [
           {
@@ -5523,6 +5697,9 @@
         ],
         "summary" : "Get a User's Pinned Lists",
         "description" : "Get a User's Pinned Lists.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/pinned-lists/api-reference/get-users-id-pinned_lists"
+        },
         "operationId" : "listUserPinnedLists",
         "parameters" : [
           {
@@ -5591,6 +5768,9 @@
         ],
         "summary" : "Pin a List",
         "description" : "Causes a User to pin a List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/pinned-lists/api-reference/post-users-id-pinned-lists"
+        },
         "operationId" : "listUserPin",
         "parameters" : [
           {
@@ -5662,6 +5842,9 @@
         ],
         "summary" : "Unpin a List",
         "description" : "Causes a User to remove a pinned List.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/pinned-lists/api-reference/delete-users-id-pinned-lists-list_id"
+        },
         "operationId" : "listUserUnpin",
         "parameters" : [
           {
@@ -5733,6 +5916,9 @@
         ],
         "summary" : "Causes the User (in the path) to retweet the specified Tweet.",
         "description" : "Causes the User (in the path) to retweet the specified Tweet. The User in the path must match the User context authorizing the request.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/post-users-id-retweets"
+        },
         "operationId" : "usersIdRetweets",
         "parameters" : [
           {
@@ -5803,6 +5989,9 @@
         ],
         "summary" : "Causes the User (in the path) to unretweet the specified Tweet",
         "description" : "Causes the User (in the path) to unretweet the specified Tweet. The User must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/delete-users-id-retweets-tweet_id"
+        },
         "operationId" : "usersIdUnretweets",
         "parameters" : [
           {
@@ -5873,6 +6062,9 @@
         ],
         "summary" : "User home timeline by User ID",
         "description" : "Returns Tweet objects that appears in the provided User ID's home timeline",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-reverse-chronological"
+        },
         "operationId" : "usersIdTimeline",
         "parameters" : [
           {
@@ -6046,6 +6238,9 @@
         ],
         "summary" : "User Tweets timeline by User ID",
         "description" : "Returns a list of Tweets authored by the provided User ID",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets"
+        },
         "operationId" : "usersIdTweets",
         "parameters" : [
           {
@@ -6219,6 +6414,9 @@
         ],
         "summary" : "Unblock User by User ID",
         "description" : "Causes the source User to unblock the target User. The source User must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/delete-users-user_id-blocking"
+        },
         "operationId" : "usersIdUnblock",
         "parameters" : [
           {
@@ -6290,6 +6488,9 @@
         ],
         "summary" : "Unfollow User",
         "description" : "Causes the source User to unfollow the target User. The source User must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/delete-users-source_id-following"
+        },
         "operationId" : "usersIdUnfollow",
         "parameters" : [
           {
@@ -6361,6 +6562,9 @@
         ],
         "summary" : "Unmute User by User ID",
         "description" : "Causes the source User to unmute the target User. The source User must match the User context authorizing the request",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/delete-users-user_id-muting"
+        },
         "operationId" : "usersIdUnmute",
         "parameters" : [
           {
