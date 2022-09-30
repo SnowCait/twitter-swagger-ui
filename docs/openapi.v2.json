@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.49",
+    "version" : "2.50",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10122,7 +10122,8 @@
         "type" : "object",
         "required" : [
           "id",
-          "text"
+          "text",
+          "edit_history_tweet_ids"
         ],
         "properties" : {
           "attachments" : {
@@ -10165,6 +10166,39 @@
             "description" : "Creation time of the Tweet.",
             "format" : "date-time",
             "example" : "2021-01-06T18:40:40.000Z"
+          },
+          "edit_controls" : {
+            "type" : "object",
+            "required" : [
+              "is_edit_eligible",
+              "editable_until",
+              "edits_remaining"
+            ],
+            "properties" : {
+              "editable_until" : {
+                "type" : "string",
+                "description" : "Time when Tweet is no longer editable.",
+                "format" : "date-time",
+                "example" : "2021-01-06T18:40:40.000Z"
+              },
+              "edits_remaining" : {
+                "type" : "integer",
+                "description" : "Number of times this Tweet can be edited."
+              },
+              "is_edit_eligible" : {
+                "type" : "boolean",
+                "description" : "Indicates if this Tweet is eligible to be edited.",
+                "example" : false
+              }
+            }
+          },
+          "edit_history_tweet_ids" : {
+            "type" : "array",
+            "description" : "A list of Tweet Ids in this Tweet chain.",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/TweetId"
+            }
           },
           "entities" : {
             "$ref" : "#/components/schemas/FullTextEntities"
@@ -10349,6 +10383,9 @@
           },
           {
             "$ref" : "#/components/schemas/TweetUndropComplianceSchema"
+          },
+          {
+            "$ref" : "#/components/schemas/TweetEditComplianceSchema"
           }
         ]
       },
@@ -10613,6 +10650,55 @@
         "properties" : {
           "drop" : {
             "$ref" : "#/components/schemas/TweetComplianceSchema"
+          }
+        }
+      },
+      "TweetEditComplianceObjectSchema" : {
+        "type" : "object",
+        "required" : [
+          "tweet",
+          "event_at",
+          "initial_tweet_id",
+          "edit_tweet_ids"
+        ],
+        "properties" : {
+          "edit_tweet_ids" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/TweetId"
+            }
+          },
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "initial_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
+          "tweet" : {
+            "type" : "object",
+            "required" : [
+              "id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              }
+            }
+          }
+        }
+      },
+      "TweetEditComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "tweet_edit"
+        ],
+        "properties" : {
+          "tweet_edit" : {
+            "$ref" : "#/components/schemas/TweetEditComplianceObjectSchema"
           }
         }
       },
@@ -12002,6 +12088,7 @@
               "attachments.media_keys",
               "attachments.poll_ids",
               "author_id",
+              "edit_history_tweet_ids",
               "entities.mentions.username",
               "geo.place_id",
               "in_reply_to_user_id",
@@ -12013,6 +12100,7 @@
             "attachments.media_keys",
             "attachments.poll_ids",
             "author_id",
+            "edit_history_tweet_ids",
             "entities.mentions.username",
             "geo.place_id",
             "in_reply_to_user_id",
@@ -12041,6 +12129,8 @@
               "context_annotations",
               "conversation_id",
               "created_at",
+              "edit_controls",
+              "edit_history_tweet_ids",
               "entities",
               "geo",
               "id",
@@ -12064,6 +12154,8 @@
             "context_annotations",
             "conversation_id",
             "created_at",
+            "edit_controls",
+            "edit_history_tweet_ids",
             "entities",
             "geo",
             "id",
