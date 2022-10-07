@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.51",
+    "version" : "2.52",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10461,6 +10461,10 @@
       "TweetCreateRequest" : {
         "type" : "object",
         "properties" : {
+          "card_uri" : {
+            "type" : "string",
+            "description" : "Card Uri Parameter. This is mutually exclusive from Quote Tweet Id, Poll, Media, and Direct Message Deep Link."
+          },
           "direct_message_deep_link" : {
             "type" : "string",
             "description" : "Link to take the conversation from the public timeline to a private Direct Message."
@@ -10482,7 +10486,7 @@
           },
           "media" : {
             "type" : "object",
-            "description" : "Media information being attached to created Tweet. This is mutually exclusive from Quote Tweet Id and Poll.",
+            "description" : "Media information being attached to created Tweet. This is mutually exclusive from Quote Tweet Id, Poll, and Card URI.",
             "required" : [
               "media_ids"
             ],
@@ -10508,9 +10512,14 @@
             },
             "additionalProperties" : false
           },
+          "nullcast" : {
+            "type" : "boolean",
+            "description" : "Nullcasted (promoted-only) Tweets do not appear in the public timeline and are not served to followers.",
+            "default" : false
+          },
           "poll" : {
             "type" : "object",
-            "description" : "Poll options for a Tweet with a poll. This is mutually exclusive from Media and Quote Tweet Id.",
+            "description" : "Poll options for a Tweet with a poll. This is mutually exclusive from Media, Quote Tweet Id, and Card URI.",
             "required" : [
               "options",
               "duration_minutes"
