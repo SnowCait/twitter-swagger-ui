@@ -9551,34 +9551,6 @@
           }
         }
       },
-      "ProblemErrors" : {
-        "type" : "object",
-        "required" : [
-          "errors"
-        ],
-        "properties" : {
-          "errors" : {
-            "$ref" : "#/components/schemas/Problems"
-          }
-        }
-      },
-      "ProblemOrError" : {
-        "description" : "Represents the response in case of throwing an exception. Mainly for the openapi-generator",
-        "oneOf" : [
-          {
-            "$ref" : "#/components/schemas/Error"
-          },
-          {
-            "$ref" : "#/components/schemas/Problem"
-          }
-        ]
-      },
-      "Problems" : {
-        "type" : "array",
-        "items" : {
-          "$ref" : "#/components/schemas/Problem"
-        }
-      },
       "ReplySettings" : {
         "type" : "string",
         "description" : "Shows who can reply a Tweet. Fields returned are everyone, mentioned_users, and following.",
@@ -9589,42 +9561,6 @@
           "following",
           "other"
         ]
-      },
-      "ReportUsersRequest" : {
-        "type" : "object",
-        "required" : [
-          "description",
-          "user_ids"
-        ],
-        "properties" : {
-          "description" : {
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 5000
-          },
-          "user_ids" : {
-            "type" : "array",
-            "minItems" : 1,
-            "maxItems" : 10000,
-            "items" : {
-              "$ref" : "#/components/schemas/UserId"
-            }
-          }
-        },
-        "additionalProperties" : false
-      },
-      "ReportUsersResponse" : {
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "type" : "object",
-            "properties" : {
-              "id" : {
-                "type" : "integer"
-              }
-            }
-          }
-        }
       },
       "ResourceNotFoundProblem" : {
         "description" : "A problem that indicates that a given Tweet, User, etc. does not exist.",
