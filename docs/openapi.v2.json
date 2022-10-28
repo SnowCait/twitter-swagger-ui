@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.54",
+    "version" : "2.55",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -187,6 +187,585 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Get2ComplianceJobsIdResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_conversations" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.write",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Create a new DM Conversation",
+        "description" : "Creates a new DM Conversation.",
+        "operationId" : "dmConversationIdCreate",
+        "parameters" : [ ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateDmConversationRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateDmEventResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_conversations/with/{participant_id}/dm_events" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.read",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Get DM Events for a DM Conversation",
+        "description" : "Returns DM Events for a DM Conversation",
+        "operationId" : "getDmConversationsWithParticipantIdDmEvents",
+        "parameters" : [
+          {
+            "name" : "participant_id",
+            "in" : "path",
+            "description" : "The ID of the participant user for the One to One DM conversation.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserId"
+            },
+            "style" : "simple"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 100
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "This parameter is used to get a specified 'page' of results.",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/components/schemas/PaginationToken32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "event_types",
+            "in" : "query",
+            "description" : "The set of event_types to include in the results.",
+            "required" : false,
+            "schema" : {
+              "type" : "array",
+              "minItems" : 1,
+              "uniqueItems" : true,
+              "items" : {
+                "type" : "string",
+                "enum" : [
+                  "MessageCreate",
+                  "ParticipantsJoin",
+                  "ParticipantsLeave"
+                ]
+              },
+              "default" : [
+                "MessageCreate",
+                "ParticipantsLeave",
+                "ParticipantsJoin"
+              ],
+              "example" : [
+                "MessageCreate",
+                "ParticipantsLeave"
+              ]
+            },
+            "explode" : false,
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2DmConversationsWithParticipantIdDmEventsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_conversations/with/{participant_id}/messages" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.write",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Send a new message to a user",
+        "description" : "Creates a new message for a DM Conversation with a participant user by ID",
+        "operationId" : "dmConversationWithUserEventIdCreate",
+        "parameters" : [
+          {
+            "name" : "participant_id",
+            "in" : "path",
+            "description" : "The ID of the recipient user that will receive the DM.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMessageRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateDmEventResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_conversations/{dm_conversation_id}/messages" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.write",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Send a new message to a DM Conversation",
+        "description" : "Creates a new message for a DM Conversation specified by DM Conversation ID",
+        "operationId" : "dmConversationByIdEventIdCreate",
+        "parameters" : [
+          {
+            "name" : "dm_conversation_id",
+            "in" : "path",
+            "description" : "The DM Conversation ID.",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "style" : "simple"
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMessageRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateDmEventResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_conversations/{id}/dm_events" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.read",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Get DM Events for a DM Conversation",
+        "description" : "Returns DM Events for a DM Conversation",
+        "operationId" : "getDmConversationsIdDmEvents",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The DM Conversation ID.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/DmConversationId"
+            },
+            "style" : "simple"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 100
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "This parameter is used to get a specified 'page' of results.",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/components/schemas/PaginationToken32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "event_types",
+            "in" : "query",
+            "description" : "The set of event_types to include in the results.",
+            "required" : false,
+            "schema" : {
+              "type" : "array",
+              "minItems" : 1,
+              "uniqueItems" : true,
+              "items" : {
+                "type" : "string",
+                "enum" : [
+                  "MessageCreate",
+                  "ParticipantsJoin",
+                  "ParticipantsLeave"
+                ]
+              },
+              "default" : [
+                "MessageCreate",
+                "ParticipantsLeave",
+                "ParticipantsJoin"
+              ],
+              "example" : [
+                "MessageCreate",
+                "ParticipantsLeave"
+              ]
+            },
+            "explode" : false,
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2DmConversationsIdDmEventsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_events" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.read",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Get recent DM Events",
+        "description" : "Returns recent DM Events across DM conversations",
+        "operationId" : "getDmEvents",
+        "parameters" : [
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 100
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "This parameter is used to get a specified 'page' of results.",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/components/schemas/PaginationToken32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "event_types",
+            "in" : "query",
+            "description" : "The set of event_types to include in the results.",
+            "required" : false,
+            "schema" : {
+              "type" : "array",
+              "minItems" : 1,
+              "uniqueItems" : true,
+              "items" : {
+                "type" : "string",
+                "enum" : [
+                  "MessageCreate",
+                  "ParticipantsJoin",
+                  "ParticipantsLeave"
+                ]
+              },
+              "default" : [
+                "MessageCreate",
+                "ParticipantsLeave",
+                "ParticipantsJoin"
+              ],
+              "example" : [
+                "MessageCreate",
+                "ParticipantsLeave"
+              ]
+            },
+            "explode" : false,
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2DmEventsResponse"
                 }
               }
             }
@@ -6724,6 +7303,14 @@
       }
     },
     {
+      "name" : "Direct Messages",
+      "description" : "Endpoints related to retrieving, managing Direct Messages",
+      "externalDocs" : {
+        "description" : "Find out more",
+        "url" : "https://developer.twitter.com/en/docs/twitter-api/direct-messages"
+      }
+    },
+    {
       "name" : "General",
       "description" : "Miscellaneous endpoints for general API functionality",
       "externalDocs" : {
@@ -6781,6 +7368,8 @@
               "block.write" : "Block and unblock accounts for you.",
               "bookmark.read" : "Allows an app to read bookmarked Tweets",
               "bookmark.write" : "Allows an app to create and delete bookmarks",
+              "dm.read" : "All your Direct Messages",
+              "dm.write" : "Send and manage Direct Messages for you",
               "follows.read" : "People who follow you and people who you follow.",
               "follows.write" : "Follow and unfollow people for you.",
               "like.read" : "Tweets you’ve liked and likes you can view.",
@@ -7160,6 +7749,22 @@
         "pattern" : "^[A-Z]{2}$",
         "example" : "US"
       },
+      "CreateAttachmentsMessageRequest" : {
+        "type" : "object",
+        "required" : [
+          "attachments"
+        ],
+        "properties" : {
+          "attachments" : {
+            "$ref" : "#/components/schemas/DmAttachments"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "Text of the message.",
+            "minLength" : 1
+          }
+        }
+      },
       "CreateComplianceJobRequest" : {
         "type" : "object",
         "description" : "A request to create a new batch compliance job.",
@@ -7196,6 +7801,83 @@
             "items" : {
               "$ref" : "#/components/schemas/Problem"
             }
+          }
+        }
+      },
+      "CreateDmConversationRequest" : {
+        "type" : "object",
+        "required" : [
+          "conversation_type",
+          "participant_ids",
+          "message"
+        ],
+        "properties" : {
+          "conversation_type" : {
+            "type" : "string",
+            "description" : "The conversation type that is being created.",
+            "enum" : [
+              "Group"
+            ]
+          },
+          "message" : {
+            "$ref" : "#/components/schemas/CreateMessageRequest"
+          },
+          "participant_ids" : {
+            "$ref" : "#/components/schemas/DmParticipants"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "CreateDmEventResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "required" : [
+              "dm_conversation_id",
+              "dm_event_id"
+            ],
+            "properties" : {
+              "dm_conversation_id" : {
+                "$ref" : "#/components/schemas/DmConversationId"
+              },
+              "dm_event_id" : {
+                "$ref" : "#/components/schemas/DmEventId"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "CreateMessageRequest" : {
+        "anyOf" : [
+          {
+            "$ref" : "#/components/schemas/CreateTextMessageRequest"
+          },
+          {
+            "$ref" : "#/components/schemas/CreateAttachmentsMessageRequest"
+          }
+        ]
+      },
+      "CreateTextMessageRequest" : {
+        "type" : "object",
+        "required" : [
+          "text"
+        ],
+        "properties" : {
+          "attachments" : {
+            "$ref" : "#/components/schemas/DmAttachments"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "Text of the message.",
+            "minLength" : 1
           }
         }
       },
@@ -7271,6 +7953,120 @@
             }
           }
         ]
+      },
+      "DmAttachments" : {
+        "type" : "array",
+        "description" : "Attachments to a DM Event.",
+        "items" : {
+          "$ref" : "#/components/schemas/DmMediaAttachment"
+        }
+      },
+      "DmConversationId" : {
+        "type" : "string",
+        "description" : "Unique identifier of a DM conversation. This can either be a numeric string, or a pair of numeric strings separated by a '-' character in the case of one-on-one DM Conversations.",
+        "pattern" : "^([0-9]{1,19}-[0-9]{1,19}|[0-9]{15,19})$",
+        "example" : "123123123-456456456"
+      },
+      "DmEvent" : {
+        "type" : "object",
+        "required" : [
+          "id",
+          "event_type"
+        ],
+        "properties" : {
+          "attachments" : {
+            "type" : "object",
+            "description" : "Specifies the type of attachments (if any) present in this DM.",
+            "properties" : {
+              "card_ids" : {
+                "type" : "array",
+                "description" : "A list of card IDs (if cards are attached).",
+                "minItems" : 1,
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "media_keys" : {
+                "type" : "array",
+                "description" : "A list of Media Keys for each one of the media attachments (if media are attached).",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/MediaKey"
+                }
+              }
+            }
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "dm_conversation_id" : {
+            "$ref" : "#/components/schemas/DmConversationId"
+          },
+          "event_type" : {
+            "type" : "string",
+            "example" : "MessageCreate"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/DmEventId"
+          },
+          "participant_ids" : {
+            "type" : "array",
+            "description" : "A list of participants for a ParticipantsJoin or ParticipantsLeave event_type.",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/UserId"
+            }
+          },
+          "referenced_tweets" : {
+            "type" : "array",
+            "description" : "A list of Tweets this DM refers to.",
+            "minItems" : 1,
+            "items" : {
+              "type" : "object",
+              "required" : [
+                "id"
+              ],
+              "properties" : {
+                "id" : {
+                  "$ref" : "#/components/schemas/TweetId"
+                }
+              }
+            }
+          },
+          "sender_id" : {
+            "$ref" : "#/components/schemas/UserId"
+          },
+          "text" : {
+            "type" : "string"
+          }
+        }
+      },
+      "DmEventId" : {
+        "type" : "string",
+        "description" : "Unique identifier of a DM Event.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
+      },
+      "DmMediaAttachment" : {
+        "type" : "object",
+        "required" : [
+          "media_id"
+        ],
+        "properties" : {
+          "media_id" : {
+            "$ref" : "#/components/schemas/MediaId"
+          }
+        }
+      },
+      "DmParticipants" : {
+        "type" : "array",
+        "description" : "Participants for the DM Conversation.",
+        "minItems" : 2,
+        "maxItems" : 49,
+        "items" : {
+          "$ref" : "#/components/schemas/UserId"
+        }
       },
       "DownloadExpiration" : {
         "type" : "string",
@@ -7639,6 +8435,114 @@
           "meta" : {
             "type" : "object",
             "properties" : {
+              "result_count" : {
+                "$ref" : "#/components/schemas/ResultCount"
+              }
+            }
+          }
+        }
+      },
+      "Get2DmConversationsIdDmEventsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/DmEvent"
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "$ref" : "#/components/schemas/NextToken"
+              },
+              "previous_token" : {
+                "$ref" : "#/components/schemas/PreviousToken"
+              },
+              "result_count" : {
+                "$ref" : "#/components/schemas/ResultCount"
+              }
+            }
+          }
+        }
+      },
+      "Get2DmConversationsWithParticipantIdDmEventsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/DmEvent"
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "$ref" : "#/components/schemas/NextToken"
+              },
+              "previous_token" : {
+                "$ref" : "#/components/schemas/PreviousToken"
+              },
+              "result_count" : {
+                "$ref" : "#/components/schemas/ResultCount"
+              }
+            }
+          }
+        }
+      },
+      "Get2DmEventsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/DmEvent"
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "next_token" : {
+                "$ref" : "#/components/schemas/NextToken"
+              },
+              "previous_token" : {
+                "$ref" : "#/components/schemas/PreviousToken"
+              },
               "result_count" : {
                 "$ref" : "#/components/schemas/ResultCount"
               }
@@ -11938,6 +12842,96 @@
             "type",
             "upload_expires_at",
             "upload_url"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "DmConversationFieldsParameter" : {
+        "name" : "dm_conversation.fields",
+        "in" : "query",
+        "description" : "A comma separated list of DmConversation fields to display.",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "description" : "The fields available for a DmConversation object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "id"
+            ]
+          },
+          "example" : [
+            "id"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "DmEventExpansionsParameter" : {
+        "name" : "expansions",
+        "in" : "query",
+        "description" : "A comma separated list of fields to expand.",
+        "schema" : {
+          "type" : "array",
+          "description" : "The list of fields you can expand for a [DmEvent](#DmEvent) object. If the field has an ID, it can be expanded into a full object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "attachments.media_keys",
+              "participant_ids",
+              "referenced_tweets.id",
+              "sender_id"
+            ]
+          },
+          "example" : [
+            "attachments.media_keys",
+            "participant_ids",
+            "referenced_tweets.id",
+            "sender_id"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "DmEventFieldsParameter" : {
+        "name" : "dm_event.fields",
+        "in" : "query",
+        "description" : "A comma separated list of DmEvent fields to display.",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "description" : "The fields available for a DmEvent object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "attachments",
+              "created_at",
+              "dm_conversation_id",
+              "event_type",
+              "id",
+              "participant_ids",
+              "referenced_tweets",
+              "sender_id",
+              "text"
+            ]
+          },
+          "example" : [
+            "attachments",
+            "created_at",
+            "dm_conversation_id",
+            "event_type",
+            "id",
+            "participant_ids",
+            "referenced_tweets",
+            "sender_id",
+            "text"
           ]
         },
         "explode" : false,
