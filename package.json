@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/SnowCait/twitter-swagger-ui#readme",
   "devDependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.3"
   }
 }
