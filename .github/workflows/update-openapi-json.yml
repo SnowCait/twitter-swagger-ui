@@ -21,7 +21,6 @@ jobs:
       - name: Download openapi.json
         run: |
           curl --fail --output docs/openapi.v2.json https://api.twitter.com/2/openapi.json
-          curl --fail --output docs/openapi.labs.json https://api.twitter.com/labs/2/openapi.json
       - name: Count changes
         id: changes
         run: echo "::set-output name=count::$(git diff --name-only | wc -l)"
