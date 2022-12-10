@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.55",
+    "version" : "2.56",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10257,6 +10257,14 @@
           }
         ]
       },
+      "Oauth1PermissionsProblem" : {
+        "description" : "A problem that indicates your client application does not have the required OAuth1 permissions for the requested endpoint.",
+        "allOf" : [
+          {
+            "$ref" : "#/components/schemas/Problem"
+          }
+        ]
+      },
       "OldestId" : {
         "type" : "string",
         "description" : "The oldest id in this response."
@@ -10527,6 +10535,7 @@
             "https://api.twitter.com/2/problems/noncompliant-rules" : "#/components/schemas/NonCompliantRulesProblem",
             "https://api.twitter.com/2/problems/not-authorized-for-field" : "#/components/schemas/FieldUnauthorizedProblem",
             "https://api.twitter.com/2/problems/not-authorized-for-resource" : "#/components/schemas/ResourceUnauthorizedProblem",
+            "https://api.twitter.com/2/problems/oauth1-permissions" : "#/components/schemas/Oauth1PermissionsProblem",
             "https://api.twitter.com/2/problems/operational-disconnect" : "#/components/schemas/OperationalDisconnectProblem",
             "https://api.twitter.com/2/problems/resource-not-found" : "#/components/schemas/ResourceNotFoundProblem",
             "https://api.twitter.com/2/problems/resource-unavailable" : "#/components/schemas/ResourceUnavailableProblem",
