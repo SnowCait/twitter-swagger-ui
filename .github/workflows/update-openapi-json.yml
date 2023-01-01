@@ -47,7 +47,7 @@ jobs:
     
     steps:
       - name: Tweet
-        uses: snow-actions/tweet@v1.3.0
+        uses: snow-actions/tweet@v1.4.0
         with:
           status: |
             Twitter API が更新されました
