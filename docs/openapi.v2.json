@@ -12156,6 +12156,10 @@
             "type" : "boolean",
             "description" : "Indicate if this User is a verified Twitter User."
           },
+          "verified_type" : {
+            "type" : "string",
+            "description" : "The Twitter Blue verified type of the user, eg: blue, government, business or none."
+          },
           "withheld" : {
             "$ref" : "#/components/schemas/UserWithheld"
           }
