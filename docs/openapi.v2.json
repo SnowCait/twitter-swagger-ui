@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.59",
+    "version" : "2.60",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -11233,9 +11233,15 @@
             "required" : [
               "retweet_count",
               "reply_count",
-              "like_count"
+              "like_count",
+              "impression_count"
             ],
             "properties" : {
+              "impression_count" : {
+                "type" : "integer",
+                "description" : "Number of times this Tweet has been viewed.",
+                "format" : "int32"
+              },
               "like_count" : {
                 "type" : "integer",
                 "description" : "Number of times this Tweet has been liked."
@@ -11284,7 +11290,7 @@
           },
           "source" : {
             "type" : "string",
-            "description" : "The name of the app the user Tweeted from."
+            "description" : "This is deprecated."
           },
           "text" : {
             "$ref" : "#/components/schemas/TweetText"
