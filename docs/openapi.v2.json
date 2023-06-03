@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.62",
+    "version" : "2.64",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10257,6 +10257,11 @@
           }
         ]
       },
+      "NoteTweetText" : {
+        "type" : "string",
+        "description" : "The note content of the Tweet.",
+        "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+      },
       "Oauth1PermissionsProblem" : {
         "description" : "A problem that indicates your client application does not have the required OAuth1 permissions for the requested endpoint.",
         "allOf" : [
@@ -11168,6 +11173,48 @@
               }
             }
           },
+          "note_tweet" : {
+            "type" : "object",
+            "description" : "The full-content of the Tweet, including text beyond 280 characters.",
+            "properties" : {
+              "entities" : {
+                "type" : "object",
+                "properties" : {
+                  "cashtags" : {
+                    "type" : "array",
+                    "minItems" : 1,
+                    "items" : {
+                      "$ref" : "#/components/schemas/CashtagEntity"
+                    }
+                  },
+                  "hashtags" : {
+                    "type" : "array",
+                    "minItems" : 1,
+                    "items" : {
+                      "$ref" : "#/components/schemas/HashtagEntity"
+                    }
+                  },
+                  "mentions" : {
+                    "type" : "array",
+                    "minItems" : 1,
+                    "items" : {
+                      "$ref" : "#/components/schemas/MentionEntity"
+                    }
+                  },
+                  "urls" : {
+                    "type" : "array",
+                    "minItems" : 1,
+                    "items" : {
+                      "$ref" : "#/components/schemas/UrlEntity"
+                    }
+                  }
+                }
+              },
+              "text" : {
+                "$ref" : "#/components/schemas/NoteTweetText"
+              }
+            }
+          },
           "organic_metrics" : {
             "type" : "object",
             "description" : "Organic nonpublic engagement metrics for the Tweet at the time of the request.",
@@ -11234,9 +11281,15 @@
               "retweet_count",
               "reply_count",
               "like_count",
-              "impression_count"
+              "impression_count",
+              "bookmark_count"
             ],
             "properties" : {
+              "bookmark_count" : {
+                "type" : "integer",
+                "description" : "Number of times this Tweet has been bookmarked.",
+                "format" : "int32"
+              },
               "impression_count" : {
                 "type" : "integer",
                 "description" : "Number of times this Tweet has been viewed.",
@@ -13288,6 +13341,7 @@
               "entities.mentions.username",
               "geo.place_id",
               "in_reply_to_user_id",
+              "entities.note.mentions.username",
               "referenced_tweets.id",
               "referenced_tweets.id.author_id"
             ]
@@ -13300,6 +13354,7 @@
             "entities.mentions.username",
             "geo.place_id",
             "in_reply_to_user_id",
+            "entities.note.mentions.username",
             "referenced_tweets.id",
             "referenced_tweets.id.author_id"
           ]
@@ -13333,6 +13388,7 @@
               "in_reply_to_user_id",
               "lang",
               "non_public_metrics",
+              "note_tweet",
               "organic_metrics",
               "possibly_sensitive",
               "promoted_metrics",
@@ -13358,6 +13414,7 @@
             "in_reply_to_user_id",
             "lang",
             "non_public_metrics",
+            "note_tweet",
             "organic_metrics",
             "possibly_sensitive",
             "promoted_metrics",
