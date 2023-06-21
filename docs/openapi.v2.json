@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.64",
+    "version" : "2.65",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -4727,78 +4727,6 @@
             }
           }
         }
-      },
-      "post" : {
-        "security" : [
-          {
-            "OAuth2UserToken" : [
-              "block.write",
-              "tweet.read",
-              "users.read"
-            ]
-          },
-          {
-            "UserToken" : [ ]
-          }
-        ],
-        "tags" : [
-          "Users"
-        ],
-        "summary" : "Block User by User ID",
-        "description" : "Causes the User (in the path) to block the target User. The User (in the path) must match the User context authorizing the request",
-        "externalDocs" : {
-          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/post-users-user_id-blocking"
-        },
-        "operationId" : "usersIdBlock",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to block the target User.",
-            "required" : true,
-            "schema" : {
-              "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
-            },
-            "style" : "simple"
-          }
-        ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/BlockUserRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The request has succeeded.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/BlockUserMutationResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "description" : "The request has failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              },
-              "application/problem+json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Problem"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/2/users/{id}/bookmarks" : {
@@ -7056,80 +6984,6 @@
         }
       }
     },
-    "/2/users/{source_user_id}/blocking/{target_user_id}" : {
-      "delete" : {
-        "security" : [
-          {
-            "OAuth2UserToken" : [
-              "block.write",
-              "tweet.read",
-              "users.read"
-            ]
-          },
-          {
-            "UserToken" : [ ]
-          }
-        ],
-        "tags" : [
-          "Users"
-        ],
-        "summary" : "Unblock User by User ID",
-        "description" : "Causes the source User to unblock the target User. The source User must match the User context authorizing the request",
-        "externalDocs" : {
-          "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/delete-users-user_id-blocking"
-        },
-        "operationId" : "usersIdUnblock",
-        "parameters" : [
-          {
-            "name" : "source_user_id",
-            "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to unblock the target User.",
-            "required" : true,
-            "schema" : {
-              "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
-            },
-            "style" : "simple"
-          },
-          {
-            "name" : "target_user_id",
-            "in" : "path",
-            "description" : "The ID of the User that the source User is requesting to unblock.",
-            "required" : true,
-            "schema" : {
-              "$ref" : "#/components/schemas/UserId"
-            },
-            "style" : "simple"
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "The request has succeeded.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/BlockUserMutationResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "description" : "The request has failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              },
-              "application/problem+json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Problem"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/2/users/{source_user_id}/following/{target_user_id}" : {
       "delete" : {
         "security" : [
@@ -7365,7 +7219,6 @@
             "tokenUrl" : "https://api.twitter.com/2/oauth2/token",
             "scopes" : {
               "block.read" : "Accounts you’ve blocked.",
-              "block.write" : "Block and unblock accounts for you.",
               "bookmark.read" : "Allows an app to read bookmarked Tweets",
               "bookmark.write" : "Allows an app to create and delete bookmarks",
               "dm.read" : "All your Direct Messages",
@@ -7468,37 +7321,6 @@
             }
           }
         ]
-      },
-      "BlockUserMutationResponse" : {
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "type" : "object",
-            "properties" : {
-              "blocking" : {
-                "type" : "boolean"
-              }
-            }
-          },
-          "errors" : {
-            "type" : "array",
-            "minItems" : 1,
-            "items" : {
-              "$ref" : "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "BlockUserRequest" : {
-        "type" : "object",
-        "required" : [
-          "target_user_id"
-        ],
-        "properties" : {
-          "target_user_id" : {
-            "$ref" : "#/components/schemas/UserId"
-          }
-        }
       },
       "BookmarkAddRequest" : {
         "type" : "object",
