@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.66",
+    "version" : "2.67",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -11394,7 +11394,8 @@
             "description" : "Settings to indicate who can reply to the Tweet.",
             "enum" : [
               "following",
-              "mentionedUsers"
+              "mentionedUsers",
+              "subscribers"
             ]
           },
           "text" : {
