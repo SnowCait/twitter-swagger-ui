@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.67",
+    "version" : "2.68",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10384,6 +10384,18 @@
           "other"
         ]
       },
+      "ReplySettingsWithSubscribers" : {
+        "type" : "string",
+        "description" : "Shows who can reply a Tweet. Fields returned are everyone, mentioned_users, subscribers and following.",
+        "pattern" : "^[A-Za-z]{1,12}$",
+        "enum" : [
+          "everyone",
+          "mentionedUsers",
+          "following",
+          "other",
+          "subscribers"
+        ]
+      },
       "ResourceNotFoundProblem" : {
         "description" : "A problem that indicates that a given Tweet, User, etc. does not exist.",
         "allOf" : [
@@ -11161,7 +11173,7 @@
             }
           },
           "reply_settings" : {
-            "$ref" : "#/components/schemas/ReplySettings"
+            "$ref" : "#/components/schemas/ReplySettingsWithSubscribers"
           },
           "source" : {
             "type" : "string",
@@ -13264,10 +13276,12 @@
           "items" : {
             "type" : "string",
             "enum" : [
+              "most_recent_tweet_id",
               "pinned_tweet_id"
             ]
           },
           "example" : [
+            "most_recent_tweet_id",
             "pinned_tweet_id"
           ]
         },
@@ -13292,6 +13306,7 @@
               "entities",
               "id",
               "location",
+              "most_recent_tweet_id",
               "name",
               "pinned_tweet_id",
               "profile_image_url",
@@ -13310,6 +13325,7 @@
             "entities",
             "id",
             "location",
+            "most_recent_tweet_id",
             "name",
             "pinned_tweet_id",
             "profile_image_url",
