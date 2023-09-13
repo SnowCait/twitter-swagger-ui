@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.68",
+    "version" : "2.69",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -3585,6 +3585,56 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/AddOrDeleteRulesResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/tweets/search/stream/rules/counts" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "General"
+        ],
+        "summary" : "Rules Count",
+        "description" : "Returns the counts of rules from a User's active rule set, to reflect usage by project and application.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream-rules-counts"
+        },
+        "operationId" : "getRuleCount",
+        "parameters" : [
+          {
+            "$ref" : "#/components/parameters/RulesCountFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2TweetsSearchStreamRulesCountsResponse"
                 }
               }
             }
@@ -7303,6 +7353,13 @@
         "description" : "The sum of results returned in this response.",
         "format" : "int32"
       },
+      "AllProjectClientApps" : {
+        "type" : "array",
+        "description" : "Client App Rule Counts for all applications in the project",
+        "items" : {
+          "$ref" : "#/components/schemas/AppRulesCount"
+        }
+      },
       "AnimatedGif" : {
         "allOf" : [
           {
@@ -7321,6 +7378,20 @@
             }
           }
         ]
+      },
+      "AppRulesCount" : {
+        "type" : "object",
+        "description" : "A count of user-provided stream filtering rules at the application and project levels.",
+        "properties" : {
+          "client_app_id" : {
+            "$ref" : "#/components/schemas/ClientAppId"
+          },
+          "rule_count" : {
+            "type" : "integer",
+            "description" : "Number of rules for client application",
+            "format" : "int32"
+          }
+        }
       },
       "BookmarkAddRequest" : {
         "type" : "object",
@@ -7375,6 +7446,12 @@
             "example" : "TWTR"
           }
         }
+      },
+      "ClientAppId" : {
+        "type" : "string",
+        "description" : "The ID of the client application",
+        "minLength" : 1,
+        "maxLength" : 19
       },
       "ClientDisconnectedProblem" : {
         "description" : "Your client has gone away.",
@@ -9037,6 +9114,21 @@
           }
         }
       },
+      "Get2TweetsSearchStreamRulesCountsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/RulesCount"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
       "Get2UsersByResponse" : {
         "type" : "object",
         "properties" : {
@@ -10578,6 +10670,33 @@
             "$ref" : "#/components/schemas/Problem"
           }
         ]
+      },
+      "RulesCount" : {
+        "type" : "object",
+        "description" : "A count of user-provided stream filtering rules at the application and project levels.",
+        "properties" : {
+          "all_project_client_apps" : {
+            "$ref" : "#/components/schemas/AllProjectClientApps"
+          },
+          "client_app_rules_count" : {
+            "$ref" : "#/components/schemas/AppRulesCount"
+          },
+          "limit_per_client_app" : {
+            "type" : "integer",
+            "description" : "Limit of number of rules allowed per client application",
+            "format" : "int32"
+          },
+          "limit_per_project" : {
+            "type" : "integer",
+            "description" : "Limit of number of rules allowed per project",
+            "format" : "int32"
+          },
+          "project_rules_count" : {
+            "type" : "integer",
+            "description" : "Number of rules for project",
+            "format" : "int32"
+          }
+        }
       },
       "RulesLookupResponse" : {
         "type" : "object",
@@ -13013,6 +13132,37 @@
             "id",
             "options",
             "voting_status"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "RulesCountFieldsParameter" : {
+        "name" : "rules_count.fields",
+        "in" : "query",
+        "description" : "A comma separated list of RulesCount fields to display.",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "description" : "The fields available for a RulesCount object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "all_project_client_apps",
+              "client_app_rules_count",
+              "limit_per_client_app",
+              "limit_per_project",
+              "project_rules_count"
+            ]
+          },
+          "example" : [
+            "all_project_client_apps",
+            "client_app_rules_count",
+            "limit_per_client_app",
+            "limit_per_project",
+            "project_rules_count"
           ]
         },
         "explode" : false,
