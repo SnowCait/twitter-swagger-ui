@@ -12114,6 +12114,9 @@
             "type" : "string",
             "description" : "The location specified in the User's profile, if the User provided one. As this is a freeform value, it may not indicate a valid location, but it may be fuzzily evaluated when performing searches with location queries."
           },
+          "most_recent_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
           "name" : {
             "type" : "string",
             "description" : "The friendly name of this User, as shown on their profile."
