@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.69",
+    "version" : "2.70",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -12150,6 +12150,10 @@
               "following_count" : {
                 "type" : "integer",
                 "description" : "Number of Users this User is following."
+              },
+              "like_count" : {
+                "type" : "integer",
+                "description" : "The number of likes created by this User."
               },
               "listed_count" : {
                 "type" : "integer",
