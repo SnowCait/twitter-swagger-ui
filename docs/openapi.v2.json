@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.71",
+    "version" : "2.72",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -7489,7 +7489,7 @@
       },
       "AppRulesCount" : {
         "type" : "object",
-        "description" : "A count of user-provided stream filtering rules at the application and project levels.",
+        "description" : "A count of user-provided stream filtering rules at the client application level.",
         "properties" : {
           "client_app_id" : {
             "$ref" : "#/components/schemas/ClientAppId"
@@ -10822,18 +10822,18 @@
           "all_project_client_apps" : {
             "$ref" : "#/components/schemas/AllProjectClientApps"
           },
+          "cap_per_client_app" : {
+            "type" : "integer",
+            "description" : "Cap of number of rules allowed per client application",
+            "format" : "int32"
+          },
+          "cap_per_project" : {
+            "type" : "integer",
+            "description" : "Cap of number of rules allowed per project",
+            "format" : "int32"
+          },
           "client_app_rules_count" : {
             "$ref" : "#/components/schemas/AppRulesCount"
-          },
-          "limit_per_client_app" : {
-            "type" : "integer",
-            "description" : "Limit of number of rules allowed per client application",
-            "format" : "int32"
-          },
-          "limit_per_project" : {
-            "type" : "integer",
-            "description" : "Limit of number of rules allowed per project",
-            "format" : "int32"
           },
           "project_rules_count" : {
             "type" : "integer",
@@ -13302,17 +13302,17 @@
             "type" : "string",
             "enum" : [
               "all_project_client_apps",
+              "cap_per_client_app",
+              "cap_per_project",
               "client_app_rules_count",
-              "limit_per_client_app",
-              "limit_per_project",
               "project_rules_count"
             ]
           },
           "example" : [
             "all_project_client_apps",
+            "cap_per_client_app",
+            "cap_per_project",
             "client_app_rules_count",
-            "limit_per_client_app",
-            "limit_per_project",
             "project_rules_count"
           ]
         },
