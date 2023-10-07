@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.73",
+    "version" : "2.74",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -3561,6 +3561,16 @@
             "name" : "dry_run",
             "in" : "query",
             "description" : "Dry Run can be used with both the add and delete action, with the expected result given, but without actually taking any action in the system (meaning the end state will always be as it was when the request was submitted). This is particularly useful to validate rule changes.",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "delete_all",
+            "in" : "query",
+            "description" : "Delete All can be used to delete all of the rules associated this client app, it should be specified with no other parameters. Once deleted, rules cannot be recovered.",
             "required" : false,
             "schema" : {
               "type" : "boolean"
