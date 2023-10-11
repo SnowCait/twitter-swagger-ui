@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.74",
+    "version" : "2.75",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10630,16 +10630,17 @@
           "other"
         ]
       },
-      "ReplySettingsWithSubscribers" : {
+      "ReplySettingsWithVerifiedUsers" : {
         "type" : "string",
-        "description" : "Shows who can reply a Tweet. Fields returned are everyone, mentioned_users, subscribers and following.",
+        "description" : "Shows who can reply a Tweet. Fields returned are everyone, mentioned_users, subscribers, verified and following.",
         "pattern" : "^[A-Za-z]{1,12}$",
         "enum" : [
           "everyone",
           "mentionedUsers",
           "following",
           "other",
-          "subscribers"
+          "subscribers",
+          "verified"
         ]
       },
       "ResourceNotFoundProblem" : {
@@ -11446,7 +11447,7 @@
             }
           },
           "reply_settings" : {
-            "$ref" : "#/components/schemas/ReplySettingsWithSubscribers"
+            "$ref" : "#/components/schemas/ReplySettingsWithVerifiedUsers"
           },
           "source" : {
             "type" : "string",
