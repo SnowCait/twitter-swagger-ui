@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.78",
+    "version" : "2.79",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -13830,6 +13830,7 @@
               "profile_image_url",
               "protected",
               "public_metrics",
+              "subscription_type",
               "url",
               "username",
               "verified",
@@ -13849,6 +13850,7 @@
             "profile_image_url",
             "protected",
             "public_metrics",
+            "subscription_type",
             "url",
             "username",
             "verified",
