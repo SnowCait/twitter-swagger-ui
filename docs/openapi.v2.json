@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.79",
+    "version" : "2.80",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -12493,6 +12493,20 @@
               }
             }
           },
+          "receives_your_dm" : {
+            "type" : "boolean",
+            "description" : "Indicates if you can send a DM to this User"
+          },
+          "subscription_type" : {
+            "type" : "string",
+            "description" : "The Twitter Blue subscription type of the user, eg: Basic, Premium, PremiumPlus or None.",
+            "enum" : [
+              "Basic",
+              "Premium",
+              "PremiumPlus",
+              "None"
+            ]
+          },
           "url" : {
             "type" : "string",
             "description" : "The URL specified in the User's profile."
@@ -12506,7 +12520,13 @@
           },
           "verified_type" : {
             "type" : "string",
-            "description" : "The Twitter Blue verified type of the user, eg: blue, government, business or none."
+            "description" : "The Twitter Blue verified type of the user, eg: blue, government, business or none.",
+            "enum" : [
+              "blue",
+              "government",
+              "business",
+              "none"
+            ]
           },
           "withheld" : {
             "$ref" : "#/components/schemas/UserWithheld"
@@ -13830,6 +13850,7 @@
               "profile_image_url",
               "protected",
               "public_metrics",
+              "receives_your_dm",
               "subscription_type",
               "url",
               "username",
@@ -13850,6 +13871,7 @@
             "profile_image_url",
             "protected",
             "public_metrics",
+            "receives_your_dm",
             "subscription_type",
             "url",
             "username",
