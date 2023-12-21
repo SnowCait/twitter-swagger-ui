@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.84",
+    "version" : "2.86",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -8712,6 +8712,13 @@
               }
             }
           },
+          "cashtags" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/CashtagEntity"
+            }
+          },
           "created_at" : {
             "type" : "string",
             "format" : "date-time"
@@ -8723,8 +8730,22 @@
             "type" : "string",
             "example" : "MessageCreate"
           },
+          "hashtags" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/HashtagEntity"
+            }
+          },
           "id" : {
             "$ref" : "#/components/schemas/DmEventId"
+          },
+          "mentions" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/MentionEntity"
+            }
           },
           "participant_ids" : {
             "type" : "array",
@@ -8755,6 +8776,13 @@
           },
           "text" : {
             "type" : "string"
+          },
+          "urls" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/UrlEntityDm"
+            }
           }
         }
       },
@@ -12974,6 +13002,17 @@
         "example" : "https://developer.twitter.com/en/docs/twitter-api"
       },
       "UrlEntity" : {
+        "description" : "Represent the portion of text recognized as a URL, and its start and end position within the text.",
+        "allOf" : [
+          {
+            "$ref" : "#/components/schemas/EntityIndicesInclusiveExclusive"
+          },
+          {
+            "$ref" : "#/components/schemas/UrlFields"
+          }
+        ]
+      },
+      "UrlEntityDm" : {
         "description" : "Represent the portion of text recognized as a URL, and its start and end position within the text.",
         "allOf" : [
           {
