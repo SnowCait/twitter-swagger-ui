@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.86",
+    "version" : "2.87",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -12063,6 +12063,14 @@
                   "$ref" : "#/components/schemas/MediaKey"
                 }
               },
+              "media_source_tweet_id" : {
+                "type" : "array",
+                "description" : "A list of Tweets the media on this Tweet was originally posted in. For example, if the media on a tweet is re-used in another Tweet, this refers to the original, source Tweet..",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/TweetId"
+                }
+              },
               "poll_ids" : {
                 "type" : "array",
                 "description" : "A list of poll IDs (if polls are attached).",
@@ -14496,6 +14504,7 @@
             "type" : "string",
             "enum" : [
               "attachments.media_keys",
+              "attachments.media_source_tweet",
               "attachments.poll_ids",
               "author_id",
               "edit_history_tweet_ids",
@@ -14509,6 +14518,7 @@
           },
           "example" : [
             "attachments.media_keys",
+            "attachments.media_source_tweet",
             "attachments.poll_ids",
             "author_id",
             "edit_history_tweet_ids",
