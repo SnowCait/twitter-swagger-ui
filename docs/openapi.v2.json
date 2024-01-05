@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.87",
+    "version" : "2.88",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -13792,6 +13792,9 @@
           "data" : {
             "type" : "object",
             "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              },
               "retweeted" : {
                 "type" : "boolean"
               }
