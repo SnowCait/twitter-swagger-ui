@@ -1425,8 +1425,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "List Tweets timeline by List ID.",
-        "description" : "Returns a list of Tweets associated with the provided List ID.",
+        "summary" : "List Posts timeline by List ID.",
+        "description" : "Returns a list of Posts associated with the provided List ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-tweets/api-reference/get-lists-id-tweets"
         },
@@ -2009,8 +2009,8 @@
           "Spaces",
           "Tweets"
         ],
-        "summary" : "Retrieve Tweets from a Space.",
-        "description" : "Retrieves Tweets shared in the specified Space.",
+        "summary" : "Retrieve Posts from a Space.",
+        "description" : "Retrieves Posts shared in the specified Space.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-tweets"
         },
@@ -2033,7 +2033,7 @@
           {
             "name" : "max_results",
             "in" : "query",
-            "description" : "The number of Tweets to fetch from the provided space. If not provided, the value will default to the maximum of 100.",
+            "description" : "The number of Posts to fetch from the provided space. If not provided, the value will default to the maximum of 100.",
             "required" : false,
             "schema" : {
               "type" : "integer",
@@ -2174,8 +2174,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Tweet lookup by Tweet IDs",
-        "description" : "Returns a variety of information about the Tweet specified by the requested ID.",
+        "summary" : "Post lookup by Post IDs",
+        "description" : "Returns a variety of information about the Post specified by the requested ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets"
         },
@@ -2184,7 +2184,7 @@
           {
             "name" : "ids",
             "in" : "query",
-            "description" : "A comma separated list of Tweet IDs. Up to 100 are allowed in a single request.",
+            "description" : "A comma separated list of Post IDs. Up to 100 are allowed in a single request.",
             "required" : true,
             "schema" : {
               "type" : "array",
@@ -2260,8 +2260,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Creation of a Tweet",
-        "description" : "Causes the User to create a Tweet under the authorized account.",
+        "summary" : "Creation of a Post",
+        "description" : "Causes the User to create a Post under the authorized account.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets"
         },
@@ -2316,8 +2316,8 @@
         "tags" : [
           "Compliance"
         ],
-        "summary" : "Tweets Compliance stream",
-        "description" : "Streams 100% of compliance data for Tweets",
+        "summary" : "Posts Compliance stream",
+        "description" : "Streams 100% of compliance data for Posts",
         "operationId" : "getTweetsComplianceStream",
         "parameters" : [
           {
@@ -2349,7 +2349,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweet Compliance events will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Post Compliance events will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -2361,7 +2361,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweet Compliance events will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Post Compliance events will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2412,7 +2412,7 @@
           "Tweets"
         ],
         "summary" : "Full archive search counts",
-        "description" : "Returns Tweet Counts that match a search query.",
+        "description" : "Returns Post Counts that match a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
         },
@@ -2421,7 +2421,7 @@
           {
             "name" : "query",
             "in" : "query",
-            "description" : "One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length.",
+            "description" : "One query/rule/filter for matching Posts. Refer to https://t.co/rulelength to identify the max query length.",
             "required" : true,
             "schema" : {
               "type" : "string",
@@ -2434,7 +2434,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Posts will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -2445,7 +2445,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Posts will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -2456,7 +2456,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+            "description" : "Returns results with a Post ID greater than (that is, more recent than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -2466,7 +2466,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+            "description" : "Returns results with a Post ID less than (that is, older than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -2553,7 +2553,7 @@
           "Tweets"
         ],
         "summary" : "Recent search counts",
-        "description" : "Returns Tweet Counts from the last 7 days that match a search query.",
+        "description" : "Returns Post Counts from the last 7 days that match a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/counts/api-reference/get-tweets-counts-recent"
         },
@@ -2562,7 +2562,7 @@
           {
             "name" : "query",
             "in" : "query",
-            "description" : "One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length.",
+            "description" : "One query/rule/filter for matching Posts. Refer to https://t.co/rulelength to identify the max query length.",
             "required" : true,
             "schema" : {
               "type" : "string",
@@ -2575,7 +2575,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp (from most recent 7 days) from which the Posts will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -2586,7 +2586,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Posts will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -2597,7 +2597,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+            "description" : "Returns results with a Post ID greater than (that is, more recent than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -2607,7 +2607,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+            "description" : "Returns results with a Post ID less than (that is, older than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -2694,7 +2694,7 @@
           "Tweets"
         ],
         "summary" : "Firehose stream",
-        "description" : "Streams 100% of public Tweets.",
+        "description" : "Streams 100% of public Posts.",
         "operationId" : "getTweetsFirehoseStream",
         "parameters" : [
           {
@@ -2726,7 +2726,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2738,7 +2738,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2807,7 +2807,7 @@
           "Tweets"
         ],
         "summary" : "English Language Firehose stream",
-        "description" : "Streams 100% of English Language public Tweets.",
+        "description" : "Streams 100% of English Language public Posts.",
         "operationId" : "getTweetsFirehoseStreamLangEn",
         "parameters" : [
           {
@@ -2839,7 +2839,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2851,7 +2851,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2920,7 +2920,7 @@
           "Tweets"
         ],
         "summary" : "Japanese Language Firehose stream",
-        "description" : "Streams 100% of Japanese Language public Tweets.",
+        "description" : "Streams 100% of Japanese Language public Posts.",
         "operationId" : "getTweetsFirehoseStreamLangJa",
         "parameters" : [
           {
@@ -2952,7 +2952,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -2964,7 +2964,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3033,7 +3033,7 @@
           "Tweets"
         ],
         "summary" : "Korean Language Firehose stream",
-        "description" : "Streams 100% of Korean Language public Tweets.",
+        "description" : "Streams 100% of Korean Language public Posts.",
         "operationId" : "getTweetsFirehoseStreamLangKo",
         "parameters" : [
           {
@@ -3065,7 +3065,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3077,7 +3077,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3146,7 +3146,7 @@
           "Tweets"
         ],
         "summary" : "Portuguese Language Firehose stream",
-        "description" : "Streams 100% of Portuguese Language public Tweets.",
+        "description" : "Streams 100% of Portuguese Language public Posts.",
         "operationId" : "getTweetsFirehoseStreamLangPt",
         "parameters" : [
           {
@@ -3178,7 +3178,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3190,7 +3190,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3258,8 +3258,8 @@
         "tags" : [
           "Compliance"
         ],
-        "summary" : "Tweets Label stream",
-        "description" : "Streams 100% of labeling events applied to Tweets",
+        "summary" : "Posts Label stream",
+        "description" : "Streams 100% of labeling events applied to Posts",
         "operationId" : "getTweetsLabelStream",
         "parameters" : [
           {
@@ -3278,7 +3278,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweet labels will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Post labels will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -3290,7 +3290,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the Tweet labels will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the Post labels will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -3341,7 +3341,7 @@
           "Tweets"
         ],
         "summary" : "Sample stream",
-        "description" : "Streams a deterministic 1% of public Tweets.",
+        "description" : "Streams a deterministic 1% of public Posts.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/volume-streams/api-reference/get-tweets-sample-stream"
         },
@@ -3420,7 +3420,7 @@
           "Tweets"
         ],
         "summary" : "Sample 10% stream",
-        "description" : "Streams a deterministic 10% of public Tweets.",
+        "description" : "Streams a deterministic 10% of public Posts.",
         "operationId" : "getTweetsSample10Stream",
         "parameters" : [
           {
@@ -3452,7 +3452,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3464,7 +3464,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -3533,7 +3533,7 @@
           "Tweets"
         ],
         "summary" : "Full-archive search",
-        "description" : "Returns Tweets that match a search query.",
+        "description" : "Returns Posts that match a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
         },
@@ -3542,7 +3542,7 @@
           {
             "name" : "query",
             "in" : "query",
-            "description" : "One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length.",
+            "description" : "One query/rule/filter for matching Posts. Refer to https://t.co/rulelength to identify the max query length.",
             "required" : true,
             "schema" : {
               "type" : "string",
@@ -3555,7 +3555,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp from which the Posts will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -3566,7 +3566,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Posts will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -3577,7 +3577,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+            "description" : "Returns results with a Post ID greater than (that is, more recent than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -3587,7 +3587,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+            "description" : "Returns results with a Post ID less than (that is, older than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -3710,7 +3710,7 @@
           "Tweets"
         ],
         "summary" : "Recent search",
-        "description" : "Returns Tweets from the last 7 days that match a search query.",
+        "description" : "Returns Posts from the last 7 days that match a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent"
         },
@@ -3719,7 +3719,7 @@
           {
             "name" : "query",
             "in" : "query",
-            "description" : "One query/rule/filter for matching Tweets. Refer to https://t.co/rulelength to identify the max query length.",
+            "description" : "One query/rule/filter for matching Posts. Refer to https://t.co/rulelength to identify the max query length.",
             "required" : true,
             "schema" : {
               "type" : "string",
@@ -3732,7 +3732,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp from which the Tweets will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The oldest UTC timestamp from which the Posts will be provided. Timestamp is in second granularity and is inclusive (i.e. 12:00:01 includes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -3743,7 +3743,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Tweets will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The newest, most recent UTC timestamp to which the Posts will be provided. Timestamp is in second granularity and is exclusive (i.e. 12:00:01 excludes the first second of the minute).",
             "required" : false,
             "schema" : {
               "type" : "string",
@@ -3754,7 +3754,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID greater than (that is, more recent than) the specified ID.",
+            "description" : "Returns results with a Post ID greater than (that is, more recent than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -3764,7 +3764,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "Returns results with a Tweet ID less than (that is, older than) the specified ID.",
+            "description" : "Returns results with a Post ID less than (that is, older than) the specified ID.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -3878,7 +3878,7 @@
           "Tweets"
         ],
         "summary" : "Filtered stream",
-        "description" : "Streams Tweets matching the stream's active rule set.",
+        "description" : "Streams Posts matching the stream's active rule set.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream"
         },
@@ -3900,7 +3900,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -3912,7 +3912,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -4198,8 +4198,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Tweet delete by Tweet ID",
-        "description" : "Delete specified Tweet (in the path) by ID.",
+        "summary" : "Post delete by Post ID",
+        "description" : "Delete specified Post (in the path) by ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/delete-tweets-id"
         },
@@ -4208,7 +4208,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the Tweet to be deleted.",
+            "description" : "The ID of the Post to be deleted.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4262,8 +4262,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Tweet lookup by Tweet ID",
-        "description" : "Returns a variety of information about the Tweet specified by the requested ID.",
+        "summary" : "Post lookup by Post ID",
+        "description" : "Returns a variety of information about the Post specified by the requested ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id"
         },
@@ -4272,7 +4272,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "A single Tweet ID.",
+            "description" : "A single Post ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4347,8 +4347,8 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that have liked the provided Tweet ID",
-        "description" : "Returns a list of Users that have liked the provided Tweet ID",
+        "summary" : "Returns User objects that have liked the provided Post ID",
+        "description" : "Returns a list of Users that have liked the provided Post ID",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users"
         },
@@ -4357,7 +4357,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "A single Tweet ID.",
+            "description" : "A single Post ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4446,8 +4446,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Retrieve Tweets that quote a Tweet.",
-        "description" : "Returns a variety of information about each Tweet that quotes the Tweet specified by the requested ID.",
+        "summary" : "Retrieve Posts that quote a Post.",
+        "description" : "Returns a variety of information about each Post that quotes the Post specified by the requested ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/quote-tweets/api-reference/get-tweets-id-quote_tweets"
         },
@@ -4456,7 +4456,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "A single Tweet ID.",
+            "description" : "A single Post ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4578,8 +4578,8 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that have retweeted the provided Tweet ID",
-        "description" : "Returns a list of Users that have retweeted the provided Tweet ID",
+        "summary" : "Returns User objects that have retweeted the provided Post ID",
+        "description" : "Returns a list of Users that have retweeted the provided Post ID",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweeted_by"
         },
@@ -4588,7 +4588,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "A single Tweet ID.",
+            "description" : "A single Post ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4677,8 +4677,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Retrieve Tweets that retweet a Tweet.",
-        "description" : "Returns a variety of information about each Tweet that has retweeted the Tweet specified by the requested ID.",
+        "summary" : "Retrieve Posts that repost a Post.",
+        "description" : "Returns a variety of information about each Post that has retweeted the Post specified by the requested ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweets"
         },
@@ -4687,7 +4687,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "A single Tweet ID.",
+            "description" : "A single Post ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -4849,8 +4849,8 @@
         "tags" : [
           "Usage"
         ],
-        "summary" : "Tweet Usage",
-        "description" : "Returns the Tweet Usage.",
+        "summary" : "Post Usage",
+        "description" : "Returns the Post Usage.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/usage/tweets/api-reference/get-usage-tweets"
         },
@@ -5022,7 +5022,7 @@
               "maxItems" : 100,
               "items" : {
                 "type" : "string",
-                "description" : "The Twitter handle (screen name) of this User.",
+                "description" : "The X handle (screen name) of this User.",
                 "pattern" : "^[A-Za-z0-9_]{1,15}$"
               },
               "example" : "TwitterDev,TwitterAPI"
@@ -5587,7 +5587,7 @@
           "Bookmarks"
         ],
         "summary" : "Bookmarks by User",
-        "description" : "Returns Tweet objects that have been bookmarked by the requesting User",
+        "description" : "Returns Post objects that have been bookmarked by the requesting User",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/get-users-id-bookmarks"
         },
@@ -5686,8 +5686,8 @@
         "tags" : [
           "Bookmarks"
         ],
-        "summary" : "Add Tweet to Bookmarks",
-        "description" : "Adds a Tweet (ID in the body) to the requesting User's (in the path) bookmarks",
+        "summary" : "Add Post to Bookmarks",
+        "description" : "Adds a Post (ID in the body) to the requesting User's (in the path) bookmarks",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/post-users-id-bookmarks"
         },
@@ -5757,8 +5757,8 @@
         "tags" : [
           "Bookmarks"
         ],
-        "summary" : "Remove a bookmarked Tweet",
-        "description" : "Removes a Tweet from the requesting User's bookmarked Tweets.",
+        "summary" : "Remove a bookmarked Post",
+        "description" : "Removes a Post from the requesting User's bookmarked Posts.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/delete-users-id-bookmarks-tweet_id"
         },
@@ -5777,7 +5777,7 @@
           {
             "name" : "tweet_id",
             "in" : "path",
-            "description" : "The ID of the Tweet that the source User is removing from bookmarks.",
+            "description" : "The ID of the Post that the source User is removing from bookmarks.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -6351,8 +6351,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Returns Tweet objects liked by the provided User ID",
-        "description" : "Returns a list of Tweets liked by the provided User ID",
+        "summary" : "Returns Post objects liked by the provided User ID",
+        "description" : "Returns a list of Posts liked by the provided User ID",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-users-id-liked_tweets"
         },
@@ -6457,8 +6457,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Causes the User (in the path) to like the specified Tweet",
-        "description" : "Causes the User (in the path) to like the specified Tweet. The User in the path must match the User context authorizing the request.",
+        "summary" : "Causes the User (in the path) to like the specified Post",
+        "description" : "Causes the User (in the path) to like the specified Post. The User in the path must match the User context authorizing the request.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/post-users-id-likes"
         },
@@ -6467,7 +6467,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to like the Tweet.",
+            "description" : "The ID of the authenticated source User that is requesting to like the Post.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
@@ -6530,8 +6530,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Causes the User (in the path) to unlike the specified Tweet",
-        "description" : "Causes the User (in the path) to unlike the specified Tweet. The User must match the User context authorizing the request",
+        "summary" : "Causes the User (in the path) to unlike the specified Post",
+        "description" : "Causes the User (in the path) to unlike the specified Post. The User must match the User context authorizing the request",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/delete-users-id-likes-tweet_id"
         },
@@ -6540,7 +6540,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to unlike the Tweet.",
+            "description" : "The ID of the authenticated source User that is requesting to unlike the Post.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
@@ -6550,7 +6550,7 @@
           {
             "name" : "tweet_id",
             "in" : "path",
-            "description" : "The ID of the Tweet that the User is requesting to unlike.",
+            "description" : "The ID of the Post that the User is requesting to unlike.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -6708,7 +6708,7 @@
           "Tweets"
         ],
         "summary" : "User mention timeline by User ID",
-        "description" : "Returns Tweet objects that mention username associated to the provided User ID",
+        "description" : "Returns Post objects that mention username associated to the provided User ID",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-mentions"
         },
@@ -6728,7 +6728,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "The minimum Tweet ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
+            "description" : "The minimum Post ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
             "required" : false,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -6738,7 +6738,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "The maximum Tweet ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
+            "description" : "The maximum Post ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
             "required" : false,
             "example" : "1346889436626259968",
             "schema" : {
@@ -6772,7 +6772,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweets will be provided. The since_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Posts will be provided. The since_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -6784,7 +6784,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided. The until_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided. The until_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -7346,8 +7346,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Causes the User (in the path) to retweet the specified Tweet.",
-        "description" : "Causes the User (in the path) to retweet the specified Tweet. The User in the path must match the User context authorizing the request.",
+        "summary" : "Causes the User (in the path) to repost the specified Post.",
+        "description" : "Causes the User (in the path) to repost the specified Post. The User in the path must match the User context authorizing the request.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/post-users-id-retweets"
         },
@@ -7356,7 +7356,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to retweet the Tweet.",
+            "description" : "The ID of the authenticated source User that is requesting to repost the Post.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
@@ -7419,8 +7419,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Causes the User (in the path) to unretweet the specified Tweet",
-        "description" : "Causes the User (in the path) to unretweet the specified Tweet. The User must match the User context authorizing the request",
+        "summary" : "Causes the User (in the path) to unretweet the specified Post",
+        "description" : "Causes the User (in the path) to unretweet the specified Post. The User must match the User context authorizing the request",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/delete-users-id-retweets-tweet_id"
         },
@@ -7429,7 +7429,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the authenticated source User that is requesting to retweet the Tweet.",
+            "description" : "The ID of the authenticated source User that is requesting to repost the Post.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
@@ -7439,7 +7439,7 @@
           {
             "name" : "source_tweet_id",
             "in" : "path",
-            "description" : "The ID of the Tweet that the User is requesting to unretweet.",
+            "description" : "The ID of the Post that the User is requesting to unretweet.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/TweetId"
@@ -7493,7 +7493,7 @@
           "Tweets"
         ],
         "summary" : "User home timeline by User ID",
-        "description" : "Returns Tweet objects that appears in the provided User ID's home timeline",
+        "description" : "Returns Post objects that appears in the provided User ID's home timeline",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-reverse-chronological"
         },
@@ -7502,7 +7502,7 @@
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The ID of the authenticated source User to list Reverse Chronological Timeline Tweets of.",
+            "description" : "The ID of the authenticated source User to list Reverse Chronological Timeline Posts of.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
@@ -7512,7 +7512,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "The minimum Tweet ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
+            "description" : "The minimum Post ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
             "required" : false,
             "example" : "791775337160081409",
             "schema" : {
@@ -7523,7 +7523,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "The maximum Tweet ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
+            "description" : "The maximum Post ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
             "required" : false,
             "example" : "1346889436626259968",
             "schema" : {
@@ -7580,7 +7580,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweets will be provided. The since_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Posts will be provided. The since_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -7592,7 +7592,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided. The until_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided. The until_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -7668,8 +7668,8 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "User Tweets timeline by User ID",
-        "description" : "Returns a list of Tweets authored by the provided User ID",
+        "summary" : "User Posts timeline by User ID",
+        "description" : "Returns a list of Posts authored by the provided User ID",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets"
         },
@@ -7689,7 +7689,7 @@
           {
             "name" : "since_id",
             "in" : "query",
-            "description" : "The minimum Tweet ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
+            "description" : "The minimum Post ID to be included in the result set. This parameter takes precedence over start_time if both are specified.",
             "required" : false,
             "example" : "791775337160081409",
             "schema" : {
@@ -7700,7 +7700,7 @@
           {
             "name" : "until_id",
             "in" : "query",
-            "description" : "The maximum Tweet ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
+            "description" : "The maximum Post ID to be included in the result set. This parameter takes precedence over end_time if both are specified.",
             "required" : false,
             "example" : "1346889436626259968",
             "schema" : {
@@ -7758,7 +7758,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Tweets will be provided. The since_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Posts will be provided. The since_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -7770,7 +7770,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Tweets will be provided. The until_id parameter takes precedence if it is also specified.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided. The until_id parameter takes precedence if it is also specified.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -7993,7 +7993,7 @@
     },
     {
       "name" : "Compliance",
-      "description" : "Endpoints related to keeping Twitter data in your systems compliant",
+      "description" : "Endpoints related to keeping X data in your systems compliant",
       "externalDocs" : {
         "description" : "Find out more",
         "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-tweet/introduction"
@@ -8757,7 +8757,7 @@
           },
           "referenced_tweets" : {
             "type" : "array",
-            "description" : "A list of Tweets this DM refers to.",
+            "description" : "A list of Posts this DM refers to.",
             "minItems" : 1,
             "items" : {
               "type" : "object",
@@ -10807,7 +10807,7 @@
       },
       "List" : {
         "type" : "object",
-        "description" : "A Twitter List is a curated group of accounts.",
+        "description" : "A X List is a curated group of accounts.",
         "required" : [
           "id",
           "name"
@@ -10879,7 +10879,7 @@
         "properties" : {
           "data" : {
             "type" : "object",
-            "description" : "A Twitter List is a curated group of accounts.",
+            "description" : "A X List is a curated group of accounts.",
             "required" : [
               "id",
               "name"
@@ -11194,7 +11194,7 @@
       "NoteTweetText" : {
         "type" : "string",
         "description" : "The note content of the Tweet.",
-        "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+        "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
       },
       "Oauth1PermissionsProblem" : {
         "description" : "A problem that indicates your client application does not have the required OAuth1 permissions for the requested endpoint.",
@@ -11677,7 +11677,7 @@
       "RuleTag" : {
         "type" : "string",
         "description" : "A tag meant for the labeling of user provided rules.",
-        "example" : "Non-retweeted coffee Tweets"
+        "example" : "Non-retweeted coffee Posts"
       },
       "RuleValue" : {
         "type" : "string",
@@ -11938,7 +11938,7 @@
             "description" : "The topics of a Space, as selected by its creator.",
             "items" : {
               "type" : "object",
-              "description" : "The Twitter Topic object.",
+              "description" : "The X Topic object.",
               "required" : [
                 "id",
                 "name"
@@ -12038,7 +12038,7 @@
           },
           "tweet_count" : {
             "type" : "integer",
-            "description" : "Number of Tweets in this trend.",
+            "description" : "Number of Posts in this trend.",
             "format" : "int32"
           }
         }
@@ -12065,7 +12065,7 @@
               },
               "media_source_tweet_id" : {
                 "type" : "array",
-                "description" : "A list of Tweets the media on this Tweet was originally posted in. For example, if the media on a tweet is re-used in another Tweet, this refers to the original, source Tweet..",
+                "description" : "A list of Posts the media on this Tweet was originally posted in. For example, if the media on a tweet is re-used in another Tweet, this refers to the original, source Tweet..",
                 "minItems" : 1,
                 "items" : {
                   "$ref" : "#/components/schemas/TweetId"
@@ -12156,7 +12156,7 @@
           },
           "lang" : {
             "type" : "string",
-            "description" : "Language of the Tweet, if detected by Twitter. Returned as a BCP47 language tag.",
+            "description" : "Language of the Tweet, if detected by X. Returned as a BCP47 language tag.",
             "example" : "en"
           },
           "non_public_metrics" : {
@@ -12312,7 +12312,7 @@
           },
           "referenced_tweets" : {
             "type" : "array",
-            "description" : "A list of Tweets this Tweet refers to. For example, if the parent Tweet is a Retweet, a Quoted Tweet or a Reply, it will include the related Tweet referenced to by its parent.",
+            "description" : "A list of Posts this Tweet refers to. For example, if the parent Tweet is a Retweet, a Quoted Tweet or a Reply, it will include the related Tweet referenced to by its parent.",
             "minItems" : 1,
             "items" : {
               "type" : "object",
@@ -12353,7 +12353,7 @@
           "author_id" : "2244994945",
           "created_at" : "Wed Jan 06 18:40:40 +0000 2021",
           "id" : "1346889436626259968",
-          "text" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+          "text" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
         }
       },
       "TweetComplianceData" : {
@@ -12501,7 +12501,7 @@
           },
           "nullcast" : {
             "type" : "boolean",
-            "description" : "Nullcasted (promoted-only) Tweets do not appear in the public timeline and are not served to followers.",
+            "description" : "Nullcasted (promoted-only) Posts do not appear in the public timeline and are not served to followers.",
             "default" : false
           },
           "poll" : {
@@ -12882,7 +12882,7 @@
       "TweetText" : {
         "type" : "string",
         "description" : "The content of the Tweet.",
-        "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the Twitter API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+        "example" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
       },
       "TweetUndropComplianceSchema" : {
         "type" : "object",
@@ -13045,7 +13045,7 @@
           },
           "display_url" : {
             "type" : "string",
-            "description" : "The URL as displayed in the Twitter client.",
+            "description" : "The URL as displayed in the X client.",
             "example" : "twittercommunity.com/t/introducing-…"
           },
           "expanded_url" : {
@@ -13133,7 +13133,7 @@
           },
           "project_cap" : {
             "type" : "integer",
-            "description" : "Total number of Tweets that can be read in this project per month",
+            "description" : "Total number of Posts that can be read in this project per month",
             "format" : "int32"
           },
           "project_id" : {
@@ -13143,7 +13143,7 @@
           },
           "project_usage" : {
             "type" : "integer",
-            "description" : "The number of Tweets read in this project",
+            "description" : "The number of Posts read in this project",
             "format" : "int32"
           }
         }
@@ -13194,7 +13194,7 @@
       },
       "User" : {
         "type" : "object",
-        "description" : "The Twitter User object.",
+        "description" : "The X User object.",
         "required" : [
           "id",
           "name",
@@ -13256,7 +13256,7 @@
           },
           "protected" : {
             "type" : "boolean",
-            "description" : "Indicates if this User has chosen to protect their Tweets (in other words, if this User's Tweets are private)."
+            "description" : "Indicates if this User has chosen to protect their Posts (in other words, if this User's Posts are private)."
           },
           "public_metrics" : {
             "type" : "object",
@@ -13286,7 +13286,7 @@
               },
               "tweet_count" : {
                 "type" : "integer",
-                "description" : "The number of Tweets (including Retweets) posted by this User."
+                "description" : "The number of Posts (including Retweets) posted by this User."
               }
             }
           },
@@ -13296,7 +13296,7 @@
           },
           "subscription_type" : {
             "type" : "string",
-            "description" : "The Twitter Blue subscription type of the user, eg: Basic, Premium, PremiumPlus or None.",
+            "description" : "The X Blue subscription type of the user, eg: Basic, Premium, PremiumPlus or None.",
             "enum" : [
               "Basic",
               "Premium",
@@ -13313,11 +13313,11 @@
           },
           "verified" : {
             "type" : "boolean",
-            "description" : "Indicate if this User is a verified Twitter User."
+            "description" : "Indicate if this User is a verified X User."
           },
           "verified_type" : {
             "type" : "string",
-            "description" : "The Twitter Blue verified type of the user, eg: blue, government, business or none.",
+            "description" : "The X Blue verified type of the user, eg: blue, government, business or none.",
             "enum" : [
               "blue",
               "government",
@@ -13332,7 +13332,7 @@
         "example" : {
           "created_at" : "2013-12-14T04:35:55Z",
           "id" : "2244994945",
-          "name" : "Twitter Dev",
+          "name" : "X Dev",
           "protected" : false,
           "username" : "TwitterDev"
         }
@@ -13451,7 +13451,7 @@
       },
       "UserName" : {
         "type" : "string",
-        "description" : "The Twitter handle (screen name) of this user.",
+        "description" : "The X handle (screen name) of this user.",
         "pattern" : "^[A-Za-z0-9_]{1,15}$"
       },
       "UserProfileModificationComplianceSchema" : {
