@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.88",
+    "version" : "2.89",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -13201,6 +13201,23 @@
           "username"
         ],
         "properties" : {
+          "connection_status" : {
+            "type" : "array",
+            "description" : "Returns detailed information about the relationship between two users.",
+            "minItems" : 0,
+            "items" : {
+              "type" : "string",
+              "description" : "Type of connection between users.",
+              "enum" : [
+                "follow_request_received",
+                "follow_request_sent",
+                "blocking",
+                "followed_by",
+                "following",
+                "muting"
+              ]
+            }
+          },
           "created_at" : {
             "type" : "string",
             "description" : "Creation time of this User.",
@@ -14675,6 +14692,7 @@
           "items" : {
             "type" : "string",
             "enum" : [
+              "connection_status",
               "created_at",
               "description",
               "entities",
@@ -14696,6 +14714,7 @@
             ]
           },
           "example" : [
+            "connection_status",
             "created_at",
             "description",
             "entities",
