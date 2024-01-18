@@ -2831,7 +2831,7 @@
             "schema" : {
               "type" : "integer",
               "minimum" : 1,
-              "maximum" : 20,
+              "maximum" : 8,
               "format" : "int32"
             },
             "style" : "form"
@@ -2944,7 +2944,7 @@
             "schema" : {
               "type" : "integer",
               "minimum" : 1,
-              "maximum" : 20,
+              "maximum" : 2,
               "format" : "int32"
             },
             "style" : "form"
@@ -3057,7 +3057,7 @@
             "schema" : {
               "type" : "integer",
               "minimum" : 1,
-              "maximum" : 20,
+              "maximum" : 2,
               "format" : "int32"
             },
             "style" : "form"
@@ -3170,7 +3170,7 @@
             "schema" : {
               "type" : "integer",
               "minimum" : 1,
-              "maximum" : 20,
+              "maximum" : 2,
               "format" : "int32"
             },
             "style" : "form"
