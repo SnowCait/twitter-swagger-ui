@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.89",
+    "version" : "2.90",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -766,6 +766,82 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Get2DmEventsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/dm_events/{event_id}" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.read",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Get DM Events by id",
+        "description" : "Returns DM Events by event id.",
+        "operationId" : "getDmEventsById",
+        "parameters" : [
+          {
+            "name" : "event_id",
+            "in" : "path",
+            "description" : "dm event id.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/DmEventId"
+            },
+            "style" : "simple"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/DmEventExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2DmEventsEventIdResponse"
                 }
               }
             }
@@ -9255,6 +9331,24 @@
                 "$ref" : "#/components/schemas/ResultCount"
               }
             }
+          }
+        }
+      },
+      "Get2DmEventsEventIdResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/DmEvent"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
           }
         }
       },
