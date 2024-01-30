@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.90",
+    "version" : "2.91",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -862,6 +862,226 @@
             }
           }
         }
+      }
+    },
+    "/2/likes/firehose/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Likes"
+        ],
+        "summary" : "Likes Firehose stream",
+        "description" : "Streams 100% of public Likes.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-likes-firehose-stream"
+        },
+        "operationId" : "likesFirehoseStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 20,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/LikeFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/LikeExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StreamingLikeResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
+      }
+    },
+    "/2/likes/sample10/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Likes"
+        ],
+        "summary" : "Likes Sample 10 stream",
+        "description" : "Streams 10% of public Likes.",
+        "externalDocs" : {
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-likes-firehose-stream"
+        },
+        "operationId" : "likesSample10Stream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "partition",
+            "in" : "query",
+            "description" : "The partition number.",
+            "required" : true,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 20,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp to which the Posts will be provided.",
+            "required" : false,
+            "example" : "2021-02-14T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/LikeFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/LikeExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StreamingLikeResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
       }
     },
     "/2/lists" : {
@@ -9388,6 +9608,42 @@
           }
         }
       },
+      "Get2LikesFirehoseStreamResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Like"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          }
+        }
+      },
+      "Get2LikesSample10StreamResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Like"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          }
+        }
+      },
       "Get2ListsIdFollowersResponse" : {
         "type" : "object",
         "properties" : {
@@ -10899,6 +11155,38 @@
         "pattern" : "^[0-9]{1,19}$",
         "example" : "1372966999991541762"
       },
+      "Like" : {
+        "type" : "object",
+        "description" : "A Like event, with the liking user and the tweet being liked",
+        "properties" : {
+          "created_at" : {
+            "type" : "string",
+            "description" : "Creation time of the Tweet.",
+            "format" : "date-time",
+            "example" : "2021-01-06T18:40:40.000Z"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/LikeId"
+          },
+          "liked_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
+          "liking_user_id" : {
+            "$ref" : "#/components/schemas/UserId"
+          },
+          "timestamp_ms" : {
+            "type" : "integer",
+            "description" : "Timestamp in milliseconds of creation.",
+            "format" : "int32"
+          }
+        }
+      },
+      "LikeId" : {
+        "type" : "string",
+        "description" : "The unique identifier of this Like.",
+        "pattern" : "^[A-Za-z0-9_]{1,40}$",
+        "example" : "8ba4f34e6235d905a46bac021d98e923"
+      },
       "List" : {
         "type" : "object",
         "description" : "A X List is a curated group of accounts.",
@@ -12076,6 +12364,24 @@
         "type" : "string",
         "description" : "The start time of the bucket.",
         "format" : "date-time"
+      },
+      "StreamingLikeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Like"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "includes" : {
+            "$ref" : "#/components/schemas/Expansions"
+          }
+        }
       },
       "StreamingTweetResponse" : {
         "type" : "object",
