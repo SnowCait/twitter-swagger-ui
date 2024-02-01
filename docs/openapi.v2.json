@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.91",
+    "version" : "2.92",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -862,6 +862,88 @@
             }
           }
         }
+      }
+    },
+    "/2/likes/compliance/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Compliance"
+        ],
+        "summary" : "Users Compliance stream",
+        "description" : "Streams 100% of compliance data for Users",
+        "operationId" : "getLikesComplianceStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the User Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the User Compliance events will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LikesComplianceStreamResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
       }
     },
     "/2/likes/firehose/stream" : {
@@ -11181,11 +11263,54 @@
           }
         }
       },
+      "LikeComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "delete"
+        ],
+        "properties" : {
+          "delete" : {
+            "$ref" : "#/components/schemas/UnlikeComplianceSchema"
+          }
+        }
+      },
       "LikeId" : {
         "type" : "string",
         "description" : "The unique identifier of this Like.",
         "pattern" : "^[A-Za-z0-9_]{1,40}$",
         "example" : "8ba4f34e6235d905a46bac021d98e923"
+      },
+      "LikesComplianceStreamResponse" : {
+        "description" : "Likes compliance stream events.",
+        "oneOf" : [
+          {
+            "type" : "object",
+            "description" : "Compliance event.",
+            "required" : [
+              "data"
+            ],
+            "properties" : {
+              "data" : {
+                "$ref" : "#/components/schemas/LikeComplianceSchema"
+              }
+            }
+          },
+          {
+            "type" : "object",
+            "required" : [
+              "errors"
+            ],
+            "properties" : {
+              "errors" : {
+                "type" : "array",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        ]
       },
       "List" : {
         "type" : "object",
@@ -13381,6 +13506,36 @@
         "properties" : {
           "withheld" : {
             "$ref" : "#/components/schemas/TweetTakedownComplianceSchema"
+          }
+        }
+      },
+      "UnlikeComplianceSchema" : {
+        "type" : "object",
+        "required" : [
+          "favorite",
+          "event_at"
+        ],
+        "properties" : {
+          "event_at" : {
+            "type" : "string",
+            "description" : "Event time.",
+            "format" : "date-time",
+            "example" : "2021-07-06T18:40:40.000Z"
+          },
+          "favorite" : {
+            "type" : "object",
+            "required" : [
+              "id",
+              "user_id"
+            ],
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              },
+              "user_id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
           }
         }
       },
