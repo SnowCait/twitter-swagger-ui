@@ -874,7 +874,7 @@
         "tags" : [
           "Compliance"
         ],
-        "summary" : "Users Compliance stream",
+        "summary" : "Likes Compliance stream",
         "description" : "Streams 100% of compliance data for Users",
         "operationId" : "getLikesComplianceStream",
         "parameters" : [
@@ -894,7 +894,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the User Compliance events will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Likes Compliance events will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -906,7 +906,7 @@
           {
             "name" : "end_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the User Compliance events will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the Likes Compliance events will be provided.",
             "required" : false,
             "example" : "2021-02-01T18:40:40.000Z",
             "schema" : {
@@ -992,7 +992,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Likes will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
@@ -1102,7 +1102,7 @@
           {
             "name" : "start_time",
             "in" : "query",
-            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Posts will be provided.",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp to which the Likes will be provided.",
             "required" : false,
             "example" : "2021-02-14T18:40:40.000Z",
             "schema" : {
