@@ -14356,7 +14356,8 @@
           "tweet_id" : {
             "$ref" : "#/components/schemas/TweetId"
           }
-        }
+        },
+        "additionalProperties" : false
       },
       "UsersRetweetsCreateResponse" : {
         "type" : "object",
