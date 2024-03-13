@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.94",
+    "version" : "2.95",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -789,6 +789,64 @@
       }
     },
     "/2/dm_events/{event_id}" : {
+      "delete" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.read",
+              "dm.write"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Direct Messages"
+        ],
+        "summary" : "Delete Dm",
+        "description" : "Delete a Dm Event that you own.",
+        "operationId" : "dmEventDelete",
+        "parameters" : [
+          {
+            "name" : "event_id",
+            "in" : "path",
+            "description" : "The ID of the direct-message event to delete.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/DmEventId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeleteDmResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
       "get" : {
         "security" : [
           {
@@ -8980,6 +9038,26 @@
         "description" : "Creation time of the compliance job.",
         "format" : "date-time",
         "example" : "2021-01-06T18:40:40.000Z"
+      },
+      "DeleteDmResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "deleted" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
       },
       "DeleteRulesRequest" : {
         "type" : "object",
