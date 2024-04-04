@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.95",
+    "version" : "2.96",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1127,7 +1127,7 @@
         "summary" : "Likes Sample 10 stream",
         "description" : "Streams 10% of public Likes.",
         "externalDocs" : {
-          "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-likes-firehose-stream"
+          "url" : "https://developer.twitter.com/en/docs/twitter-api/likes/firehose/api-reference/get-likes-sample10-stream"
         },
         "operationId" : "likesSample10Stream",
         "parameters" : [
@@ -1152,7 +1152,7 @@
             "schema" : {
               "type" : "integer",
               "minimum" : 1,
-              "maximum" : 20,
+              "maximum" : 2,
               "format" : "int32"
             },
             "style" : "form"
