@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.97",
+    "version" : "2.98",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -12941,6 +12941,17 @@
           "reply_settings" : {
             "$ref" : "#/components/schemas/ReplySettingsWithVerifiedUsers"
           },
+          "scopes" : {
+            "type" : "object",
+            "description" : "The scopes for this tweet",
+            "properties" : {
+              "followers" : {
+                "type" : "boolean",
+                "description" : "Indicates if this Tweet is viewable by followers without the Tweet ID",
+                "example" : false
+              }
+            }
+          },
           "source" : {
             "type" : "string",
             "description" : "This is deprecated."
@@ -15276,6 +15287,7 @@
               "public_metrics",
               "referenced_tweets",
               "reply_settings",
+              "scopes",
               "source",
               "text",
               "withheld"
@@ -15303,6 +15315,7 @@
             "public_metrics",
             "referenced_tweets",
             "reply_settings",
+            "scopes",
             "source",
             "text",
             "withheld"
