@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.98",
+    "version" : "2.99",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1079,9 +1079,6 @@
           },
           {
             "$ref" : "#/components/parameters/TweetFieldsParameter"
-          },
-          {
-            "$ref" : "#/components/parameters/UserFieldsParameter"
           }
         ],
         "responses" : {
@@ -1189,9 +1186,6 @@
           },
           {
             "$ref" : "#/components/parameters/TweetFieldsParameter"
-          },
-          {
-            "$ref" : "#/components/parameters/UserFieldsParameter"
           }
         ],
         "responses" : {
@@ -12648,11 +12642,6 @@
       },
       "Tweet" : {
         "type" : "object",
-        "required" : [
-          "id",
-          "text",
-          "edit_history_tweet_ids"
-        ],
         "properties" : {
           "attachments" : {
             "type" : "object",
@@ -12959,6 +12948,9 @@
           "text" : {
             "$ref" : "#/components/schemas/TweetText"
           },
+          "username" : {
+            "$ref" : "#/components/schemas/UserName"
+          },
           "withheld" : {
             "$ref" : "#/components/schemas/TweetWithheld"
           }
@@ -12967,7 +12959,8 @@
           "author_id" : "2244994945",
           "created_at" : "Wed Jan 06 18:40:40 +0000 2021",
           "id" : "1346889436626259968",
-          "text" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i"
+          "text" : "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet\\u2026 https:\\/\\/t.co\\/56a0vZUx7i",
+          "username" : "XDevelopers"
         }
       },
       "TweetComplianceData" : {
@@ -14799,13 +14792,11 @@
           "items" : {
             "type" : "string",
             "enum" : [
-              "liked_tweet_id",
-              "liking_user_id"
+              "liked_tweet_id"
             ]
           },
           "example" : [
-            "liked_tweet_id",
-            "liking_user_id"
+            "liked_tweet_id"
           ]
         },
         "explode" : false,
@@ -14827,7 +14818,6 @@
               "created_at",
               "id",
               "liked_tweet_id",
-              "liking_user_id",
               "timestamp_ms"
             ]
           },
@@ -14835,7 +14825,6 @@
             "created_at",
             "id",
             "liked_tweet_id",
-            "liking_user_id",
             "timestamp_ms"
           ]
         },
@@ -15233,7 +15222,8 @@
               "in_reply_to_user_id",
               "entities.note.mentions.username",
               "referenced_tweets.id",
-              "referenced_tweets.id.author_id"
+              "referenced_tweets.id.author_id",
+              "author_screen_name"
             ]
           },
           "example" : [
@@ -15247,7 +15237,8 @@
             "in_reply_to_user_id",
             "entities.note.mentions.username",
             "referenced_tweets.id",
-            "referenced_tweets.id.author_id"
+            "referenced_tweets.id.author_id",
+            "author_screen_name"
           ]
         },
         "explode" : false,
@@ -15290,6 +15281,7 @@
               "scopes",
               "source",
               "text",
+              "username",
               "withheld"
             ]
           },
@@ -15318,6 +15310,7 @@
             "scopes",
             "source",
             "text",
+            "username",
             "withheld"
           ]
         },
