@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.99",
+    "version" : "2.100",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -4761,9 +4761,6 @@
       "get" : {
         "security" : [
           {
-            "BearerToken" : [ ]
-          },
-          {
             "OAuth2UserToken" : [
               "like.read",
               "tweet.read",
@@ -6764,9 +6761,6 @@
     "/2/users/{id}/liked_tweets" : {
       "get" : {
         "security" : [
-          {
-            "BearerToken" : [ ]
-          },
           {
             "OAuth2UserToken" : [
               "like.read",
