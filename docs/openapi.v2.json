@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.102",
+    "version" : "2.101",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -1072,13 +1072,10 @@
             "style" : "form"
           },
           {
-            "$ref" : "#/components/parameters/LikeWithTweetAuthorFieldsParameter"
+            "$ref" : "#/components/parameters/LikeFieldsParameter"
           },
           {
-            "$ref" : "#/components/parameters/LikeWithTweetAuthorExpansionsParameter"
-          },
-          {
-            "$ref" : "#/components/parameters/UserFieldsParameter"
+            "$ref" : "#/components/parameters/LikeExpansionsParameter"
           },
           {
             "$ref" : "#/components/parameters/TweetFieldsParameter"
@@ -1090,7 +1087,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/StreamingLikeResponseV2"
+                  "$ref" : "#/components/schemas/StreamingLikeResponse"
                 }
               }
             }
@@ -1182,13 +1179,10 @@
             "style" : "form"
           },
           {
-            "$ref" : "#/components/parameters/LikeWithTweetAuthorFieldsParameter"
+            "$ref" : "#/components/parameters/LikeFieldsParameter"
           },
           {
-            "$ref" : "#/components/parameters/LikeWithTweetAuthorExpansionsParameter"
-          },
-          {
-            "$ref" : "#/components/parameters/UserFieldsParameter"
+            "$ref" : "#/components/parameters/LikeExpansionsParameter"
           },
           {
             "$ref" : "#/components/parameters/TweetFieldsParameter"
@@ -1200,7 +1194,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/StreamingLikeResponseV2"
+                  "$ref" : "#/components/schemas/StreamingLikeResponse"
                 }
               }
             }
@@ -9766,7 +9760,7 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "$ref" : "#/components/schemas/LikeWithTweetAuthor"
+            "$ref" : "#/components/schemas/Like"
           },
           "errors" : {
             "type" : "array",
@@ -9784,7 +9778,7 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "$ref" : "#/components/schemas/LikeWithTweetAuthor"
+            "$ref" : "#/components/schemas/Like"
           },
           "errors" : {
             "type" : "array",
@@ -11309,6 +11303,32 @@
         "pattern" : "^[0-9]{1,19}$",
         "example" : "1372966999991541762"
       },
+      "Like" : {
+        "type" : "object",
+        "description" : "A Like event, with the liking user and the tweet being liked",
+        "properties" : {
+          "created_at" : {
+            "type" : "string",
+            "description" : "Creation time of the Tweet.",
+            "format" : "date-time",
+            "example" : "2021-01-06T18:40:40.000Z"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/LikeId"
+          },
+          "liked_tweet_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
+          "liking_user_id" : {
+            "$ref" : "#/components/schemas/UserId"
+          },
+          "timestamp_ms" : {
+            "type" : "integer",
+            "description" : "Timestamp in milliseconds of creation.",
+            "format" : "int32"
+          }
+        }
+      },
       "LikeComplianceSchema" : {
         "type" : "object",
         "required" : [
@@ -11325,32 +11345,6 @@
         "description" : "The unique identifier of this Like.",
         "pattern" : "^[A-Za-z0-9_]{1,40}$",
         "example" : "8ba4f34e6235d905a46bac021d98e923"
-      },
-      "LikeWithTweetAuthor" : {
-        "type" : "object",
-        "description" : "A Like event, with the tweet author user and the tweet being liked",
-        "properties" : {
-          "created_at" : {
-            "type" : "string",
-            "description" : "Creation time of the Tweet.",
-            "format" : "date-time",
-            "example" : "2021-01-06T18:40:40.000Z"
-          },
-          "id" : {
-            "$ref" : "#/components/schemas/LikeId"
-          },
-          "liked_tweet_id" : {
-            "$ref" : "#/components/schemas/TweetId"
-          },
-          "timestamp_ms" : {
-            "type" : "integer",
-            "description" : "Timestamp in milliseconds of creation.",
-            "format" : "int32"
-          },
-          "tweet_author_id" : {
-            "$ref" : "#/components/schemas/UserId"
-          }
-        }
       },
       "LikesComplianceStreamResponse" : {
         "description" : "Likes compliance stream events.",
@@ -12562,11 +12556,11 @@
         "description" : "The start time of the bucket.",
         "format" : "date-time"
       },
-      "StreamingLikeResponseV2" : {
+      "StreamingLikeResponse" : {
         "type" : "object",
         "properties" : {
           "data" : {
-            "$ref" : "#/components/schemas/LikeWithTweetAuthor"
+            "$ref" : "#/components/schemas/Like"
           },
           "errors" : {
             "type" : "array",
@@ -14824,61 +14818,6 @@
           "example" : [
             "created_at",
             "id",
-            "liked_tweet_id",
-            "timestamp_ms"
-          ]
-        },
-        "explode" : false,
-        "style" : "form"
-      },
-      "LikeWithTweetAuthorExpansionsParameter" : {
-        "name" : "expansions",
-        "in" : "query",
-        "description" : "A comma separated list of fields to expand.",
-        "schema" : {
-          "type" : "array",
-          "description" : "The list of fields you can expand for a [LikeWithTweetAuthor](#LikeWithTweetAuthor) object. If the field has an ID, it can be expanded into a full object.",
-          "minItems" : 1,
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "string",
-            "enum" : [
-              "liked_tweet_author_id",
-              "liked_tweet_id"
-            ]
-          },
-          "example" : [
-            "liked_tweet_author_id",
-            "liked_tweet_id"
-          ]
-        },
-        "explode" : false,
-        "style" : "form"
-      },
-      "LikeWithTweetAuthorFieldsParameter" : {
-        "name" : "like_with_tweet_author.fields",
-        "in" : "query",
-        "description" : "A comma separated list of LikeWithTweetAuthor fields to display.",
-        "required" : false,
-        "schema" : {
-          "type" : "array",
-          "description" : "The fields available for a LikeWithTweetAuthor object.",
-          "minItems" : 1,
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "string",
-            "enum" : [
-              "created_at",
-              "id",
-              "liked_tweet_author_id",
-              "liked_tweet_id",
-              "timestamp_ms"
-            ]
-          },
-          "example" : [
-            "created_at",
-            "id",
-            "liked_tweet_author_id",
             "liked_tweet_id",
             "timestamp_ms"
           ]
