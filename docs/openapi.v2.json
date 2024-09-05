@@ -1095,7 +1095,7 @@
             "style" : "form"
           },
           {
-            "name" : "to_time",
+            "name" : "end_time",
             "in" : "query",
             "description" : "YYYY-MM-DDTHH:mm:ssZ. The UTC timestamp representing the end of the time range.",
             "required" : true,
@@ -1107,7 +1107,7 @@
             "style" : "form"
           },
           {
-            "name" : "from_time",
+            "name" : "start_time",
             "in" : "query",
             "description" : "YYYY-MM-DDTHH:mm:ssZ. The UTC timestamp representing the start of the time range.",
             "required" : true,
