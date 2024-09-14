@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.108",
+    "version" : "2.109",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -6054,7 +6054,7 @@
             "required" : true,
             "example" : "someXUser",
             "schema" : {
-              "$ref" : "#/components/schemas/UserSearchQuery"
+              "$ref" : "#/components/schemas/UserSearchQueryVnext"
             },
             "style" : "form"
           },
@@ -14626,10 +14626,10 @@
           }
         }
       },
-      "UserSearchQuery" : {
+      "UserSearchQueryVnext" : {
         "type" : "string",
         "description" : "The the search string by which to query for users.",
-        "pattern" : "^[A-Za-z0-9_]{1,32}$"
+        "pattern" : "^[A-Za-z0-9_' ]{1,50}$"
       },
       "UserSuspendComplianceSchema" : {
         "type" : "object",
@@ -15725,8 +15725,7 @@
               "in_reply_to_user_id",
               "entities.note.mentions.username",
               "referenced_tweets.id",
-              "referenced_tweets.id.author_id",
-              "author_screen_name"
+              "referenced_tweets.id.author_id"
             ]
           },
           "example" : [
@@ -15742,8 +15741,7 @@
             "in_reply_to_user_id",
             "entities.note.mentions.username",
             "referenced_tweets.id",
-            "referenced_tweets.id.author_id",
-            "author_screen_name"
+            "referenced_tweets.id.author_id"
           ]
         },
         "explode" : false,
@@ -15787,7 +15785,6 @@
               "scopes",
               "source",
               "text",
-              "username",
               "withheld"
             ]
           },
@@ -15817,7 +15814,6 @@
             "scopes",
             "source",
             "text",
-            "username",
             "withheld"
           ]
         },
