@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.109",
+    "version" : "2.110",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -6513,6 +6513,134 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/BookmarkMutationResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/users/{id}/dm/block" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.write",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Users"
+        ],
+        "summary" : "Causes DMs to/from the target User (in the path) to be blocked by the authenticated request user",
+        "description" : "Causes DMs to/from the target User (in the path) to be blocked by the authenticated request user",
+        "externalDocs" : {
+          "url" : "https://developer.x.com/"
+        },
+        "operationId" : "usersIdDMBlock",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The ID of the target User that the authenticated user requesting to block dms for.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersDMBlockCreateResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/users/{id}/dm/unblock" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "dm.write",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Users"
+        ],
+        "summary" : "Causes DMs to/from the target User (in the path) to be unblocked by the authenticated request user",
+        "description" : "Causes DMs to/from the target User (in the path) to be unblocked by the authenticated request user",
+        "externalDocs" : {
+          "url" : "https://developer.x.com/"
+        },
+        "operationId" : "usersIdDMUnBlock",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The ID of the target User that the authenticated user requesting to unblock dms for.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersDMUnBlockCreateResponse"
                 }
               }
             }
@@ -14259,6 +14387,29 @@
           "username"
         ],
         "properties" : {
+          "affiliation" : {
+            "type" : "object",
+            "description" : "Metadata about a user's affiliation.",
+            "properties" : {
+              "badge_url" : {
+                "type" : "string",
+                "description" : "The badge URL corresponding to the affiliation.",
+                "format" : "uri"
+              },
+              "description" : {
+                "type" : "string",
+                "description" : "The description of the affiliation."
+              },
+              "url" : {
+                "type" : "string",
+                "description" : "The URL, if available, to details about an affiliation.",
+                "format" : "uri"
+              },
+              "user_id" : {
+                "$ref" : "#/components/schemas/UserId"
+              }
+            }
+          },
           "connection_status" : {
             "type" : "array",
             "description" : "Returns detailed information about the relationship between two users.",
@@ -14323,6 +14474,11 @@
           },
           "pinned_tweet_id" : {
             "$ref" : "#/components/schemas/TweetId"
+          },
+          "profile_banner_url" : {
+            "type" : "string",
+            "description" : "The URL to the profile banner for this User.",
+            "format" : "uri"
           },
           "profile_image_url" : {
             "type" : "string",
@@ -14742,6 +14898,46 @@
         "properties" : {
           "user_withheld" : {
             "$ref" : "#/components/schemas/UserTakedownComplianceSchema"
+          }
+        }
+      },
+      "UsersDMBlockCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "blocked" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "UsersDMUnBlockCreateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "blocked" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
           }
         }
       },
