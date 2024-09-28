@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.110",
+    "version" : "2.111",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -15963,6 +15963,7 @@
               "context_annotations",
               "conversation_id",
               "created_at",
+              "display_text_range",
               "edit_controls",
               "edit_history_tweet_ids",
               "entities",
@@ -15992,6 +15993,7 @@
             "context_annotations",
             "conversation_id",
             "created_at",
+            "display_text_range",
             "edit_controls",
             "edit_history_tweet_ids",
             "entities",
