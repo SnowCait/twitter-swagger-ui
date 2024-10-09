@@ -6024,7 +6024,7 @@
         }
       }
     },
-    "/2/users/repost_of_me" : {
+    "/2/users/reposts_of_me" : {
       "get" : {
         "security" : [
           {
@@ -6044,6 +6044,30 @@
         "description" : "This endpoint returns reposts of the requesting User.",
         "operationId" : "listOfRepostOfUser",
         "parameters" : [
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 100
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "This parameter is used to get the next 'page' of results.",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/components/schemas/PaginationToken36"
+            },
+            "style" : "form"
+          },
           {
             "$ref" : "#/components/parameters/TweetFieldsParameter"
           },
@@ -6069,7 +6093,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Get2UsersRepostOfMeResponse"
+                  "$ref" : "#/components/schemas/Get2UsersRepostsOfMeResponse"
                 }
               }
             }
@@ -11794,7 +11818,7 @@
           }
         }
       },
-      "Get2UsersRepostOfMeResponse" : {
+      "Get2UsersRepostsOfMeResponse" : {
         "type" : "object",
         "properties" : {
           "data" : {
