@@ -8930,14 +8930,6 @@
       }
     },
     {
-      "name" : "Community Notes",
-      "description" : "Endpoints related to retrieving, searching, and modifying Community Notes",
-      "externalDocs" : {
-        "description" : "Find out more",
-        "url" : "https://developer.twitter.com/en/docs/twitter-api/community-notes"
-      }
-    },
-    {
       "name" : "Compliance",
       "description" : "Endpoints related to keeping X data in your systems compliant",
       "externalDocs" : {
