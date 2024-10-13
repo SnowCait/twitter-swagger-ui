@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.112",
+    "version" : "2.113",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2216,6 +2216,77 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Get2ListsIdTweetsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/notes" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          },
+          {
+            "OAuth2UserToken" : [
+              "list.read",
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Community Notes"
+        ],
+        "summary" : "Community Note lookup by Post ID",
+        "description" : "Returns a variety of information about the Community Noted specified by the requested Post ID.",
+        "externalDocs" : {
+          "url" : "https://developer.x.com/en/docs/x-api/community_notes/api-reference/get-community-note"
+        },
+        "operationId" : "findNoteByTweetId",
+        "parameters" : [
+          {
+            "name" : "postId",
+            "in" : "query",
+            "description" : "A single Post ID.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/TweetId"
+            },
+            "explode" : false,
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/NoteFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2NotesResponse"
                 }
               }
             }
@@ -9241,6 +9312,12 @@
           }
         ]
       },
+      "CommunityId" : {
+        "type" : "string",
+        "description" : "The unique identifier of this Community.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
+      },
       "ComplianceJob" : {
         "type" : "object",
         "required" : [
@@ -10562,6 +10639,21 @@
               "result_count" : {
                 "$ref" : "#/components/schemas/ResultCount"
               }
+            }
+          }
+        }
+      },
+      "Get2NotesResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/Note"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
             }
           }
         }
@@ -12448,6 +12540,64 @@
           }
         ]
       },
+      "Note" : {
+        "type" : "object",
+        "description" : "A X Community Note is a note on a Post.",
+        "required" : [
+          "id",
+          "text"
+        ],
+        "properties" : {
+          "classification" : {
+            "$ref" : "#/components/schemas/NoteClassification"
+          },
+          "created_at" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "deleted" : {
+            "type" : "boolean",
+            "description" : "Whether the Community Note has been deleted or not."
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/NoteId"
+          },
+          "rating_status" : {
+            "$ref" : "#/components/schemas/NoteRatingStatus"
+          },
+          "text" : {
+            "type" : "string",
+            "description" : "The text summary in the Community Note."
+          }
+        }
+      },
+      "NoteClassification" : {
+        "type" : "string",
+        "description" : "Community Note classification type.",
+        "enum" : [
+          "HarmfullyMisleading",
+          "MisinformedOrPotentiallyMisleading",
+          "NotMisleading",
+          "PotentiallyMisleading"
+        ]
+      },
+      "NoteId" : {
+        "type" : "string",
+        "description" : "The unique identifier of this Community Note.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
+      },
+      "NoteRatingStatus" : {
+        "type" : "string",
+        "description" : "Community Note rating status.",
+        "enum" : [
+          "CurrentlyRatedHelpful",
+          "CurrentlyRatedNotHelpful",
+          "InsufficientConsensus",
+          "MinimumRatingsNotMet",
+          "NeedsMoreRatings"
+        ]
+      },
       "NoteTweetText" : {
         "type" : "string",
         "description" : "The note content of the Tweet.",
@@ -13354,6 +13504,9 @@
           "author_id" : {
             "$ref" : "#/components/schemas/UserId"
           },
+          "community_id" : {
+            "$ref" : "#/components/schemas/CommunityId"
+          },
           "context_annotations" : {
             "type" : "array",
             "minItems" : 1,
@@ -13736,6 +13889,9 @@
           "card_uri" : {
             "type" : "string",
             "description" : "Card Uri Parameter. This is mutually exclusive from Quote Tweet Id, Poll, Media, and Direct Message Deep Link."
+          },
+          "community_id" : {
+            "$ref" : "#/components/schemas/CommunityId"
           },
           "direct_message_deep_link" : {
             "type" : "string",
@@ -15758,6 +15914,39 @@
             "url",
             "variants",
             "width"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "NoteFieldsParameter" : {
+        "name" : "note.fields",
+        "in" : "query",
+        "description" : "A comma separated list of Note fields to display.",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "description" : "The fields available for a Note object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "classification",
+              "created_at",
+              "deleted",
+              "id",
+              "rating_status",
+              "text"
+            ]
+          },
+          "example" : [
+            "classification",
+            "created_at",
+            "deleted",
+            "id",
+            "rating_status",
+            "text"
           ]
         },
         "explode" : false,
