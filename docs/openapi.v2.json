@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.114",
+    "version" : "2.115",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -16741,6 +16741,7 @@
               "attachments",
               "author_id",
               "card_uri",
+              "community_id",
               "context_annotations",
               "conversation_id",
               "created_at",
@@ -16772,6 +16773,7 @@
             "attachments",
             "author_id",
             "card_uri",
+            "community_id",
             "context_annotations",
             "conversation_id",
             "created_at",
