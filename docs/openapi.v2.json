@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.118",
+    "version" : "2.119",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -6902,6 +6902,160 @@
         }
       }
     },
+    "/2/users/{id}/bookmarks/folders" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "bookmark.read",
+              "users.read"
+            ]
+          }
+        ],
+        "tags" : [
+          "Bookmarks"
+        ],
+        "summary" : "Bookmark folders by User",
+        "description" : "Returns metadata about Bookmark folders that have been created by the requesting User",
+        "externalDocs" : {
+          "url" : "https://developer.x.com"
+        },
+        "operationId" : "getUsersIdBookmarkFolders",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The ID of the authenticated source User for whom to return results.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
+            },
+            "style" : "simple"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "This parameter is used to get the next 'page' of results.",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/components/schemas/PaginationToken36"
+            },
+            "style" : "form"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookmarkFoldersResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/users/{id}/bookmarks/folders/{folder_id}" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "bookmark.read",
+              "tweet.read",
+              "users.read"
+            ]
+          }
+        ],
+        "tags" : [
+          "Bookmarks"
+        ],
+        "summary" : "Bookmark Folder Posts by User and Folder id",
+        "description" : "Returns posts belonging to input bookmarks folder id that have been created by the requesting User",
+        "externalDocs" : {
+          "url" : "https://developer.x.com"
+        },
+        "operationId" : "getUsersIdBookmarkFolderPosts",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The ID of the authenticated source User for whom to return results.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/UserIdMatchesAuthenticatedUser"
+            },
+            "style" : "simple"
+          },
+          {
+            "name" : "folder_id",
+            "in" : "path",
+            "description" : "The ID of the Bookmark Folder that the authenticated User is trying to fetch Posts for.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/BookmarkFolderId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookmarkFolderPostsResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/2/users/{id}/bookmarks/{tweet_id}" : {
       "delete" : {
         "security" : [
@@ -9479,6 +9633,41 @@
         "properties" : {
           "tweet_id" : {
             "$ref" : "#/components/schemas/TweetId"
+          }
+        }
+      },
+      "BookmarkFolderId" : {
+        "type" : "string",
+        "description" : "The unique identifier of this Bookmark folder.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "1146654567674912769"
+      },
+      "BookmarkFolderPostsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/TweetId"
+              }
+            }
+          }
+        }
+      },
+      "BookmarkFoldersResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/BookmarkFolderId"
+              },
+              "name" : {
+                "type" : "string"
+              }
+            }
           }
         }
       },
