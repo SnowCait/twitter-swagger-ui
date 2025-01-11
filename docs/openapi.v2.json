@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.120",
+    "version" : "2.121",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -3135,6 +3135,20 @@
               "format" : "int32"
             },
             "style" : "simple"
+          },
+          {
+            "name" : "max_trends",
+            "in" : "query",
+            "description" : "The maximum number of results.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 50,
+              "format" : "int32",
+              "default" : 20
+            },
+            "style" : "form"
           },
           {
             "$ref" : "#/components/parameters/TrendFieldsParameter"
@@ -17070,6 +17084,7 @@
               "description",
               "entities",
               "id",
+              "is_identity_verified",
               "location",
               "most_recent_tweet_id",
               "name",
@@ -17095,6 +17110,7 @@
             "description",
             "entities",
             "id",
+            "is_identity_verified",
             "location",
             "most_recent_tweet_id",
             "name",
