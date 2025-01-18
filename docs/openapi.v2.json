@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.122",
+    "version" : "2.123",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2580,6 +2580,8 @@
                 "tweet_gif",
                 "tweet_image",
                 "tweet_video",
+                "dm_video",
+                "dm_image",
                 "subtitles"
               ]
             },
@@ -2618,11 +2620,10 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "$ref" : "#/components/schemas/AddOrDeleteRulesRequest"
+                "$ref" : "#/components/schemas/MediaUploadAppendRequest"
               }
             }
-          },
-          "required" : true
+          }
         },
         "responses" : {
           "200" : {
@@ -13253,6 +13254,19 @@
         "description" : "The Media Key identifier for this attachment.",
         "pattern" : "^([0-9]+)_([0-9]+)$"
       },
+      "MediaPayload" : {
+        "type" : "string",
+        "description" : "The file to upload.",
+        "format" : "binary"
+      },
+      "MediaUploadAppendRequest" : {
+        "type" : "object",
+        "properties" : {
+          "media" : {
+            "$ref" : "#/components/schemas/MediaPayload"
+          }
+        }
+      },
       "MediaUploadInitResponse" : {
         "type" : "object",
         "description" : "A response from initiating a media upload session.",
@@ -17399,6 +17413,7 @@
               "location",
               "most_recent_tweet_id",
               "name",
+              "parody",
               "pinned_tweet_id",
               "profile_banner_url",
               "profile_image_url",
@@ -17425,6 +17440,7 @@
             "location",
             "most_recent_tweet_id",
             "name",
+            "parody",
             "pinned_tweet_id",
             "profile_banner_url",
             "profile_image_url",
