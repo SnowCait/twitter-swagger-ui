@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.123",
+    "version" : "2.124",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2464,6 +2464,9 @@
             "OAuth2UserToken" : [
               "media.write"
             ]
+          },
+          {
+            "UserToken" : [ ]
           }
         ],
         "tags" : [
@@ -2535,6 +2538,9 @@
             "OAuth2UserToken" : [
               "media.write"
             ]
+          },
+          {
+            "UserToken" : [ ]
           }
         ],
         "tags" : [
@@ -17420,6 +17426,7 @@
               "protected",
               "public_metrics",
               "receives_your_dm",
+              "subscription",
               "subscription_type",
               "url",
               "username",
@@ -17447,6 +17454,7 @@
             "protected",
             "public_metrics",
             "receives_your_dm",
+            "subscription",
             "subscription_type",
             "url",
             "username",
