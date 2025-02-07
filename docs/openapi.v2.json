@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.125",
+    "version" : "2.126",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -13628,6 +13628,34 @@
       "MetadataCreateResponse" : {
         "type" : "object",
         "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "associated_metadata" : {
+                "type" : "object",
+                "properties" : {
+                  "allow_download_status" : {
+                    "$ref" : "#/components/schemas/AllowDownloadStatus"
+                  },
+                  "alt_text" : {
+                    "$ref" : "#/components/schemas/AltText"
+                  },
+                  "found_media_origin" : {
+                    "$ref" : "#/components/schemas/FoundMediaOrigin"
+                  },
+                  "sticker_info" : {
+                    "$ref" : "#/components/schemas/StickerInfo"
+                  },
+                  "upload_source" : {
+                    "$ref" : "#/components/schemas/UploadSource"
+                  }
+                }
+              },
+              "id" : {
+                "$ref" : "#/components/schemas/MediaId"
+              }
+            }
+          },
           "errors" : {
             "type" : "array",
             "minItems" : 1,
