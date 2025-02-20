@@ -16121,7 +16121,11 @@
                 "format" : "uri"
               },
               "user_id" : {
-                "$ref" : "#/components/schemas/UserId"
+                "type" : "array",
+                "minItems" : 1,
+                "items" : {
+                  "$ref" : "#/components/schemas/UserId"
+                }
               }
             }
           },
