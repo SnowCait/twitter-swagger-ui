@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.127",
+    "version" : "2.128",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -10018,9 +10018,9 @@
         "properties" : {
           "text" : {
             "type" : "string",
-            "description" : "Alternate text Metadata (Must be <=1000 chars)",
+            "description" : "Description of media ( <= 1000 characters )",
             "pattern" : "^.{0,1000}$",
-            "example" : "dancing cat"
+            "example" : "A dancing cat"
           }
         }
       },
@@ -11082,10 +11082,12 @@
         "properties" : {
           "id" : {
             "type" : "string",
-            "description" : "external_id"
+            "description" : "Unique Identifier of media within provider ( <= 24 characters ))",
+            "example" : "u5BzatR15TZ04"
           },
           "provider" : {
             "type" : "string",
+            "description" : "The media provider (e.g., 'giphy') that sourced the media ( <= 8 Characters )",
             "example" : "giphy"
           }
         }
@@ -13457,16 +13459,14 @@
           }
         }
       },
-      "MediaCategory" : {
+      "MediaCategorySubtitles" : {
         "type" : "string",
-        "description" : "The media category of uploaded media",
+        "description" : "The media category of uploaded media to which subtitles should be added/deleted",
         "enum" : [
           "amplify_video",
-          "tweet_gif",
-          "tweet_image",
-          "tweet_video",
-          "subtitles"
-        ]
+          "tweet_video"
+        ],
+        "example" : "tweet_video"
       },
       "MediaHeight" : {
         "type" : "integer",
@@ -14618,42 +14618,62 @@
         "properties" : {
           "aspect_ratio" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "width-to-height ratio of the media",
+            "format" : "double",
+            "example" : 1.78
           },
           "group_annotation_id" : {
             "type" : "number",
-            "format" : "long"
+            "description" : "A unique identifier for the group of annotations associated with the media",
+            "format" : "long",
+            "example" : 987654321098765
           },
           "id" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Unique identifier for sticker",
+            "example" : "12345"
           },
           "sticker_set_annotation_id" : {
             "type" : "number",
-            "format" : "long"
+            "description" : "A unique identifier for the sticker set associated with the media",
+            "format" : "long",
+            "example" : 123456789012345
           },
           "transform_a" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "Scale or rotate the media on the x-axis",
+            "format" : "double",
+            "example" : 1.0
           },
           "transform_b" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "Skew the media on the x-axis",
+            "format" : "double",
+            "example" : 0.0
           },
           "transform_c" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "Skew the media on the y-axis",
+            "format" : "double",
+            "example" : 0.0
           },
           "transform_d" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "Scale or rotate the media on the y-axis",
+            "format" : "double",
+            "example" : 1.0
           },
           "transform_tx" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "Scale or rotate the media on the x-axis",
+            "format" : "double",
+            "example" : 10.5
           },
           "transform_ty" : {
             "type" : "number",
-            "format" : "double"
+            "description" : "The vertical translation (shift) value for the media",
+            "format" : "double",
+            "example" : -5.2
           }
         }
       },
@@ -14662,6 +14682,7 @@
         "properties" : {
           "stickers" : {
             "type" : "array",
+            "description" : "Stickers list must not be empty and should not exceed 25",
             "items" : {
               "$ref" : "#/components/schemas/Sticker"
             }
@@ -14756,7 +14777,7 @@
         "type" : "object",
         "properties" : {
           "media_category" : {
-            "$ref" : "#/components/schemas/MediaCategory"
+            "$ref" : "#/components/schemas/MediaCategorySubtitles"
           },
           "media_id" : {
             "$ref" : "#/components/schemas/MediaId"
@@ -14783,7 +14804,7 @@
                 "$ref" : "#/components/schemas/MediaId"
               },
               "media_category" : {
-                "$ref" : "#/components/schemas/MediaCategory"
+                "$ref" : "#/components/schemas/MediaCategorySubtitles"
               }
             }
           },
@@ -14800,7 +14821,7 @@
         "type" : "object",
         "properties" : {
           "media_category" : {
-            "$ref" : "#/components/schemas/MediaCategory"
+            "$ref" : "#/components/schemas/MediaCategorySubtitles"
           },
           "media_id" : {
             "$ref" : "#/components/schemas/MediaId"
@@ -14825,7 +14846,8 @@
                     "language_code" : {
                       "type" : "string",
                       "description" : "The language code should be a BCP47 code (e.g. 'en\", \"sp\")",
-                      "pattern" : "^[a-z]{2}$"
+                      "pattern" : "^[a-z]{2}$",
+                      "example" : "en"
                     }
                   }
                 }
@@ -14834,7 +14856,7 @@
                 "$ref" : "#/components/schemas/MediaId"
               },
               "media_category" : {
-                "$ref" : "#/components/schemas/MediaCategory"
+                "$ref" : "#/components/schemas/MediaCategorySubtitles"
               }
             }
           },
@@ -15895,7 +15917,8 @@
         "properties" : {
           "text" : {
             "type" : "string",
-            "description" : "Upload Source"
+            "description" : "Records the source (e.g., app, device) from which the media was uploaded",
+            "example" : "gallery"
           }
         }
       },
