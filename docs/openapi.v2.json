@@ -2635,126 +2635,6 @@
         }
       }
     },
-    "/2/media/subtitles/create" : {
-      "post" : {
-        "security" : [
-          {
-            "OAuth2UserToken" : [
-              "media.write"
-            ]
-          },
-          {
-            "UserToken" : [ ]
-          }
-        ],
-        "tags" : [
-          "MediaUpload"
-        ],
-        "summary" : "Subtitle Create",
-        "description" : "SubtitleCreate",
-        "externalDocs" : {
-          "url" : "https://developer.x.com"
-        },
-        "operationId" : "subtitleCreate",
-        "parameters" : [ ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/SubtitlesCreateRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The request has succeeded.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SubtitlesCreateResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "description" : "The request has failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              },
-              "application/problem+json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Problem"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/2/media/subtitles/delete" : {
-      "post" : {
-        "security" : [
-          {
-            "OAuth2UserToken" : [
-              "media.write"
-            ]
-          },
-          {
-            "UserToken" : [ ]
-          }
-        ],
-        "tags" : [
-          "MediaUpload"
-        ],
-        "summary" : "Subtitle Delete",
-        "description" : "SubtitleDelete",
-        "externalDocs" : {
-          "url" : "https://developer.x.com"
-        },
-        "operationId" : "subtitleDelete",
-        "parameters" : [ ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/SubtitlesDeleteRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The request has succeeded.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SubtitlesDeleteResponse"
-                }
-              }
-            }
-          },
-          "default" : {
-            "description" : "The request has failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              },
-              "application/problem+json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Problem"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/2/media/upload" : {
       "get" : {
         "security" : [
@@ -14918,14 +14798,14 @@
       "SubtitlesDeleteRequest" : {
         "type" : "object",
         "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/MediaId"
+          },
           "language_code" : {
             "$ref" : "#/components/schemas/SubtitleLanguageCode"
           },
           "media_category" : {
             "$ref" : "#/components/schemas/MediaCategorySubtitles"
-          },
-          "media_id" : {
-            "$ref" : "#/components/schemas/MediaId"
           }
         }
       },
