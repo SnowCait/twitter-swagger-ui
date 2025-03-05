@@ -2457,7 +2457,7 @@
         }
       }
     },
-    "/2/media/metadata/create" : {
+    "/2/media/metadata" : {
       "post" : {
         "security" : [
           {
@@ -2475,7 +2475,7 @@
         "summary" : "Metadata Create",
         "description" : "MetadataCreate",
         "externalDocs" : {
-          "url" : "https://developer.x.com"
+          "url" : "https://docs.x.com/x-api/media/media-metadata-create#metadata-create"
         },
         "operationId" : "metadataCreate",
         "parameters" : [ ],
