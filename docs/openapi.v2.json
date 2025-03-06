@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.129",
+    "version" : "2.130",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -2653,7 +2653,7 @@
         "summary" : "Media Upload Status",
         "description" : "Get MediaUpload Status",
         "externalDocs" : {
-          "url" : "https://developer.x.com"
+          "url" : "https://docs.x.com/x-api/media/media-upload-status#media-upload-status"
         },
         "operationId" : "uploadMediaStatus",
         "parameters" : [
@@ -2664,7 +2664,7 @@
             "required" : true,
             "schema" : {
               "type" : "integer",
-              "format" : "int32"
+              "format" : "int64"
             },
             "style" : "form"
           },
@@ -2672,7 +2672,7 @@
             "name" : "command",
             "in" : "query",
             "description" : "The command for the media upload request.",
-            "required" : true,
+            "required" : false,
             "schema" : {
               "type" : "string",
               "enum" : [
@@ -13600,26 +13600,31 @@
       "MetadataCreateRequest" : {
         "type" : "object",
         "required" : [
-          "media_id"
+          "id"
         ],
         "properties" : {
-          "allow_download_status" : {
-            "$ref" : "#/components/schemas/AllowDownloadStatus"
-          },
-          "alt_text" : {
-            "$ref" : "#/components/schemas/AltText"
-          },
-          "found_media_origin" : {
-            "$ref" : "#/components/schemas/FoundMediaOrigin"
-          },
-          "media_id" : {
+          "id" : {
             "$ref" : "#/components/schemas/MediaId"
           },
-          "sticker_info" : {
-            "$ref" : "#/components/schemas/StickerInfo"
-          },
-          "upload_source" : {
-            "$ref" : "#/components/schemas/UploadSource"
+          "metadata" : {
+            "type" : "object",
+            "properties" : {
+              "allow_download_status" : {
+                "$ref" : "#/components/schemas/AllowDownloadStatus"
+              },
+              "alt_text" : {
+                "$ref" : "#/components/schemas/AltText"
+              },
+              "found_media_origin" : {
+                "$ref" : "#/components/schemas/FoundMediaOrigin"
+              },
+              "sticker_info" : {
+                "$ref" : "#/components/schemas/StickerInfo"
+              },
+              "upload_source" : {
+                "$ref" : "#/components/schemas/UploadSource"
+              }
+            }
           }
         }
       },
@@ -15878,7 +15883,7 @@
       "UploadSource" : {
         "type" : "object",
         "properties" : {
-          "text" : {
+          "upload_source" : {
             "type" : "string",
             "description" : "Records the source (e.g., app, device) from which the media was uploaded",
             "example" : "gallery"
