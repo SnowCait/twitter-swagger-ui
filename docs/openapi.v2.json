@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.141",
+    "version" : "2.142",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -16027,18 +16027,16 @@
             "type" : "object",
             "properties" : {
               "media" : {
-                "type" : "number",
-                "description" : "Unique identifier of this media",
-                "format" : "long",
-                "example" : "1344889453626359968"
+                "$ref" : "#/components/schemas/MediaId"
               },
               "media_category" : {
                 "type" : "string",
                 "description" : "The media category of media",
                 "enum" : [
-                  "PreviewImage"
+                  "TweetImage"
                 ],
-                "example" : "PreviewImage"
+                "default" : "TweetImage",
+                "example" : "TweetImage"
               }
             }
           }
