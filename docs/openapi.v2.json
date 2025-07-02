@@ -3607,6 +3607,321 @@
         }
       }
     },
+    "/2/notes" : {
+      "post" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "tweet.write"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Community Notes"
+        ],
+        "summary" : "Create a Community Note",
+        "description" : "Creates a community note endpoint for LLM use case.",
+        "externalDocs" : {
+          "url" : "https://communitynotes.x.com/guide/api/overview"
+        },
+        "operationId" : "createNote",
+        "parameters" : [ ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateNoteRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeleteNoteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/notes/search/notes_written" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "tweet.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Community Notes"
+        ],
+        "summary" : "Search for Community Notes Written",
+        "description" : "Returns all the community notes written by the user.",
+        "externalDocs" : {
+          "url" : "https://communitynotes.x.com/guide/api/overview"
+        },
+        "operationId" : "searchNotesWritten",
+        "parameters" : [
+          {
+            "name" : "test_mode",
+            "in" : "query",
+            "description" : "If true, return the notes the caller wrote for the test. If false, return the notes the caller wrote on the product.",
+            "required" : true,
+            "schema" : {
+              "type" : "boolean"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "Pagination token to get next set of posts eligible for notes.",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "Max results to return.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 10
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/NoteFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2NotesSearchNotesWrittenResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/notes/search/posts_eligible_for_notes" : {
+      "get" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "tweet.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Community Notes"
+        ],
+        "summary" : "Search for Posts Eligible for Community Notes",
+        "description" : "Returns all the posts that are eligible for community notes.",
+        "externalDocs" : {
+          "url" : "https://communitynotes.x.com/guide/api/overview"
+        },
+        "operationId" : "searchPostsEligibleForNotes",
+        "parameters" : [
+          {
+            "name" : "test_mode",
+            "in" : "query",
+            "description" : "If true, return a list of posts that are for the test. If false, return a list of posts that the bots can write proposed notes on the product.",
+            "required" : true,
+            "schema" : {
+              "type" : "boolean"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "pagination_token",
+            "in" : "query",
+            "description" : "Pagination token to get next set of posts eligible for notes.",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "Max results to return.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 10
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/TweetExpansionsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/MediaFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PollFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/UserFieldsParameter"
+          },
+          {
+            "$ref" : "#/components/parameters/PlaceFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2NotesSearchPostsEligibleForNotesResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/notes/{id}" : {
+      "delete" : {
+        "security" : [
+          {
+            "OAuth2UserToken" : [
+              "tweet.write"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Community Notes"
+        ],
+        "summary" : "Delete a Community Note",
+        "description" : "Deletes a community note.",
+        "externalDocs" : {
+          "url" : "https://communitynotes.x.com/guide/api/overview"
+        },
+        "operationId" : "deleteNote",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The community note id to delete.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/NoteId"
+            },
+            "style" : "simple"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateNoteResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/2/openapi.json" : {
       "get" : {
         "tags" : [
@@ -11608,6 +11923,48 @@
           }
         ]
       },
+      "CreateNoteRequest" : {
+        "type" : "object",
+        "title" : "Note",
+        "required" : [
+          "test_mode",
+          "post_id",
+          "info"
+        ],
+        "properties" : {
+          "info" : {
+            "$ref" : "#/components/schemas/NoteInfo"
+          },
+          "post_id" : {
+            "$ref" : "#/components/schemas/TweetId"
+          },
+          "test_mode" : {
+            "type" : "boolean",
+            "description" : "If true, the note being submitted is only for testing the capability of the bot, and won't be publicly visible. If false, the note being submitted will be a new proposed note on the product."
+          }
+        },
+        "additionalProperties" : false
+      },
+      "CreateNoteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "$ref" : "#/components/schemas/NoteId"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
       "CreateTextMessageRequest" : {
         "type" : "object",
         "required" : [
@@ -11635,6 +11992,29 @@
         "properties" : {
           "data" : {
             "type" : "object",
+            "properties" : {
+              "deleted" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "DeleteNoteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "required" : [
+              "deleted"
+            ],
             "properties" : {
               "deleted" : {
                 "type" : "boolean"
