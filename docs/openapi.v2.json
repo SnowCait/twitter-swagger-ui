@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.142",
+    "version" : "2.143",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -6711,6 +6711,88 @@
             }
           }
         }
+      }
+    },
+    "/2/tweets/unviewable/stream" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "Compliance"
+        ],
+        "summary" : "Unviewable Posts stream",
+        "description" : "Streams 100% of unviewable events applied to Posts",
+        "operationId" : "getTweetsUnviewableStream",
+        "parameters" : [
+          {
+            "name" : "backfill_minutes",
+            "in" : "query",
+            "description" : "The number of minutes of backfill requested.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 5,
+              "format" : "int32"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "start_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The earliest UTC timestamp from which the Post labels will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "end_time",
+            "in" : "query",
+            "description" : "YYYY-MM-DDTHH:mm:ssZ. The latest UTC timestamp from which the Post labels will be provided.",
+            "required" : false,
+            "example" : "2021-02-01T18:40:40.000Z",
+            "schema" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "style" : "form"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TweetLabelStreamResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-twitter-streaming" : true
       }
     },
     "/2/tweets/{id}" : {
