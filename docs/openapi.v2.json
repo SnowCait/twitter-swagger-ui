@@ -20459,12 +20459,14 @@
             "type" : "string",
             "enum" : [
               "id",
+              "info",
               "status",
               "test_result"
             ]
           },
           "example" : [
             "id",
+            "info",
             "status",
             "test_result"
           ]
