@@ -3685,7 +3685,7 @@
         "summary" : "Search for Community Notes Written",
         "description" : "Returns all the community notes written by the user.",
         "externalDocs" : {
-          "url" : "https://communitynotes.x.com/guide/api/overview"
+          "url" : "https://docs.x.com/x-api/community-notes/search-for-community-notes-written"
         },
         "operationId" : "searchNotesWritten",
         "parameters" : [
@@ -3774,7 +3774,7 @@
         "summary" : "Search for Posts Eligible for Community Notes",
         "description" : "Returns all the posts that are eligible for community notes.",
         "externalDocs" : {
-          "url" : "https://communitynotes.x.com/guide/api/overview"
+          "url" : "https://docs.x.com/x-api/community-notes/search-for-posts-eligible-for-community-notes"
         },
         "operationId" : "searchPostsEligibleForNotes",
         "parameters" : [
