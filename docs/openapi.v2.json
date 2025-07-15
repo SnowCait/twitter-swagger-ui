@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "Twitter API v2 available endpoints",
-    "version" : "2.143",
+    "version" : "2.144",
     "title" : "Twitter API v2",
     "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
@@ -15879,8 +15879,7 @@
             "$ref" : "#/components/schemas/NoteRatingStatus"
           },
           "test_result" : {
-            "type" : "boolean",
-            "description" : "Test result information. Only returned when test result is true."
+            "$ref" : "#/components/schemas/NoteTestResult"
           }
         }
       },
@@ -15941,6 +15940,21 @@
           "needs_more_ratings",
           "needs_your_help"
         ]
+      },
+      "NoteTestResult" : {
+        "type" : "object",
+        "description" : "The test result of a community note.",
+        "properties" : {
+          "evaluator_score" : {
+            "type" : "number",
+            "description" : "The score given to a written test note.",
+            "format" : "double"
+          },
+          "evaluator_type" : {
+            "type" : "string",
+            "description" : "The type of evaluator response."
+          }
+        }
       },
       "NoteTweetText" : {
         "type" : "string",
