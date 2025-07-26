@@ -1,17 +1,17 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "description" : "Twitter API v2 available endpoints",
+    "description" : "X API v2 available endpoints",
     "version" : "2.144",
-    "title" : "Twitter API v2",
-    "termsOfService" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html",
+    "title" : "X API v2",
+    "termsOfService" : "https://developer.x.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
-      "name" : "Twitter Developers",
-      "url" : "https://developer.twitter.com/"
+      "name" : "X Developers",
+      "url" : "https://developer.x.com/"
     },
     "license" : {
-      "name" : "Twitter Developer Agreement and Policy",
-      "url" : "https://developer.twitter.com/en/developer-terms/agreement-and-policy.html"
+      "name" : "X Developer Agreement and Policy",
+      "url" : "https://developer.x.com/en/developer-terms/agreement-and-policy.html"
     }
   },
   "paths" : {
@@ -420,11 +420,11 @@
           "Communities"
         ],
         "summary" : "Search Communities",
-        "description" : "Returns Communities that match search query",
+        "description" : "Retrieves a list of Communities matching the specified search query.",
         "externalDocs" : {
           "url" : "https://developer.x.com"
         },
-        "operationId" : "communitiesSearch",
+        "operationId" : "searchCommunities",
         "parameters" : [
           {
             "name" : "query",
@@ -526,12 +526,12 @@
         "tags" : [
           "Communities"
         ],
-        "summary" : "Communities lookup by Community ID.",
-        "description" : "Returns a Community.",
+        "summary" : "Get Community by ID",
+        "description" : "Retrieves details of a specific Community by its ID.",
         "externalDocs" : {
           "url" : "https://developer.x.com/en/docs/x-api/communities/api-reference/get-communities-id"
         },
-        "operationId" : "communityIdGet",
+        "operationId" : "getCommunitiesById",
         "parameters" : [
           {
             "name" : "id",
@@ -586,12 +586,12 @@
         "tags" : [
           "Compliance"
         ],
-        "summary" : "List Compliance Jobs",
-        "description" : "Returns recent Compliance Jobs for a given job type and optional job status",
+        "summary" : "Get Compliance Jobs",
+        "description" : "Retrieves a list of Compliance Jobs filtered by job type and optional status.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs"
         },
-        "operationId" : "listBatchComplianceJobs",
+        "operationId" : "getComplianceJobs",
         "parameters" : [
           {
             "name" : "type",
@@ -720,12 +720,12 @@
         "tags" : [
           "Compliance"
         ],
-        "summary" : "Get Compliance Job",
-        "description" : "Returns a single Compliance Job by ID",
+        "summary" : "Get Compliance Job by ID",
+        "description" : "Retrieves details of a specific Compliance Job by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs-id"
         },
-        "operationId" : "getBatchComplianceJob",
+        "operationId" : "getComplianceJobsById",
         "parameters" : [
           {
             "name" : "id",
@@ -892,8 +892,8 @@
         "tags" : [
           "Direct Messages"
         ],
-        "summary" : "Get DM Events for a DM Conversation",
-        "description" : "Returns DM Events for a DM Conversation",
+        "summary" : "Get DM events for a DM conversation",
+        "description" : "Retrieves direct message events for a specific conversation.",
         "operationId" : "getDmEventsByParticipantId",
         "parameters" : [
           {
@@ -1162,14 +1162,14 @@
         "tags" : [
           "Direct Messages"
         ],
-        "summary" : "Get DM Events for a DM Conversation",
-        "description" : "Returns DM Events for a DM Conversation",
+        "summary" : "Get DM events for a DM conversation",
+        "description" : "Retrieves direct message events for a specific conversation.",
         "operationId" : "getDmConversationsIdDmEvents",
         "parameters" : [
           {
             "name" : "id",
             "in" : "path",
-            "description" : "The DM Conversation ID.",
+            "description" : "The DM conversation ID.",
             "required" : true,
             "schema" : {
               "$ref" : "#/components/schemas/DmConversationId"
@@ -1292,8 +1292,8 @@
         "tags" : [
           "Direct Messages"
         ],
-        "summary" : "Get recent DM Events",
-        "description" : "Returns recent DM Events across DM conversations",
+        "summary" : "Get DM events",
+        "description" : "Retrieves a list of recent direct message events across all conversations.",
         "operationId" : "getDmEvents",
         "parameters" : [
           {
@@ -1470,8 +1470,8 @@
         "tags" : [
           "Direct Messages"
         ],
-        "summary" : "Get DM Events by id",
-        "description" : "Returns DM Events by event id.",
+        "summary" : "Get DM event by ID",
+        "description" : "Retrieves details of a specific direct message event by its ID.",
         "operationId" : "getDmEventsById",
         "parameters" : [
           {
@@ -2262,12 +2262,12 @@
         "tags" : [
           "Lists"
         ],
-        "summary" : "List lookup by List ID.",
-        "description" : "Returns a List.",
+        "summary" : "Get List by ID",
+        "description" : "Retrieves details of a specific List by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-lists-id"
         },
-        "operationId" : "listIdGet",
+        "operationId" : "getListsById",
         "parameters" : [
           {
             "name" : "id",
@@ -2409,12 +2409,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that follow a List by the provided List ID",
-        "description" : "Returns a list of Users that follow a List by the provided List ID",
+        "summary" : "Get List followers",
+        "description" : "Retrieves a list of Users who follow a specific List by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers"
         },
-        "operationId" : "listGetFollowers",
+        "operationId" : "getListsFollowers",
         "parameters" : [
           {
             "name" : "id",
@@ -2509,12 +2509,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that are members of a List by the provided List ID.",
-        "description" : "Returns a list of Users that are members of a List by the provided List ID.",
+        "summary" : "Get List members",
+        "description" : "Retrieves a list of Users who are members of a specific List by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-users-id-list_memberships"
         },
-        "operationId" : "listGetMembers",
+        "operationId" : "getListsMembers",
         "parameters" : [
           {
             "name" : "id",
@@ -2754,12 +2754,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "List Posts timeline by List ID.",
-        "description" : "Returns a list of Posts associated with the provided List ID.",
+        "summary" : "Get List Posts",
+        "description" : "Retrieves a list of Posts associated with a specific List by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-tweets/api-reference/get-lists-id-tweets"
         },
-        "operationId" : "listsIdTweets",
+        "operationId" : "getListsPosts",
         "parameters" : [
           {
             "name" : "id",
@@ -2861,12 +2861,12 @@
         "tags" : [
           "Media"
         ],
-        "summary" : "Media lookup by Media Key",
-        "description" : "Returns a variety of information about the Media specified by the requested Media Key.",
+        "summary" : "Get Media by media keys",
+        "description" : "Retrieves details of Media files by their media keys.",
         "externalDocs" : {
           "url" : "https://developer.x.com"
         },
-        "operationId" : "findMediaByMediaKeys",
+        "operationId" : "getMediaByMediaKeys",
         "parameters" : [
           {
             "name" : "media_keys",
@@ -2932,9 +2932,9 @@
         "tags" : [
           "Media"
         ],
-        "summary" : "Analytics of Media",
-        "description" : "Returns analytics of Media.",
-        "operationId" : "MediaAnalytics",
+        "summary" : "Get Media analytics",
+        "description" : "Retrieves analytics data for media.",
+        "operationId" : "getMediaAnalytics",
         "parameters" : [
           {
             "name" : "media_keys",
@@ -3557,12 +3557,12 @@
         "tags" : [
           "Media"
         ],
-        "summary" : "Media lookup by Media Key",
-        "description" : "Returns a variety of information about the Media specified by the requested Media Key.",
+        "summary" : "Get Media by media key",
+        "description" : "Retrieves details of a specific Media file by its media key.",
         "externalDocs" : {
           "url" : "https://developer.x.com"
         },
-        "operationId" : "findMediaByMediaKey",
+        "operationId" : "getMediaByMediaKey",
         "parameters" : [
           {
             "name" : "media_key",
@@ -3627,7 +3627,7 @@
         "externalDocs" : {
           "url" : "https://communitynotes.x.com/guide/api/overview"
         },
-        "operationId" : "createNote",
+        "operationId" : "createNotes",
         "parameters" : [ ],
         "requestBody" : {
           "content" : {
@@ -3776,7 +3776,7 @@
         "externalDocs" : {
           "url" : "https://docs.x.com/x-api/community-notes/search-for-posts-eligible-for-community-notes"
         },
-        "operationId" : "searchPostsEligibleForNotes",
+        "operationId" : "searchForEligiblePosts",
         "parameters" : [
           {
             "name" : "test_mode",
@@ -3880,7 +3880,7 @@
         "externalDocs" : {
           "url" : "https://communitynotes.x.com/guide/api/overview"
         },
-        "operationId" : "deleteNote",
+        "operationId" : "deleteNotes",
         "parameters" : [
           {
             "name" : "id",
@@ -3927,8 +3927,8 @@
         "tags" : [
           "General"
         ],
-        "summary" : "Returns the OpenAPI Specification document.",
-        "description" : "Full OpenAPI Specification in JSON format. (See https://github.com/OAI/OpenAPI-Specification/blob/master/README.md)",
+        "summary" : "Get OpenAPI Spec.",
+        "description" : "Retrieves the full OpenAPI Specification in JSON format. (See https://github.com/OAI/OpenAPI-Specification/blob/master/README.md)",
         "operationId" : "getOpenApiSpec",
         "parameters" : [ ],
         "responses" : {
@@ -3962,12 +3962,12 @@
         "tags" : [
           "Spaces"
         ],
-        "summary" : "Space lookup up Space IDs",
-        "description" : "Returns a variety of information about the Spaces specified by the requested IDs",
+        "summary" : "Get Spaces by IDs",
+        "description" : "Retrieves details of multiple Spaces by their IDs.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces"
         },
-        "operationId" : "findSpacesByIds",
+        "operationId" : "getSpacesByIds",
         "parameters" : [
           {
             "name" : "ids",
@@ -4046,12 +4046,12 @@
         "tags" : [
           "Spaces"
         ],
-        "summary" : "Space lookup by their creators",
-        "description" : "Returns a variety of information about the Spaces created by the provided User IDs",
+        "summary" : "Get Spaces by creator IDs",
+        "description" : "Retrieves details of Spaces created by specified User IDs.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-by-creator-ids"
         },
-        "operationId" : "findSpacesByCreatorIds",
+        "operationId" : "getSpacesByCreatorIds",
         "parameters" : [
           {
             "name" : "user_ids",
@@ -4127,8 +4127,8 @@
         "tags" : [
           "Spaces"
         ],
-        "summary" : "Search for Spaces",
-        "description" : "Returns Spaces that match the provided query.",
+        "summary" : "Search Spaces",
+        "description" : "Retrieves a list of Spaces matching the specified search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/search/api-reference/get-spaces-search"
         },
@@ -4237,12 +4237,12 @@
         "tags" : [
           "Spaces"
         ],
-        "summary" : "Space lookup by Space ID",
-        "description" : "Returns a variety of information about the Space specified by the requested ID",
+        "summary" : "Get space by ID",
+        "description" : "Retrieves details of a specific space by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id"
         },
-        "operationId" : "findSpaceById",
+        "operationId" : "getSpacesById",
         "parameters" : [
           {
             "name" : "id",
@@ -4315,12 +4315,12 @@
           "Spaces",
           "Tweets"
         ],
-        "summary" : "Retrieve the list of Users who purchased a ticket to the given space",
-        "description" : "Retrieves the list of Users who purchased a ticket to the given space",
+        "summary" : "Get Space ticket buyers",
+        "description" : "Retrieves a list of Users who purchased tickets to a specific Space by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-buyers"
         },
-        "operationId" : "spaceBuyers",
+        "operationId" : "getSpacesBuyers",
         "parameters" : [
           {
             "name" : "id",
@@ -4417,12 +4417,12 @@
           "Spaces",
           "Tweets"
         ],
-        "summary" : "Retrieve Posts from a Space.",
-        "description" : "Retrieves Posts shared in the specified Space.",
+        "summary" : "Get Space Posts",
+        "description" : "Retrieves a list of Posts shared in a specific Space by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-tweets"
         },
-        "operationId" : "spaceTweets",
+        "operationId" : "getSpacesPosts",
         "parameters" : [
           {
             "name" : "id",
@@ -4596,12 +4596,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Post lookup by Post IDs",
-        "description" : "Returns a variety of information about the Post specified by the requested ID.",
+        "summary" : "Get Posts by IDs",
+        "description" : "Retrieves details of multiple Posts by their IDs.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets"
         },
-        "operationId" : "findTweetsById",
+        "operationId" : "getPostsByIds",
         "parameters" : [
           {
             "name" : "ids",
@@ -4744,9 +4744,9 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Analytics of posts",
-        "description" : "Returns analytics of posts.",
-        "operationId" : "postAnalytics2",
+        "summary" : "Get Post analytics",
+        "description" : "Retrieves analytics data for specified Posts within a defined time range.",
+        "operationId" : "getPostsAnalytics",
         "parameters" : [
           {
             "name" : "ids",
@@ -4943,12 +4943,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Full archive search counts",
-        "description" : "Returns Post Counts that match a search query.",
+        "summary" : "Get count of all Posts",
+        "description" : "Retrieves the count of Posts matching a search query from the full archive.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
         },
-        "operationId" : "tweetCountsFullArchiveSearch",
+        "operationId" : "getPostsCountsAll",
         "parameters" : [
           {
             "name" : "query",
@@ -5084,12 +5084,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Recent search counts",
-        "description" : "Returns Post Counts from the last 7 days that match a search query.",
+        "summary" : "Get count of recent Posts",
+        "description" : "Retrieves the count of Posts from the last 7 days matching a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/counts/api-reference/get-tweets-counts-recent"
         },
-        "operationId" : "tweetCountsRecentSearch",
+        "operationId" : "getPostsCountsRecent",
         "parameters" : [
           {
             "name" : "query",
@@ -5982,12 +5982,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Full-archive search",
-        "description" : "Returns Posts that match a search query.",
+        "summary" : "Search all Posts",
+        "description" : "Retrieves Posts from the full archive matching a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all"
         },
-        "operationId" : "tweetsFullarchiveSearch",
+        "operationId" : "searchPostsAll",
         "parameters" : [
           {
             "name" : "query",
@@ -6159,12 +6159,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Recent search",
-        "description" : "Returns Posts from the last 7 days that match a search query.",
+        "summary" : "Search recent Posts",
+        "description" : "Retrieves Posts from the last 7 days matching a search query.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent"
         },
-        "operationId" : "tweetsRecentSearch",
+        "operationId" : "searchPostsRecent",
         "parameters" : [
           {
             "name" : "query",
@@ -6589,14 +6589,15 @@
           }
         ],
         "tags" : [
-          "General"
+          "Stream",
+          "Tweets"
         ],
-        "summary" : "Rules Count",
-        "description" : "Returns the counts of rules from a User's active rule set, to reflect usage by project and application.",
+        "summary" : "Get stream rule counts",
+        "description" : "Retrieves the count of rules in the active rule set for the filtered stream.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream-rules-counts"
         },
-        "operationId" : "getRuleCount",
+        "operationId" : "getRuleCounts",
         "parameters" : [
           {
             "$ref" : "#/components/parameters/RulesCountFieldsParameter"
@@ -6712,12 +6713,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Post lookup by Post ID",
-        "description" : "Returns a variety of information about the Post specified by the requested ID.",
+        "summary" : "Get Post by ID",
+        "description" : "Retrieves details of a specific Post by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id"
         },
-        "operationId" : "findTweetById",
+        "operationId" : "getPostsById",
         "parameters" : [
           {
             "name" : "id",
@@ -6794,12 +6795,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that have liked the provided Post ID",
-        "description" : "Returns a list of Users that have liked the provided Post ID",
+        "summary" : "Get Liking Users",
+        "description" : "Retrieves a list of Users who liked a specific Post by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users"
         },
-        "operationId" : "tweetsIdLikingUsers",
+        "operationId" : "getPostsLikingUsers",
         "parameters" : [
           {
             "name" : "id",
@@ -6893,12 +6894,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Retrieve Posts that quote a Post.",
-        "description" : "Returns a variety of information about each Post that quotes the Post specified by the requested ID.",
+        "summary" : "Get Quoted Posts",
+        "description" : "Retrieves a list of Posts that quote a specific Post by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/quote-tweets/api-reference/get-tweets-id-quote_tweets"
         },
-        "operationId" : "findTweetsThatQuoteATweet",
+        "operationId" : "getPostsQuotedPosts",
         "parameters" : [
           {
             "name" : "id",
@@ -7025,12 +7026,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that have retweeted the provided Post ID",
-        "description" : "Returns a list of Users that have retweeted the provided Post ID",
+        "summary" : "Get Reposted by",
+        "description" : "Retrieves a list of Users who reposted a specific Post by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweeted_by"
         },
-        "operationId" : "tweetsIdRetweetingUsers",
+        "operationId" : "getPostsRepostedBy",
         "parameters" : [
           {
             "name" : "id",
@@ -7124,12 +7125,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Retrieve Posts that repost a Post.",
-        "description" : "Returns a variety of information about each Post that has retweeted the Post specified by the requested ID.",
+        "summary" : "Get Reposts",
+        "description" : "Retrieves a list of Posts that repost a specific Post by its ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweets"
         },
-        "operationId" : "findTweetsThatRetweetATweet",
+        "operationId" : "getPostsReposts",
         "parameters" : [
           {
             "name" : "id",
@@ -7296,12 +7297,12 @@
         "tags" : [
           "Usage"
         ],
-        "summary" : "Post Usage",
-        "description" : "Returns the Post Usage.",
+        "summary" : "Get usage",
+        "description" : "Retrieves usage statistics for Posts over a specified number of days.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/usage/tweets/api-reference/get-usage-tweets"
         },
-        "operationId" : "getUsageTweets",
+        "operationId" : "getUsage",
         "parameters" : [
           {
             "name" : "days",
@@ -7369,12 +7370,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "User lookup by IDs",
-        "description" : "This endpoint returns information about Users. Specify Users by their ID.",
+        "summary" : "Get Users by IDs",
+        "description" : "Retrieves details of multiple Users by their IDs.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users"
         },
-        "operationId" : "findUsersById",
+        "operationId" : "getUsersByIds",
         "parameters" : [
           {
             "name" : "ids",
@@ -7451,12 +7452,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "User lookup by usernames",
-        "description" : "This endpoint returns information about Users. Specify Users by their username.",
+        "summary" : "Get Users by usernames",
+        "description" : "Retrieves details of multiple Users by their usernames.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-by"
         },
-        "operationId" : "findUsersByUsername",
+        "operationId" : "getUsersByUsernames",
         "parameters" : [
           {
             "name" : "usernames",
@@ -7535,12 +7536,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "User lookup by username",
-        "description" : "This endpoint returns information about a User. Specify User by username.",
+        "summary" : "Get User by username",
+        "description" : "Retrieves details of a specific User by their username.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-by-username-username"
         },
-        "operationId" : "findUserByUsername",
+        "operationId" : "getUsersByUsername",
         "parameters" : [
           {
             "name" : "username",
@@ -7704,12 +7705,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "User lookup me",
-        "description" : "This endpoint returns information about the requesting User.",
+        "summary" : "Get my User",
+        "description" : "Retrieves details of the authenticated user.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-me"
         },
-        "operationId" : "findMyUser",
+        "operationId" : "getMyUser",
         "parameters" : [
           {
             "$ref" : "#/components/parameters/UserFieldsParameter"
@@ -7767,11 +7768,11 @@
           "Trends"
         ],
         "summary" : "Get personalized Trends",
-        "description" : "Returns Personalized trends for the authenticated user",
+        "description" : "Retrieves personalized trending topics for the authenticated user.",
         "externalDocs" : {
           "url" : "https://developer.x.com/"
         },
-        "operationId" : "personalizedTrends",
+        "operationId" : "getUsersPersonalizedTrends",
         "parameters" : [
           {
             "$ref" : "#/components/parameters/PersonalizedTrendFieldsParameter"
@@ -7822,9 +7823,9 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns repost of user",
-        "description" : "This endpoint returns reposts of the requesting User.",
-        "operationId" : "listOfRepostOfUser",
+        "summary" : "Get Reposts of me",
+        "description" : "Retrieves a list of Posts that repost content from the authenticated user.",
+        "operationId" : "getUsersRepostsOfMe",
         "parameters" : [
           {
             "name" : "max_results",
@@ -8014,12 +8015,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "User lookup by ID",
-        "description" : "This endpoint returns information about a User. Specify User by ID.",
+        "summary" : "Get User by ID",
+        "description" : "Retrieves details of a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-id"
         },
-        "operationId" : "findUserById",
+        "operationId" : "getUsersById",
         "parameters" : [
           {
             "name" : "id",
@@ -8088,12 +8089,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that are blocked by provided User ID",
-        "description" : "Returns a list of Users that are blocked by the provided User ID",
+        "summary" : "Get blocking",
+        "description" : "Retrieves a list of Users blocked by the specified User ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/get-users-blocking"
         },
-        "operationId" : "usersIdBlocking",
+        "operationId" : "getUsersBlocking",
         "parameters" : [
           {
             "name" : "id",
@@ -8181,12 +8182,12 @@
         "tags" : [
           "Bookmarks"
         ],
-        "summary" : "Bookmarks by User",
-        "description" : "Returns Post objects that have been bookmarked by the requesting User",
+        "summary" : "Get Bookmarks",
+        "description" : "Retrieves a list of Posts bookmarked by the authenticated user.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/bookmarks/api-reference/get-users-id-bookmarks"
         },
-        "operationId" : "getUsersIdBookmarks",
+        "operationId" : "getUsersBookmarks",
         "parameters" : [
           {
             "name" : "id",
@@ -8711,12 +8712,12 @@
         "tags" : [
           "Lists"
         ],
-        "summary" : "Get User's Followed Lists",
-        "description" : "Returns a User's followed Lists.",
+        "summary" : "Get followed Lists",
+        "description" : "Retrieves a list of Lists followed by a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/get-users-id-followed_lists"
         },
-        "operationId" : "userFollowedLists",
+        "operationId" : "getUsersFollowedLists",
         "parameters" : [
           {
             "name" : "id",
@@ -8957,12 +8958,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Followers by User ID",
-        "description" : "Returns a list of Users who are followers of the specified User ID.",
+        "summary" : "Get followers",
+        "description" : "Retrieves a list of Users who follow a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers"
         },
-        "operationId" : "usersIdFollowers",
+        "operationId" : "getUsersFollowers",
         "parameters" : [
           {
             "name" : "id",
@@ -9057,12 +9058,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Following by User ID",
-        "description" : "Returns a list of Users that are being followed by the provided User ID",
+        "summary" : "Get following",
+        "description" : "Retrieves a list of Users followed by a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-following"
         },
-        "operationId" : "usersIdFollowing",
+        "operationId" : "getUsersFollowing",
         "parameters" : [
           {
             "name" : "id",
@@ -9225,12 +9226,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "Returns Post objects liked by the provided User ID",
-        "description" : "Returns a list of Posts liked by the provided User ID",
+        "summary" : "Get liked Posts",
+        "description" : "Retrieves a list of Posts liked by a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-users-id-liked_tweets"
         },
-        "operationId" : "usersIdLikedTweets",
+        "operationId" : "getUsersLikedPosts",
         "parameters" : [
           {
             "name" : "id",
@@ -9481,12 +9482,12 @@
         "tags" : [
           "Lists"
         ],
-        "summary" : "Get a User's List Memberships",
-        "description" : "Get a User's List Memberships.",
+        "summary" : "Get List memberships",
+        "description" : "Retrieves a list of Lists that a specific User is a member of by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-users-id-list_memberships"
         },
-        "operationId" : "getUserListMemberships",
+        "operationId" : "getUsersListMemberships",
         "parameters" : [
           {
             "name" : "id",
@@ -9581,12 +9582,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "User mention timeline by User ID",
-        "description" : "Returns Post objects that mention username associated to the provided User ID",
+        "summary" : "Get mentions",
+        "description" : "Retrieves a list of Posts that mention a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-mentions"
         },
-        "operationId" : "usersIdMentions",
+        "operationId" : "getUsersMentions",
         "parameters" : [
           {
             "name" : "id",
@@ -9732,12 +9733,12 @@
         "tags" : [
           "Users"
         ],
-        "summary" : "Returns User objects that are muted by the provided User ID",
-        "description" : "Returns a list of Users that are muted by the provided User ID",
+        "summary" : "Get muting",
+        "description" : "Retrieves a list of Users muted by the authenticated user.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/get-users-muting"
         },
-        "operationId" : "usersIdMuting",
+        "operationId" : "getUsersMuting",
         "parameters" : [
           {
             "name" : "id",
@@ -9903,12 +9904,12 @@
         "tags" : [
           "Lists"
         ],
-        "summary" : "Get a User's Owned Lists.",
-        "description" : "Get a User's Owned Lists.",
+        "summary" : "Get owned Lists",
+        "description" : "Retrieves a list of Lists owned by a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-users-id-owned_lists"
         },
-        "operationId" : "listUserOwnedLists",
+        "operationId" : "getUsersOwnedLists",
         "parameters" : [
           {
             "name" : "id",
@@ -10366,12 +10367,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "User home timeline by User ID",
-        "description" : "Returns Post objects that appears in the provided User ID's home timeline",
+        "summary" : "Get Timeline",
+        "description" : "Retrieves a reverse chronological list of Posts in the authenticated User’s Timeline.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-reverse-chronological"
         },
-        "operationId" : "usersIdTimeline",
+        "operationId" : "getUsersTimeline",
         "parameters" : [
           {
             "name" : "id",
@@ -10542,12 +10543,12 @@
         "tags" : [
           "Tweets"
         ],
-        "summary" : "User Posts timeline by User ID",
-        "description" : "Returns a list of Posts authored by the provided User ID",
+        "summary" : "Get Posts",
+        "description" : "Retrieves a list of posts authored by a specific User by their ID.",
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets"
         },
-        "operationId" : "usersIdTweets",
+        "operationId" : "getUsersPosts",
         "parameters" : [
           {
             "name" : "id",
@@ -11076,11 +11077,19 @@
   },
   "servers" : [
     {
-      "description" : "Twitter API",
-      "url" : "https://api.twitter.com"
+      "description" : "X API",
+      "url" : "https://api.x.com"
     }
   ],
   "tags" : [
+    {
+      "name" : "AAASubscriptions",
+      "description" : "Endpoints relating to retrieving, managing AAA subscriptions",
+      "externalDocs" : {
+        "description" : "Find out more",
+        "url" : "https://docs.x.com/x-api/enterprise-gnip-2.0/fundamentals/account-activity"
+      }
+    },
     {
       "name" : "Bookmarks",
       "description" : "Endpoints related to retrieving, managing bookmarks of a user",
@@ -11172,30 +11181,30 @@
         "type" : "oauth2",
         "flows" : {
           "authorizationCode" : {
-            "authorizationUrl" : "https://api.twitter.com/2/oauth2/authorize",
-            "tokenUrl" : "https://api.twitter.com/2/oauth2/token",
+            "authorizationUrl" : "https://api.x.com/2/oauth2/authorize",
+            "tokenUrl" : "https://api.x.com/2/oauth2/token",
             "scopes" : {
-              "block.read" : "Accounts you’ve blocked.",
-              "bookmark.read" : "Allows an app to read bookmarked Tweets",
-              "bookmark.write" : "Allows an app to create and delete bookmarks",
-              "dm.read" : "All your Direct Messages",
-              "dm.write" : "Send and manage Direct Messages for you",
-              "follows.read" : "People who follow you and people who you follow.",
-              "follows.write" : "Follow and unfollow people for you.",
-              "like.read" : "Tweets you’ve liked and likes you can view.",
-              "like.write" : "Like and un-like Tweets for you.",
-              "list.read" : "Lists, list members, and list followers of lists you’ve created or are a member of, including private lists.",
-              "list.write" : "Create and manage Lists for you.",
-              "media.write" : "Upload media like photos and videos for you.",
-              "mute.read" : "Accounts you’ve muted.",
-              "mute.write" : "Mute and unmute accounts for you.",
-              "offline.access" : "App can request refresh token.",
-              "space.read" : "Access all of the Spaces you can see.",
-              "timeline.read" : "All the Custom Timelines you can see, including public Custom Timelines from other developers.",
-              "tweet.moderate.write" : "Hide and unhide replies to your Tweets.",
-              "tweet.read" : "All the Tweets you can see, including Tweets from protected accounts.",
-              "tweet.write" : "Tweet and retweet for you.",
-              "users.read" : "Any account you can see, including protected accounts. Any account you can see, including protected accounts."
+              "block.read" : "View accounts you have blocked.",
+              "bookmark.read" : "Read your bookmarked Posts.",
+              "bookmark.write" : "Create and delete your bookmarks.",
+              "dm.read" : "Read all your Direct Messages.",
+              "dm.write" : "Send and manage your Direct Messages.",
+              "follows.read" : "View accounts you follow and accounts following you.",
+              "follows.write" : "Follow and unfollow accounts on your behalf.",
+              "like.read" : "View Posts you have liked and likes you can see.",
+              "like.write" : "Like and unlike Posts on your behalf.",
+              "list.read" : "View Lists, members, and followers of Lists you created or are a member of, including private Lists.",
+              "list.write" : "Create and manage Lists on your behalf.",
+              "media.write" : "Upload media, such as photos and videos, on your behalf.",
+              "mute.read" : "View accounts you have muted.",
+              "mute.write" : "Mute and unmute accounts on your behalf.",
+              "offline.access" : "Request a refresh token for the app.",
+              "space.read" : "View all Spaces you have access to.",
+              "timeline.read" : "View all Custom Timelines you can see, including public Custom Timelines from other developers.",
+              "tweet.moderate.write" : "Hide and unhide replies to your Posts.",
+              "tweet.read" : "View all Posts you can see, including those from protected accounts.",
+              "tweet.write" : "Post and repost on your behalf.",
+              "users.read" : "View any account you can see, including protected accounts."
             }
           }
         }
