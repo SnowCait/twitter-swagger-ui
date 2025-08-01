@@ -11411,17 +11411,20 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "type" : "object",
-            "properties" : {
-              "id" : {
-                "$ref" : "#/components/schemas/TweetId"
-              },
-              "timestamped_metrics" : {
-                "type" : "array",
-                "title" : "Timestamped Metrics",
-                "description" : "Array containing metrics data along with the timestamps of their recording.",
-                "items" : {
-                  "$ref" : "#/components/schemas/TimestampedMetrics"
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "$ref" : "#/components/schemas/TweetId"
+                },
+                "timestamped_metrics" : {
+                  "type" : "array",
+                  "title" : "Timestamped Metrics",
+                  "description" : "Array containing metrics data along with the timestamps of their recording.",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TimestampedMetrics"
+                  }
                 }
               }
             }
@@ -15308,17 +15311,20 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "type" : "object",
-            "properties" : {
-              "media_key" : {
-                "$ref" : "#/components/schemas/MediaKey"
-              },
-              "timestamped_metrics" : {
-                "type" : "array",
-                "title" : "Timestamped Metrics",
-                "description" : "Array containing metrics data along with the timestamps of their recording.",
-                "items" : {
-                  "$ref" : "#/components/schemas/MediaTimestampedMetrics"
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "media_key" : {
+                  "$ref" : "#/components/schemas/MediaKey"
+                },
+                "timestamped_metrics" : {
+                  "type" : "array",
+                  "title" : "Timestamped Metrics",
+                  "description" : "Array containing metrics data along with the timestamps of their recording.",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MediaTimestampedMetrics"
+                  }
                 }
               }
             }
@@ -16061,7 +16067,7 @@
       },
       "NoteRatingStatus" : {
         "type" : "string",
-        "description" : "Community Note rating status. Only returned when test result is false",
+        "description" : "Community Note rating status",
         "enum" : [
           "currently_rated_helpful",
           "currently_rated_not_helpful",
