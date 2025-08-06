@@ -11515,10 +11515,28 @@
         "type" : "object",
         "properties" : {
           "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "$ref" : "#/components/schemas/TweetId"
+                }
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "meta" : {
             "type" : "object",
             "properties" : {
-              "id" : {
-                "$ref" : "#/components/schemas/TweetId"
+              "pagination_token" : {
+                "$ref" : "#/components/schemas/NextToken"
               }
             }
           }
@@ -11528,13 +11546,31 @@
         "type" : "object",
         "properties" : {
           "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "$ref" : "#/components/schemas/BookmarkFolderId"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "meta" : {
             "type" : "object",
             "properties" : {
-              "id" : {
-                "$ref" : "#/components/schemas/BookmarkFolderId"
-              },
-              "name" : {
-                "type" : "string"
+              "pagination_token" : {
+                "$ref" : "#/components/schemas/NextToken"
               }
             }
           }
