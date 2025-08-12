@@ -1294,7 +1294,7 @@
         ],
         "summary" : "Get DM events",
         "description" : "Retrieves a list of recent direct message events across all conversations.",
-        "operationId" : "getDmEvents",
+        "operationId" : "getDirectMessagesEvents",
         "parameters" : [
           {
             "name" : "max_results",
@@ -1472,7 +1472,7 @@
         ],
         "summary" : "Get DM event by ID",
         "description" : "Retrieves details of a specific direct message event by its ID.",
-        "operationId" : "getDmEventsById",
+        "operationId" : "getDirectMessagesEventsById",
         "parameters" : [
           {
             "name" : "event_id",
@@ -2410,6 +2410,7 @@
           }
         ],
         "tags" : [
+          "Lists",
           "Users"
         ],
         "summary" : "Get List followers",
@@ -2510,6 +2511,7 @@
           }
         ],
         "tags" : [
+          "Lists",
           "Users"
         ],
         "summary" : "Get List members",
@@ -2755,6 +2757,7 @@
           }
         ],
         "tags" : [
+          "Lists",
           "Tweets"
         ],
         "summary" : "Get List Posts",
@@ -3690,7 +3693,7 @@
         "externalDocs" : {
           "url" : "https://docs.x.com/x-api/community-notes/search-for-community-notes-written"
         },
-        "operationId" : "searchNotesWritten",
+        "operationId" : "searchCommunityNotesWritten",
         "parameters" : [
           {
             "name" : "test_mode",
@@ -3779,7 +3782,7 @@
         "externalDocs" : {
           "url" : "https://docs.x.com/x-api/community-notes/search-for-posts-eligible-for-community-notes"
         },
-        "operationId" : "searchForEligiblePosts",
+        "operationId" : "searchEligiblePosts",
         "parameters" : [
           {
             "name" : "test_mode",
@@ -6890,6 +6893,7 @@
           }
         ],
         "tags" : [
+          "Tweets",
           "Users"
         ],
         "summary" : "Get Liking Users",
@@ -7121,6 +7125,7 @@
           }
         ],
         "tags" : [
+          "Tweets",
           "Users"
         ],
         "summary" : "Get Reposted by",
@@ -7808,7 +7813,7 @@
         "externalDocs" : {
           "url" : "https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-me"
         },
-        "operationId" : "getMyUser",
+        "operationId" : "getUsersMe",
         "parameters" : [
           {
             "$ref" : "#/components/parameters/UserFieldsParameter"
@@ -7870,7 +7875,7 @@
         "externalDocs" : {
           "url" : "https://developer.x.com/"
         },
-        "operationId" : "getUsersPersonalizedTrends",
+        "operationId" : "getTrendsPersonalizedTrends",
         "parameters" : [
           {
             "$ref" : "#/components/parameters/PersonalizedTrendFieldsParameter"
@@ -8278,6 +8283,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Bookmarks"
         ],
         "summary" : "Get Bookmarks",
@@ -8808,6 +8814,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Lists"
         ],
         "summary" : "Get followed Lists",
@@ -9322,6 +9329,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Tweets"
         ],
         "summary" : "Get liked Posts",
@@ -9578,6 +9586,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Lists"
         ],
         "summary" : "Get List memberships",
@@ -9678,6 +9687,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Tweets"
         ],
         "summary" : "Get mentions",
@@ -10000,6 +10010,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Lists"
         ],
         "summary" : "Get owned Lists",
@@ -10463,6 +10474,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Tweets"
         ],
         "summary" : "Get Timeline",
@@ -10639,6 +10651,7 @@
           }
         ],
         "tags" : [
+          "Users",
           "Tweets"
         ],
         "summary" : "Get Posts",
@@ -11202,6 +11215,14 @@
       "externalDocs" : {
         "description" : "Find out more",
         "url" : "https://developer.twitter.com/en/docs/twitter-api/compliance/batch-tweet/introduction"
+      }
+    },
+    {
+      "name" : "Connection",
+      "description" : "Endpoints related to streaming connections",
+      "externalDocs" : {
+        "description" : "Find out more",
+        "url" : "https://developer.x.com/en/docs/x-api/connections"
       }
     },
     {
@@ -16092,7 +16113,7 @@
           "text" : {
             "type" : "string",
             "description" : "The text summary in the Community Note.",
-            "pattern" : "^(?=.*https?://\\S+).+$"
+            "pattern" : "^(?=[\\s\\S]*https?://\\S+)[\\s\\S]+$"
           },
           "trustworthy_sources" : {
             "type" : "boolean",
