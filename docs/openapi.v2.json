@@ -16371,16 +16371,15 @@
       },
       "NoteTestResult" : {
         "type" : "object",
-        "description" : "The test result of a community note.",
+        "description" : "The evaluation result of a community note.",
         "properties" : {
-          "evaluator_score" : {
-            "type" : "number",
-            "description" : "The score given to a written test note.",
-            "format" : "double"
+          "evaluator_score_bucket" : {
+            "type" : "string",
+            "description" : "Score bucket from the evaluator result."
           },
           "evaluator_type" : {
             "type" : "string",
-            "description" : "The type of evaluator response."
+            "description" : "The type of the evaluator."
           }
         }
       },
