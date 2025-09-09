@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "description" : "X API v2 available endpoints",
-    "version" : "2.148",
+    "version" : "2.149",
     "title" : "X API v2",
     "termsOfService" : "https://developer.x.com/en/developer-terms/agreement-and-policy.html",
     "contact" : {
