@@ -20295,6 +20295,11 @@
                       "type" : "string",
                       "description" : "The user ID"
                     },
+                    "created_at" : {
+                      "type" : "string",
+                      "description" : "The datetime the webhook was linked to the stream",
+                      "format" : "data-time"
+                    },
                     "fields" : {
                       "type" : "array",
                       "description" : "Requested fields to be rendered",
