@@ -3650,7 +3650,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/DeleteNoteResponse"
+                  "$ref" : "#/components/schemas/CreateNoteResponse"
                 }
               }
             }
@@ -3905,7 +3905,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateNoteResponse"
+                  "$ref" : "#/components/schemas/DeleteNoteResponse"
                 }
               }
             }
@@ -8149,6 +8149,9 @@
         ],
         "summary" : "Get Reposts of me",
         "description" : "Retrieves a list of Posts that repost content from the authenticated user.",
+        "externalDocs" : {
+          "url" : "https://docs.x.com/x-api/posts/retweets/quickstart/retweets-of-me#retweets-of-me"
+        },
         "operationId" : "getUsersRepostsOfMe",
         "parameters" : [
           {
