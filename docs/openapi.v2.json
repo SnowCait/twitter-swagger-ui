@@ -783,7 +783,7 @@
         "summary" : "Terminate all connections",
         "description" : "Terminates all active streaming connections for the authenticated application.",
         "externalDocs" : {
-          "url" : "https://developer.x.com"
+          "url" : "https://docs.x.com/x-api/connections/terminate-all-connections"
         },
         "operationId" : "deleteAllConnections",
         "parameters" : [ ],
