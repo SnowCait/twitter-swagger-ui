@@ -736,7 +736,7 @@
             "style" : "simple"
           },
           {
-            "$ref" : "#/components/parameters/AiTrendFieldsParameter"
+            "$ref" : "#/components/parameters/NewsFieldsParameter"
           }
         ],
         "responses" : {
@@ -4016,6 +4016,174 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Get2MediaMediaKeyResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/news/search" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          },
+          {
+            "OAuth2UserToken" : [
+              "tweet.read",
+              "users.read"
+            ]
+          }
+        ],
+        "tags" : [
+          "News"
+        ],
+        "summary" : "Search News",
+        "description" : "Retrieves a list of News stories matching the specified search query.",
+        "externalDocs" : {
+          "url" : "https://docs.x.com/x-api/news/introduction"
+        },
+        "operationId" : "searchNews",
+        "parameters" : [
+          {
+            "name" : "query",
+            "in" : "query",
+            "description" : "The search query.",
+            "required" : true,
+            "example" : "crypto",
+            "schema" : {
+              "type" : "string",
+              "minLength" : 1,
+              "maxLength" : 2048,
+              "example" : "crypto"
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "max_results",
+            "in" : "query",
+            "description" : "The number of results to return.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 100,
+              "format" : "int32",
+              "default" : 10
+            },
+            "style" : "form"
+          },
+          {
+            "name" : "max_age_hours",
+            "in" : "query",
+            "description" : "The maximum age of the News story to search for.",
+            "required" : false,
+            "schema" : {
+              "type" : "integer",
+              "minimum" : 1,
+              "maximum" : 720,
+              "format" : "int32",
+              "default" : 168
+            },
+            "style" : "form"
+          },
+          {
+            "$ref" : "#/components/parameters/NewsFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2NewsSearchResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The request has failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/news/{id}" : {
+      "get" : {
+        "security" : [
+          {
+            "BearerToken" : [ ]
+          },
+          {
+            "OAuth2UserToken" : [
+              "tweet.read",
+              "users.read"
+            ]
+          },
+          {
+            "UserToken" : [ ]
+          }
+        ],
+        "tags" : [
+          "News"
+        ],
+        "summary" : "Get news stories by ID",
+        "description" : "Retrieves news story by its ID.",
+        "externalDocs" : {
+          "url" : "https://docs.x.com/x-api/news/introduction"
+        },
+        "operationId" : "getNews",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "The ID of the news story.",
+            "required" : true,
+            "example" : "119929381293",
+            "schema" : {
+              "$ref" : "#/components/schemas/NewsId"
+            },
+            "style" : "simple"
+          },
+          {
+            "$ref" : "#/components/parameters/NewsFieldsParameter"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "The request has succeeded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Get2NewsIdResponse"
                 }
               }
             }
@@ -11938,6 +12106,14 @@
       }
     },
     {
+      "name" : "News",
+      "description" : "Endpoint for retrieving news stories",
+      "externalDocs" : {
+        "description" : "Find out more",
+        "url" : "https://developer.twitter.com/en/docs/twitter-api/news"
+      }
+    },
+    {
       "name" : "Spaces",
       "description" : "Endpoints related to retrieving, managing Spaces",
       "externalDocs" : {
@@ -12343,56 +12519,6 @@
         "type" : "integer",
         "description" : "The sum of results returned in this response.",
         "format" : "int32"
-      },
-      "AiTrend" : {
-        "type" : "object",
-        "description" : "An AI generated trend.",
-        "required" : [
-          "rest_id"
-        ],
-        "properties" : {
-          "contexts" : {
-            "type" : "object",
-            "properties" : {
-              "topics" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string"
-                }
-              }
-            }
-          },
-          "core" : {
-            "type" : "object",
-            "properties" : {
-              "category" : {
-                "type" : "string",
-                "description" : "The ai determined category."
-              },
-              "hook" : {
-                "type" : "string",
-                "description" : "The ai generated hook."
-              },
-              "keywords" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string"
-                }
-              },
-              "name" : {
-                "type" : "string",
-                "description" : "The headline."
-              },
-              "summary" : {
-                "type" : "string",
-                "description" : "The ai trend summary."
-              }
-            }
-          },
-          "rest_id" : {
-            "$ref" : "#/components/schemas/AiTrendId"
-          }
-        }
       },
       "AiTrendId" : {
         "type" : "string",
@@ -13922,7 +14048,7 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "$ref" : "#/components/schemas/AiTrend"
+            "$ref" : "#/components/schemas/News"
           },
           "errors" : {
             "type" : "array",
@@ -14471,6 +14597,48 @@
             "minItems" : 1,
             "items" : {
               "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Get2NewsIdResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/News"
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Get2NewsSearchResponse" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/News"
+            }
+          },
+          "errors" : {
+            "type" : "array",
+            "minItems" : 1,
+            "items" : {
+              "$ref" : "#/components/schemas/Problem"
+            }
+          },
+          "meta" : {
+            "type" : "object",
+            "properties" : {
+              "result_count" : {
+                "$ref" : "#/components/schemas/ResultCount"
+              }
             }
           }
         }
@@ -17100,6 +17268,133 @@
       "NewestId" : {
         "type" : "string",
         "description" : "The newest id in this response."
+      },
+      "News" : {
+        "type" : "object",
+        "description" : "An AI generated news story.",
+        "required" : [
+          "rest_id"
+        ],
+        "properties" : {
+          "category" : {
+            "type" : "string",
+            "description" : "The news category."
+          },
+          "cluster_posts_results" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "post_id" : {
+                  "$ref" : "#/components/schemas/TweetId"
+                }
+              }
+            }
+          },
+          "contexts" : {
+            "type" : "object",
+            "properties" : {
+              "entities" : {
+                "type" : "object",
+                "properties" : {
+                  "events" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "organizations" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "people" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "places" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "products" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "finance" : {
+                "type" : "object",
+                "properties" : {
+                  "tickers" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "sports" : {
+                "type" : "object",
+                "properties" : {
+                  "teams" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "topics" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "disclaimer" : {
+            "type" : "string"
+          },
+          "hook" : {
+            "type" : "string",
+            "description" : "The news hook."
+          },
+          "keywords" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "last_updated_at_ms" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2025-7-14T04:35:55Z"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "The headline."
+          },
+          "rest_id" : {
+            "$ref" : "#/components/schemas/NewsId"
+          },
+          "summary" : {
+            "type" : "string",
+            "description" : "The news summary."
+          }
+        }
+      },
+      "NewsId" : {
+        "type" : "string",
+        "description" : "Unique identifier of news story.",
+        "pattern" : "^[0-9]{1,19}$",
+        "example" : "2244994945"
       },
       "NextToken" : {
         "type" : "string",
@@ -21204,33 +21499,6 @@
       }
     },
     "parameters" : {
-      "AiTrendFieldsParameter" : {
-        "name" : "ai_trend.fields",
-        "in" : "query",
-        "description" : "A comma separated list of AiTrend fields to display.",
-        "required" : false,
-        "schema" : {
-          "type" : "array",
-          "description" : "The fields available for a AiTrend object.",
-          "minItems" : 1,
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "string",
-            "enum" : [
-              "contexts",
-              "core",
-              "id"
-            ]
-          },
-          "example" : [
-            "contexts",
-            "core",
-            "id"
-          ]
-        },
-        "explode" : false,
-        "style" : "form"
-      },
       "AnalyticsFieldsParameter" : {
         "name" : "analytics.fields",
         "in" : "query",
@@ -21739,6 +22007,47 @@
             "url",
             "variants",
             "width"
+          ]
+        },
+        "explode" : false,
+        "style" : "form"
+      },
+      "NewsFieldsParameter" : {
+        "name" : "news.fields",
+        "in" : "query",
+        "description" : "A comma separated list of News fields to display.",
+        "required" : false,
+        "schema" : {
+          "type" : "array",
+          "description" : "The fields available for a News object.",
+          "minItems" : 1,
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [
+              "category",
+              "cluster_posts_results",
+              "contexts",
+              "disclaimer",
+              "hook",
+              "id",
+              "keywords",
+              "name",
+              "summary",
+              "updated_at"
+            ]
+          },
+          "example" : [
+            "category",
+            "cluster_posts_results",
+            "contexts",
+            "disclaimer",
+            "hook",
+            "id",
+            "keywords",
+            "name",
+            "summary",
+            "updated_at"
           ]
         },
         "explode" : false,
