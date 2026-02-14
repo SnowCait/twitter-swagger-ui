@@ -4879,7 +4879,7 @@
           {
             "name" : "post_selection",
             "in" : "query",
-            "description" : "The selection of posts to return. Valid values are 'feed_size: small' and 'feed_size: large'. Default is 'feed_size: small', only top AI writers have access to large size feed.",
+            "description" : "The selection of posts to return. Valid values are 'feed_size: small', 'feed_size: large', and 'feed_size: xl'. Default is 'feed_size: small', only top AI writers have access to large and xl size feeds.",
             "required" : false,
             "schema" : {
               "type" : "string"
@@ -13018,6 +13018,7 @@
             "profile.update.banner_picture" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
             "profile.update.bio" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
             "profile.update.geo" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
+            "profile.update.handle" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
             "profile.update.profile_picture" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
             "profile.update.screenname" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
             "profile.update.url" : "#/components/schemas/ProfileUpdateActivityResponsePayload",
@@ -13079,6 +13080,7 @@
               "profile.update.url",
               "profile.update.verified_badge",
               "profile.update.affiliate_badge",
+              "profile.update.handle",
               "news.new",
               "follow.follow",
               "follow.unfollow",
