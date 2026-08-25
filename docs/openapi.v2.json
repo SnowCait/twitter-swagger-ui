@@ -61,10 +61,10 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "dm.write",
               "tweet.read",
-              "dm.read",
-              "dm.write"
+              "users.read",
+              "dm.read"
             ]
           },
           {
@@ -119,10 +119,10 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.read",
+              "dm.write",
               "users.read",
-              "dm.write"
+              "tweet.read"
             ]
           },
           {
@@ -454,8 +454,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "like.read",
-              "tweet.read"
+              "tweet.read",
+              "like.read"
             ]
           },
           {
@@ -1259,8 +1259,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -1470,8 +1470,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -1540,8 +1540,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -1610,8 +1610,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -1835,9 +1835,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "users.read",
-              "tweet.read",
-              "dm.write"
+              "tweet.read"
             ]
           },
           {
@@ -1947,9 +1947,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.read"
             ]
           },
           {
@@ -2019,8 +2019,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "dm.read"
             ]
           },
@@ -2109,8 +2109,8 @@
           {
             "OAuth2UserToken": [
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -2182,9 +2182,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "dm.write",
               "tweet.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -2257,8 +2257,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "dm.write",
-              "users.read"
+              "users.read",
+              "dm.write"
             ]
           },
           {
@@ -2330,9 +2330,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -2404,9 +2404,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -2478,9 +2478,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "dm.write"
+              "dm.write",
+              "users.read"
             ]
           },
           {
@@ -2820,8 +2820,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -2916,9 +2916,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -3588,9 +3588,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.read",
               "tweet.read",
-              "users.read",
-              "dm.read"
+              "users.read"
             ]
           },
           {
@@ -3712,9 +3712,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "dm.write",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -3852,9 +3852,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "dm.read"
             ]
           },
           {
@@ -3976,9 +3976,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.read",
-              "tweet.read"
+              "dm.read"
             ]
           },
           {
@@ -4148,9 +4148,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -4833,9 +4833,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read",
               "list.read",
+              "tweet.read",
+              "users.read",
               "list.write"
             ]
           },
@@ -4892,9 +4892,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "list.write"
+              "list.write",
+              "users.read"
             ]
           },
           {
@@ -4953,9 +4953,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -5096,8 +5096,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "users.read",
-              "list.read"
+              "list.read",
+              "users.read"
             ]
           },
           {
@@ -5190,8 +5190,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "list.read",
-              "tweet.read"
+              "tweet.read",
+              "list.read"
             ]
           },
           {
@@ -5350,9 +5350,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.write",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "list.write"
             ]
           },
           {
@@ -5422,8 +5422,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.read",
               "tweet.read",
+              "list.read",
               "users.read"
             ]
           },
@@ -6363,8 +6363,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6816,9 +6816,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "space.read",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "space.read"
             ]
           },
           {
@@ -6894,9 +6894,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "space.read",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "space.read"
             ]
           },
           {
@@ -6972,8 +6972,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "space.read",
               "tweet.read",
+              "space.read",
               "users.read"
             ]
           },
@@ -7077,8 +7077,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "space.read",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -7244,8 +7244,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "space.read"
+              "space.read",
+              "tweet.read"
             ]
           },
           {
@@ -7420,8 +7420,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -7504,8 +7504,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "tweet.write"
+              "tweet.write",
+              "tweet.read"
             ]
           },
           {
@@ -11190,9 +11190,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "tweet.write",
-              "users.read"
+              "tweet.write"
             ]
           },
           {
@@ -11326,9 +11326,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "like.read",
               "tweet.read",
-              "users.read",
-              "like.read"
+              "users.read"
             ]
           },
           {
@@ -11540,8 +11540,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -11634,8 +11634,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -11737,9 +11737,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "tweet.moderate.write",
-              "users.read"
+              "tweet.moderate.write"
             ]
           },
           {
@@ -11783,6 +11783,51 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HidePostsReplyResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/usage/credits": {
+      "get": {
+        "security": [
+          {
+            "OAuth2UserToken": []
+          },
+          {
+            "BearerToken": []
+          }
+        ],
+        "tags": [
+          "Usage"
+        ],
+        "summary": "Get usage credits",
+        "description": "Returns the payer's developer-platform credit balance in USD. total_balance is max(0, prepaid_balance + free_balance); prepaid_balance may be negative.",
+        "operationId": "getUsageCredits",
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsageCreditsResponse"
                 }
               }
             }
@@ -11869,8 +11914,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -12022,8 +12067,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -12186,8 +12231,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -12296,9 +12341,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.read"
             ]
           },
           {
@@ -12368,8 +12413,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "timeline.read",
-              "tweet.read"
+              "tweet.read",
+              "timeline.read"
             ]
           },
           {
@@ -12459,8 +12504,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -12550,8 +12595,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -12712,8 +12757,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "block.read"
             ]
           },
@@ -12802,9 +12847,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "bookmark.read",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -12900,9 +12945,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "bookmark.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           }
         ],
@@ -12966,8 +13011,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "bookmark.read",
-              "users.read"
+              "users.read",
+              "bookmark.read"
             ]
           },
           {
@@ -13111,9 +13156,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "bookmark.read",
-              "tweet.read"
+              "bookmark.read"
             ]
           },
           {
@@ -13271,8 +13316,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "dm.write"
             ]
           },
@@ -13330,9 +13375,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "dm.write"
             ]
           },
           {
@@ -13389,9 +13434,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "list.read",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -13481,8 +13526,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.write",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -13550,9 +13595,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "list.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -13623,8 +13668,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "follows.read"
+              "follows.read",
+              "tweet.read"
             ]
           },
           {
@@ -13716,8 +13761,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "follows.read",
+              "users.read",
               "tweet.read"
             ]
           },
@@ -13808,8 +13853,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "follows.write"
             ]
           },
@@ -13878,8 +13923,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "like.read"
+              "like.read",
+              "tweet.read"
             ]
           },
           {
@@ -13977,9 +14022,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "like.write",
-              "tweet.read"
+              "like.write"
             ]
           },
           {
@@ -14046,9 +14091,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "like.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -14114,9 +14159,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "list.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -14353,8 +14398,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "mute.read",
-              "users.read"
+              "users.read",
+              "mute.read"
             ]
           },
           {
@@ -14440,9 +14485,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "mute.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -14509,9 +14554,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "list.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -14603,9 +14648,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "list.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -14670,8 +14715,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "list.write"
+              "list.write",
+              "tweet.read"
             ]
           },
           {
@@ -14742,9 +14787,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.write",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "list.write"
             ]
           },
           {
@@ -14814,9 +14859,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.read"
             ]
           },
           {
@@ -14878,8 +14923,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "dm.write"
             ]
           },
@@ -14952,8 +14997,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "tweet.write"
+              "tweet.write",
+              "tweet.read"
             ]
           },
           {
@@ -15024,8 +15069,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.write",
               "users.read",
+              "tweet.write",
               "tweet.read"
             ]
           },
@@ -15257,8 +15302,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -15493,9 +15538,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "mute.write",
-              "users.read"
+              "mute.write"
             ]
           },
           {
@@ -22472,6 +22517,67 @@
             }
           }
         }
+      },
+      "GetUsageCreditsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/GetUsageCreditsResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "GetUsageCreditsResponseData": {
+        "type": "object",
+        "required": [
+          "total_balance",
+          "prepaid_balance",
+          "free_balance",
+          "free_grants"
+        ],
+        "properties": {
+          "free_balance": {
+            "type": "number",
+            "description": "USD remaining across unexpired free grants."
+          },
+          "free_grants": {
+            "type": "array",
+            "description": "Unexpired free grants, soonest expiry first.",
+            "items": {
+              "$ref": "#/components/schemas/GetUsageCreditsResponseDataFreeGrants"
+            }
+          },
+          "prepaid_balance": {
+            "type": "number",
+            "description": "Purchased (prepaid) USD balance. May be negative when paid usage has overdrawn this bucket."
+          },
+          "total_balance": {
+            "type": "number",
+            "description": "Spendable USD remaining, clamped at 0.00: total_balance = max(0, prepaid_balance + free_balance)."
+          }
+        }
+      },
+      "GetUsageCreditsResponseDataFreeGrants": {
+        "type": "object",
+        "required": [
+          "amount"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "USD remaining in this free grant."
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "When this grant expires (RFC 3339). Omitted if the grant never expires or the expiry is unknown."
+          }
+        },
+        "additionalProperties": false
       },
       "GetUsageResponse": {
         "type": "object",
