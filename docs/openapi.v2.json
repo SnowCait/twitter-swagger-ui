@@ -159,8 +159,8 @@
             "OAuth2UserToken": [
               "tweet.read",
               "dm.write",
-              "dm.read",
-              "users.read"
+              "users.read",
+              "dm.read"
             ]
           },
           {
@@ -215,10 +215,10 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "dm.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read",
+              "dm.read"
             ]
           },
           {
@@ -550,8 +550,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "like.read"
+              "like.read",
+              "tweet.read"
             ]
           },
           {
@@ -1370,9 +1370,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "broadcast.read"
             ]
           },
           {
@@ -1486,8 +1486,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -1633,8 +1633,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -1691,8 +1691,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -1885,8 +1885,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -2166,8 +2166,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -2236,8 +2236,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -2388,7 +2388,7 @@
           "Calls"
         ],
         "summary": "List scheduled calls",
-        "description": "Returns the X calls on the authenticated user's calendar, earliest first: events on their X Calls calendar, and events on the Microsoft Outlook calendars they linked to X whose conference is an X call. Calls still running at start_time are included. The window defaults to the next 24 hours and may span at most 7 days.\n\nWhen both are provided, `start_time` must be earlier than `end_time`.",
+        "description": "Returns the X calls on the authenticated user's calendar, earliest first: events on their X Calls calendar, and events on the Microsoft Outlook calendars they linked to X whose conference is an X call. Calls still running at start_time are included. The window defaults to the next 24 hours and may span at most 7 days. Use scheduled_call.fields to select which fields are returned.\n\nWhen both are provided, `start_time` must be earlier than `end_time`.",
         "operationId": "listScheduledCalls",
         "parameters": [
           {
@@ -2425,6 +2425,15 @@
               "format": "int32"
             },
             "style": "form"
+          },
+          {
+            "$ref": "#/components/parameters/ScheduledCallFieldsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/ScheduledCallExpansionsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/UserFieldsParameter"
           }
         ],
         "responses": {
@@ -2620,7 +2629,7 @@
           "Calls"
         ],
         "summary": "Get a scheduled call",
-        "description": "Returns a scheduled call the authenticated user organizes or is invited to, at its occurrence running now or its next one within a year: its time, call, recurrence and who is invited and how they answered. Changes can take a few seconds to show here.",
+        "description": "Returns a scheduled call the authenticated user organizes or is invited to, at its occurrence running now or its next one within a year: its time, call, recurrence and who is invited and how they answered. Changes can take a few seconds to show here. Use scheduled_call.fields to select which fields are returned.",
         "operationId": "getScheduledCall",
         "parameters": [
           {
@@ -2632,6 +2641,15 @@
               "pattern": "^[0-9]{1,19}$"
             },
             "style": "simple"
+          },
+          {
+            "$ref": "#/components/parameters/ScheduledCallFieldsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/ScheduledCallExpansionsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/UserFieldsParameter"
           }
         ],
         "responses": {
@@ -2799,6 +2817,74 @@
         }
       }
     },
+    "/2/calls/{id}": {
+      "get": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "calls.read"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Calls"
+        ],
+        "summary": "Get a call",
+        "description": "Returns a call's title, join policy, host and participant count, and whether the authenticated user may join it without asking the host.",
+        "operationId": "getCall",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,64}$"
+            },
+            "style": "simple"
+          },
+          {
+            "$ref": "#/components/parameters/CallFieldsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CallExpansionsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/UserFieldsParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCallResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/2/chat/conversations": {
       "get": {
         "security": [
@@ -2899,9 +2985,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "dm.write"
+              "dm.write",
+              "users.read"
             ]
           },
           {
@@ -3011,9 +3097,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "dm.write"
             ]
           },
           {
@@ -3084,9 +3170,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -3155,9 +3241,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.read",
               "dm.write",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -3230,9 +3316,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "dm.read",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -3473,9 +3559,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "dm.write",
               "users.read",
-              "dm.write"
+              "tweet.read"
             ]
           },
           {
@@ -3559,9 +3645,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "users.read",
-              "tweet.read",
-              "dm.write"
+              "tweet.read"
             ]
           },
           {
@@ -3635,8 +3721,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "dm.write"
             ]
           },
           {
@@ -3709,9 +3795,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "dm.write",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -3784,8 +3870,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.write",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -3857,9 +3943,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "dm.write"
             ]
           },
           {
@@ -3932,9 +4018,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.read",
-              "tweet.read"
+              "dm.read"
             ]
           },
           {
@@ -4023,9 +4109,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "dm.write"
             ]
           },
           {
@@ -4096,9 +4182,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -4171,8 +4257,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "users.read",
+              "dm.read",
               "tweet.read"
             ]
           },
@@ -4250,9 +4336,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read"
             ]
           },
           {
@@ -4325,8 +4411,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "dm.write"
             ]
           },
@@ -4400,9 +4486,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "dm.write",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -4475,8 +4561,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "dm.write",
-              "users.read"
+              "users.read",
+              "dm.write"
             ]
           },
           {
@@ -4548,8 +4634,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "users.read",
+              "dm.write",
               "tweet.read"
             ]
           },
@@ -4622,9 +4708,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -4770,9 +4856,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "dm.write",
               "tweet.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -4844,9 +4930,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -4991,9 +5077,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read"
             ]
           },
           {
@@ -5066,8 +5152,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.read",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -5146,8 +5232,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read"
             ]
           },
           {
@@ -5209,9 +5295,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "dm.write"
             ]
           },
           {
@@ -5284,8 +5370,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "users.read",
+              "dm.write",
               "tweet.read"
             ]
           },
@@ -5348,9 +5434,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.write",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -5787,9 +5873,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.read",
-              "tweet.read"
+              "dm.read"
             ]
           },
           {
@@ -5920,9 +6006,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -5975,9 +6061,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -6037,8 +6123,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6133,9 +6219,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.read",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "list.read"
             ]
           },
           {
@@ -6882,9 +6968,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -7015,9 +7101,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -7139,9 +7225,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read"
             ]
           },
           {
@@ -7210,8 +7296,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "users.read",
+              "dm.write",
               "tweet.read"
             ]
           },
@@ -7280,8 +7366,8 @@
           {
             "OAuth2UserToken": [
               "dm.read",
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -7404,8 +7490,8 @@
           {
             "OAuth2UserToken": [
               "dm.read",
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -7517,8 +7603,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
-              "dm.write"
+              "dm.write",
+              "dm.read"
             ]
           },
           {
@@ -7575,9 +7661,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -8262,8 +8348,8 @@
             "OAuth2UserToken": [
               "list.read",
               "tweet.read",
-              "list.write",
-              "users.read"
+              "users.read",
+              "list.write"
             ]
           },
           {
@@ -8320,8 +8406,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "list.write"
+              "list.write",
+              "tweet.read"
             ]
           },
           {
@@ -8449,9 +8535,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "list.write",
               "tweet.read",
-              "list.write"
+              "users.read"
             ]
           },
           {
@@ -8523,8 +8609,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "list.read",
-              "tweet.read"
+              "tweet.read",
+              "list.read"
             ]
           },
           {
@@ -8616,8 +8702,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "list.read"
             ]
           },
@@ -8777,9 +8863,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "list.write",
               "tweet.read",
-              "list.write"
+              "users.read"
             ]
           },
           {
@@ -8849,9 +8935,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "list.read",
               "tweet.read",
-              "list.read"
+              "users.read"
             ]
           },
           {
@@ -9698,8 +9784,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -10243,9 +10329,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "space.read",
               "tweet.read",
-              "space.read"
+              "users.read"
             ]
           },
           {
@@ -10321,8 +10407,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "space.read"
             ]
           },
@@ -10400,8 +10486,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "space.read"
+              "space.read",
+              "tweet.read"
             ]
           },
           {
@@ -10505,8 +10591,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "space.read",
-              "users.read"
+              "users.read",
+              "space.read"
             ]
           },
           {
@@ -10670,9 +10756,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "space.read",
               "users.read",
-              "tweet.read",
-              "space.read"
+              "tweet.read"
             ]
           },
           {
@@ -10988,8 +11074,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -13795,8 +13881,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -14626,8 +14712,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "tweet.write"
             ]
           },
@@ -14763,8 +14849,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "like.read",
-              "users.read"
+              "users.read",
+              "like.read"
             ]
           },
           {
@@ -14976,8 +15062,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -15173,9 +15259,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "tweet.moderate.write"
+              "tweet.moderate.write",
+              "users.read"
             ]
           },
           {
@@ -15350,8 +15436,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -15503,8 +15589,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -15725,8 +15811,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -15849,8 +15935,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "timeline.read"
+              "timeline.read",
+              "tweet.read"
             ]
           },
           {
@@ -15940,8 +16026,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -16031,8 +16117,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -16194,8 +16280,8 @@
           {
             "OAuth2UserToken": [
               "block.read",
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -16281,9 +16367,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "block.write",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "block.write"
             ]
           },
           {
@@ -16350,9 +16436,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "bookmark.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -16660,9 +16746,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "bookmark.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -16751,8 +16837,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "bookmark.write",
+              "users.read",
               "tweet.read"
             ]
           }
@@ -16879,9 +16965,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "tweet.read",
-              "users.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -17030,9 +17116,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "list.write",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -17099,9 +17185,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "list.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -17171,9 +17257,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "follows.read",
-              "users.read"
+              "follows.read"
             ]
           },
           {
@@ -17265,9 +17351,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "follows.read",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "follows.read"
             ]
           },
           {
@@ -17357,9 +17443,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "follows.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "follows.write"
             ]
           },
           {
@@ -17426,8 +17512,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "like.read"
             ]
           },
@@ -17526,9 +17612,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "like.write",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "like.write"
             ]
           },
           {
@@ -17595,9 +17681,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "like.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "like.write"
             ]
           },
           {
@@ -17664,8 +17750,8 @@
           {
             "OAuth2UserToken": [
               "list.read",
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -17756,8 +17842,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -17902,8 +17988,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "mute.read",
-              "tweet.read"
+              "tweet.read",
+              "mute.read"
             ]
           },
           {
@@ -17990,8 +18076,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "mute.write",
-              "tweet.read"
+              "tweet.read",
+              "mute.write"
             ]
           },
           {
@@ -18058,8 +18144,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "list.read",
+              "users.read",
               "tweet.read"
             ]
           },
@@ -18152,9 +18238,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "list.read"
+              "list.read",
+              "tweet.read"
             ]
           },
           {
@@ -18219,8 +18305,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.read",
-              "list.write"
+              "list.write",
+              "tweet.read"
             ]
           },
           {
@@ -18291,9 +18377,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "list.write",
-              "tweet.read"
+              "list.write"
             ]
           },
           {
@@ -18363,9 +18449,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.read",
               "dm.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -18427,9 +18513,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "dm.write"
             ]
           },
           {
@@ -18501,8 +18587,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "tweet.write",
-              "tweet.read"
+              "tweet.read",
+              "tweet.write"
             ]
           },
           {
@@ -18573,9 +18659,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "tweet.write",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -18646,8 +18732,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -18806,8 +18892,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -19114,9 +19200,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "mute.write",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -21556,6 +21642,47 @@
           },
           "text": {
             "type": "string"
+          }
+        }
+      },
+      "Call": {
+        "type": "object",
+        "properties": {
+          "conversation_id": {
+            "type": "string",
+            "description": "XChat conversation the call belongs to, if any."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Creation time (RFC 3339)."
+          },
+          "host_id": {
+            "type": "string",
+            "description": "X user id of the call's host."
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the call; also its join secret."
+          },
+          "join_policy": {
+            "type": "string",
+            "description": "Who may join: open (anyone with the link), closed (the host admits people), or trusted (the host's Verified Organization)."
+          },
+          "join_url": {
+            "type": "string",
+            "description": "Link people open to join the call on X."
+          },
+          "participant_count": {
+            "type": "integer",
+            "description": "People in the call right now."
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the call."
+          },
+          "viewer_may_join": {
+            "type": "boolean",
+            "description": "Whether the authenticated user may join without asking the host."
           }
         }
       },
@@ -26735,6 +26862,23 @@
           }
         }
       },
+      "GetCallResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Call"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          },
+          "includes": {
+            "$ref": "#/components/schemas/Expansions"
+          }
+        }
+      },
       "GetChatConversationEventsResponse": {
         "type": "object",
         "properties": {
@@ -28074,94 +28218,18 @@
         "type": "object",
         "properties": {
           "data": {
-            "$ref": "#/components/schemas/GetScheduledCallResponseData"
+            "$ref": "#/components/schemas/ScheduledCall"
           },
           "errors": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Problem"
             }
+          },
+          "includes": {
+            "$ref": "#/components/schemas/Expansions"
           }
         }
-      },
-      "GetScheduledCallResponseData": {
-        "type": "object",
-        "properties": {
-          "calendar": {
-            "type": "string",
-            "description": "Where the call lives: x (X Calls), or outlook for a Microsoft Outlook calendar the user linked to X, whose calls are changed there."
-          },
-          "call_id": {
-            "type": "string",
-            "description": "The X call people join; also its join secret."
-          },
-          "description": {
-            "type": "string",
-            "description": "What the call is about."
-          },
-          "end_time": {
-            "type": "string",
-            "description": "End of this occurrence (RFC 3339)."
-          },
-          "id": {
-            "type": "string",
-            "description": "Unique identifier of the scheduled call: what PUT, DELETE and rsvp take. Calls on linked calendars have none."
-          },
-          "invitees": {
-            "type": "array",
-            "description": "Everyone invited, except the organizer. Not set for linked calendars.",
-            "items": {
-              "$ref": "#/components/schemas/GetScheduledCallResponseDataInvitees"
-            }
-          },
-          "join_url": {
-            "type": "string",
-            "description": "Link people open to join the call on X."
-          },
-          "occurrence_start_time": {
-            "type": "string",
-            "description": "For a recurring call, this occurrence's original start (RFC 3339): pass it as occurrence_start_time to change, cancel or answer just this occurrence."
-          },
-          "organizer_id": {
-            "type": "string",
-            "description": "X user id of the call's organizer."
-          },
-          "recurrence": {
-            "type": "string",
-            "description": "RFC 5545 RRULE the call repeats by, such as FREQ=WEEKLY;BYDAY=MO."
-          },
-          "start_time": {
-            "type": "string",
-            "description": "Start of this occurrence (RFC 3339)."
-          },
-          "status": {
-            "type": "string",
-            "description": "scheduled, or cancelled for a cancelled occurrence."
-          },
-          "time_zone": {
-            "type": "string",
-            "description": "IANA time zone the recurrence follows."
-          },
-          "title": {
-            "type": "string",
-            "description": "Title of the call."
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetScheduledCallResponseDataInvitees": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "X user id of the invitee."
-          },
-          "response": {
-            "type": "string",
-            "description": "accepted, declined, tentative, or none for no answer yet."
-          }
-        },
-        "additionalProperties": false
       },
       "GetSpacesBuyersResponse": {
         "type": "object",
@@ -29836,7 +29904,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ListScheduledCallsResponseData"
+              "$ref": "#/components/schemas/ScheduledCall"
             }
           },
           "errors": {
@@ -29844,6 +29912,9 @@
             "items": {
               "$ref": "#/components/schemas/Problem"
             }
+          },
+          "includes": {
+            "$ref": "#/components/schemas/Expansions"
           },
           "meta": {
             "type": "object",
@@ -29856,85 +29927,6 @@
             }
           }
         }
-      },
-      "ListScheduledCallsResponseData": {
-        "type": "object",
-        "properties": {
-          "calendar": {
-            "type": "string",
-            "description": "Where the call lives: x (X Calls), or outlook for a Microsoft Outlook calendar the user linked to X, whose calls are changed there."
-          },
-          "call_id": {
-            "type": "string",
-            "description": "The X call people join; also its join secret."
-          },
-          "description": {
-            "type": "string",
-            "description": "What the call is about."
-          },
-          "end_time": {
-            "type": "string",
-            "description": "End of this occurrence (RFC 3339)."
-          },
-          "id": {
-            "type": "string",
-            "description": "Unique identifier of the scheduled call: what PUT, DELETE and rsvp take. Calls on linked calendars have none."
-          },
-          "invitees": {
-            "type": "array",
-            "description": "Everyone invited, except the organizer. Not set for linked calendars.",
-            "items": {
-              "$ref": "#/components/schemas/ListScheduledCallsResponseDataInvitees"
-            }
-          },
-          "join_url": {
-            "type": "string",
-            "description": "Link people open to join the call on X."
-          },
-          "occurrence_start_time": {
-            "type": "string",
-            "description": "For a recurring call, this occurrence's original start (RFC 3339): pass it as occurrence_start_time to change, cancel or answer just this occurrence."
-          },
-          "organizer_id": {
-            "type": "string",
-            "description": "X user id of the call's organizer."
-          },
-          "recurrence": {
-            "type": "string",
-            "description": "RFC 5545 RRULE the call repeats by, such as FREQ=WEEKLY;BYDAY=MO."
-          },
-          "start_time": {
-            "type": "string",
-            "description": "Start of this occurrence (RFC 3339)."
-          },
-          "status": {
-            "type": "string",
-            "description": "scheduled, or cancelled for a cancelled occurrence."
-          },
-          "time_zone": {
-            "type": "string",
-            "description": "IANA time zone the recurrence follows."
-          },
-          "title": {
-            "type": "string",
-            "description": "Title of the call."
-          }
-        },
-        "additionalProperties": false
-      },
-      "ListScheduledCallsResponseDataInvitees": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "X user id of the invitee."
-          },
-          "response": {
-            "type": "string",
-            "description": "accepted, declined, tentative, or none for no answer yet."
-          }
-        },
-        "additionalProperties": false
       },
       "MarkChatConversationReadResponse": {
         "type": "object",
@@ -33715,6 +33707,88 @@
           }
         },
         "additionalProperties": false
+      },
+      "ScheduledCall": {
+        "type": "object",
+        "properties": {
+          "calendar": {
+            "type": "string",
+            "description": "Where the call lives: x (X Calls), or outlook for a Microsoft Outlook calendar the user linked to X, whose calls are changed there."
+          },
+          "call_id": {
+            "type": "string",
+            "description": "The X call people join; also its join secret."
+          },
+          "description": {
+            "type": "string",
+            "description": "What the call is about."
+          },
+          "end_time": {
+            "type": "string",
+            "description": "End of this occurrence (RFC 3339)."
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the scheduled call: what PUT, DELETE and rsvp take. Calls on linked calendars have none."
+          },
+          "invitees": {
+            "$ref": "#/components/schemas/ScheduledCallInvitees"
+          },
+          "join_url": {
+            "type": "string",
+            "description": "Link people open to join the call on X."
+          },
+          "occurrence_start_time": {
+            "type": "string",
+            "description": "For a recurring call, this occurrence's original start (RFC 3339): pass it as occurrence_start_time to change, cancel or answer just this occurrence."
+          },
+          "organizer_id": {
+            "type": "string",
+            "description": "X user id of the call's organizer."
+          },
+          "recurrence": {
+            "type": "string",
+            "description": "RFC 5545 RRULE the call repeats by, such as FREQ=WEEKLY;BYDAY=MO."
+          },
+          "start_time": {
+            "type": "string",
+            "description": "Start of this occurrence (RFC 3339)."
+          },
+          "status": {
+            "type": "string",
+            "description": "scheduled, or cancelled for a cancelled occurrence."
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "IANA time zone the recurrence follows."
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the call."
+          }
+        }
+      },
+      "ScheduledCallInvitees": {
+        "type": "array",
+        "description": "Everyone invited, except the organizer. Not set for linked calendars.",
+        "items": {
+          "type": "object",
+          "description": "Someone invited to a scheduled call, other than the organizer.",
+          "required": [
+            "id",
+            "response"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "X user id of the invitee."
+            },
+            "response": {
+              "type": "string",
+              "description": "accepted, declined, tentative, or none for no answer yet."
+            }
+          }
+        }
       },
       "SearchCommunitiesResponse": {
         "type": "object",
@@ -37765,6 +37839,52 @@
         "explode": false,
         "style": "form"
       },
+      "CallExpansionsParameter": {
+        "name": "expansions",
+        "in": "query",
+        "description": "A comma separated list of fields to expand.",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "host_id"
+            ]
+          }
+        },
+        "explode": false,
+        "style": "form"
+      },
+      "CallFieldsParameter": {
+        "name": "call.fields",
+        "in": "query",
+        "description": "A comma separated list of Call fields to display.",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "description": "The fields available for a Call object.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "conversation_id",
+              "created_at",
+              "id",
+              "join_policy",
+              "join_url",
+              "participant_count",
+              "title",
+              "viewer_may_join"
+            ]
+          }
+        },
+        "explode": false,
+        "style": "form"
+      },
       "ChatConversationExpansionsParameter": {
         "name": "expansions",
         "in": "query",
@@ -38467,6 +38587,57 @@
               "cap_per_project",
               "client_app_rules_count",
               "project_rules_count"
+            ]
+          }
+        },
+        "explode": false,
+        "style": "form"
+      },
+      "ScheduledCallExpansionsParameter": {
+        "name": "expansions",
+        "in": "query",
+        "description": "A comma separated list of fields to expand.",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "invitees",
+              "organizer_id"
+            ]
+          }
+        },
+        "explode": false,
+        "style": "form"
+      },
+      "ScheduledCallFieldsParameter": {
+        "name": "scheduled_call.fields",
+        "in": "query",
+        "description": "A comma separated list of ScheduledCall fields to display.",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "description": "The fields available for a ScheduledCall object.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "calendar",
+              "call_id",
+              "description",
+              "end_time",
+              "id",
+              "join_url",
+              "occurrence_start_time",
+              "recurrence",
+              "start_time",
+              "status",
+              "time_zone",
+              "title"
             ]
           }
         },
