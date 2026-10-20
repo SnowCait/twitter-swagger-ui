@@ -158,9 +158,9 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "dm.write",
+              "dm.read",
               "tweet.read",
-              "dm.read"
+              "dm.write"
             ]
           },
           {
@@ -215,10 +215,10 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "dm.read",
               "dm.write",
-              "tweet.read"
+              "users.read",
+              "tweet.read",
+              "dm.read"
             ]
           },
           {
@@ -1304,7 +1304,7 @@
               "maxItems": 100,
               "items": {
                 "type": "string",
-                "pattern": "^[a-zA-Z0-9]{1,13}$"
+                "pattern": "^[a-zA-Z0-9]{1,24}$"
               }
             },
             "explode": false,
@@ -1370,8 +1370,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
               "tweet.read",
+              "broadcast.read",
               "users.read"
             ]
           },
@@ -1486,8 +1486,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.write",
-              "broadcast.read"
+              "broadcast.read",
+              "broadcast.write"
             ]
           },
           {
@@ -1633,8 +1633,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -1645,7 +1645,7 @@
           "Broadcasts"
         ],
         "summary": "Create a scheduled broadcast",
-        "description": "Schedules a one-off or recurring broadcast for the authenticated user. A `source_id` (ingest) is required at create time.",
+        "description": "Schedules a broadcast for the authenticated user. A `source_id` (ingest) is required at create time.",
         "operationId": "createScheduledBroadcast",
         "requestBody": {
           "content": {
@@ -1703,7 +1703,7 @@
           "Broadcasts"
         ],
         "summary": "Delete a scheduled broadcast",
-        "description": "Deletes a scheduled broadcast by its alphanumeric UBS broadcast id.",
+        "description": "Deletes a scheduled broadcast by its alphanumeric broadcast id.",
         "operationId": "deleteScheduledBroadcast",
         "parameters": [
           {
@@ -1712,13 +1712,14 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           },
           {
             "name": "roll_forward",
             "in": "query",
+            "description": "Deprecated: recurring schedules are being retired and `true` will be rejected.",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -1769,7 +1770,7 @@
           "Broadcasts"
         ],
         "summary": "Get a scheduled broadcast",
-        "description": "Returns a single scheduled broadcast by its alphanumeric UBS broadcast id.",
+        "description": "Returns a single scheduled broadcast by its alphanumeric broadcast id.",
         "operationId": "getScheduledBroadcast",
         "parameters": [
           {
@@ -1778,7 +1779,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           }
@@ -1827,7 +1828,7 @@
           "Broadcasts"
         ],
         "summary": "Update a scheduled broadcast",
-        "description": "Fully replaces schedule fields for a broadcast. Path `:id` is the UBS broadcast id; the body must include `scheduled_broadcast_id` and re-send any fields that should be kept.",
+        "description": "Updates a scheduled broadcast. Path `:id` is the broadcast id; the body must include `scheduled_broadcast_id`. Re-send every field that should be kept.",
         "operationId": "updateScheduledBroadcast",
         "parameters": [
           {
@@ -1836,7 +1837,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           }
@@ -1906,7 +1907,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           }
@@ -1965,7 +1966,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           },
@@ -2027,7 +2028,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           },
@@ -2117,7 +2118,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           }
@@ -2166,8 +2167,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "broadcast.read",
-              "broadcast.write"
+              "broadcast.write",
+              "broadcast.read"
             ]
           },
           {
@@ -2187,7 +2188,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           }
@@ -2257,7 +2258,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           },
@@ -2328,7 +2329,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[a-zA-Z0-9]{1,13}$"
+              "pattern": "^[a-zA-Z0-9]{1,24}$"
             },
             "style": "simple"
           },
@@ -2431,6 +2432,9 @@
           },
           {
             "$ref": "#/components/parameters/ScheduledCallExpansionsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CallFieldsParameter"
           },
           {
             "$ref": "#/components/parameters/UserFieldsParameter"
@@ -2647,6 +2651,9 @@
           },
           {
             "$ref": "#/components/parameters/ScheduledCallExpansionsParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CallFieldsParameter"
           },
           {
             "$ref": "#/components/parameters/UserFieldsParameter"
@@ -2890,8 +2897,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
-              "users.read"
+              "users.read",
+              "dm.read"
             ]
           },
           {
@@ -2985,9 +2992,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "dm.write"
+              "dm.write",
+              "tweet.read"
             ]
           },
           {
@@ -3170,8 +3177,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
+              "users.read",
               "dm.read"
             ]
           },
@@ -3241,9 +3248,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "tweet.read",
-              "users.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -3316,9 +3323,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "dm.read",
               "users.read",
-              "dm.read"
+              "tweet.read"
             ]
           },
           {
@@ -3398,9 +3405,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.write",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -3473,9 +3480,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -3559,9 +3566,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -3720,9 +3727,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -3795,8 +3802,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "dm.write"
             ]
           },
@@ -3870,9 +3877,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "dm.write"
             ]
           },
           {
@@ -3943,9 +3950,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "dm.write"
             ]
           },
           {
@@ -4018,9 +4025,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "dm.read",
-              "users.read"
+              "dm.read"
             ]
           },
           {
@@ -4109,9 +4116,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -4182,9 +4189,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "tweet.read",
-              "users.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -4257,9 +4264,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "dm.read"
             ]
           },
           {
@@ -4337,8 +4344,8 @@
           {
             "OAuth2UserToken": [
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -4487,8 +4494,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "dm.write"
             ]
           },
           {
@@ -4560,8 +4567,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
               "tweet.read",
+              "dm.write",
               "users.read"
             ]
           },
@@ -4634,9 +4641,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "dm.write"
+              "dm.write",
+              "users.read"
             ]
           },
           {
@@ -4708,9 +4715,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -4781,9 +4788,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "tweet.read",
-              "dm.write"
+              "dm.write",
+              "users.read"
             ]
           },
           {
@@ -4857,8 +4864,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "tweet.read",
+              "dm.write"
             ]
           },
           {
@@ -4931,8 +4938,8 @@
           {
             "OAuth2UserToken": [
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -5004,9 +5011,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -5077,9 +5084,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "dm.write",
               "tweet.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -5152,9 +5159,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -5231,9 +5238,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "dm.write"
             ]
           },
           {
@@ -5296,8 +5303,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "users.read",
-              "dm.write"
+              "dm.write",
+              "users.read"
             ]
           },
           {
@@ -5370,8 +5377,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.write",
+              "users.read",
               "tweet.read"
             ]
           },
@@ -5434,8 +5441,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "dm.write"
             ]
           },
@@ -5873,9 +5880,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "dm.read"
             ]
           },
           {
@@ -5942,8 +5949,8 @@
           {
             "OAuth2UserToken": [
               "dm.write",
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6006,9 +6013,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "dm.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6123,8 +6130,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6219,9 +6226,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -6968,9 +6975,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "dm.write",
-              "tweet.read"
+              "dm.write"
             ]
           },
           {
@@ -7225,9 +7232,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "dm.write",
               "tweet.read",
-              "users.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -7296,9 +7303,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "dm.write",
-              "users.read"
+              "dm.write"
             ]
           },
           {
@@ -7365,9 +7372,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "dm.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -7489,8 +7496,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "tweet.read",
+              "dm.read",
               "users.read"
             ]
           },
@@ -7603,8 +7610,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.write",
-              "dm.read"
+              "dm.read",
+              "dm.write"
             ]
           },
           {
@@ -7661,9 +7668,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "dm.read"
             ]
           },
           {
@@ -8346,10 +8353,10 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "list.write",
               "users.read",
-              "list.read"
+              "list.write",
+              "list.read",
+              "tweet.read"
             ]
           },
           {
@@ -8466,9 +8473,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "list.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -8535,8 +8542,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.write",
               "users.read",
+              "list.write",
               "tweet.read"
             ]
           },
@@ -8609,8 +8616,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "list.read",
-              "users.read"
+              "users.read",
+              "list.read"
             ]
           },
           {
@@ -8702,9 +8709,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "list.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -8794,9 +8801,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
-              "list.write"
+              "list.write",
+              "tweet.read"
             ]
           },
           {
@@ -8863,9 +8870,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "list.write",
               "tweet.read",
-              "list.write"
+              "users.read"
             ]
           },
           {
@@ -8935,9 +8942,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -9876,8 +9883,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -10324,14 +10331,302 @@
         }
       }
     },
+    "/2/sources": {
+      "get": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "broadcast.read"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Broadcasts"
+        ],
+        "summary": "List stream sources",
+        "description": "Returns the authenticated user's RTMP/RTMPS stream sources (empty array if none). A source's `id` is also its stream key and is the `source_id` a scheduled broadcast binds to.",
+        "operationId": "listSources",
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListSourcesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "broadcast.read",
+              "broadcast.write"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Broadcasts"
+        ],
+        "summary": "Create a stream source",
+        "description": "Creates a persistent RTMP/RTMPS ingest point for the authenticated user. Push an encoder to `rtmps_url` with the source `id` as the stream key.",
+        "operationId": "createSource",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSourceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSourceResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2/sources/{id}": {
+      "delete": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "broadcast.read",
+              "broadcast.write"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Broadcasts"
+        ],
+        "summary": "Delete a stream source",
+        "description": "Deletes one of the authenticated user's stream sources. Success is an empty object.",
+        "operationId": "deleteSource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9]{1,32}$"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSourceResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "broadcast.read"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Broadcasts"
+        ],
+        "summary": "Get a stream source",
+        "description": "Returns one of the authenticated user's stream sources. Poll it after starting an encoder and wait for `is_stream_active` before going live.",
+        "operationId": "getSource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9]{1,32}$"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSourceResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "OAuth2UserToken": [
+              "broadcast.write",
+              "broadcast.read"
+            ]
+          },
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Broadcasts"
+        ],
+        "summary": "Rename a stream source",
+        "description": "Renames one of the authenticated user's stream sources.",
+        "operationId": "updateSource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9]{1,32}$"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSourceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSourceResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "The request has failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/2/spaces": {
       "get": {
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "tweet.read",
-              "space.read",
-              "users.read"
+              "space.read"
             ]
           },
           {
@@ -10407,9 +10702,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "space.read",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "space.read"
             ]
           },
           {
@@ -10485,9 +10780,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "users.read",
               "space.read",
-              "tweet.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -10591,8 +10886,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "space.read",
-              "users.read"
+              "users.read",
+              "space.read"
             ]
           },
           {
@@ -10662,9 +10957,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.read",
               "space.read",
-              "tweet.read"
+              "users.read"
             ]
           }
         ],
@@ -10756,9 +11051,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "space.read",
-              "users.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -10933,8 +11228,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -11016,9 +11311,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.write",
               "tweet.read",
-              "tweet.write"
+              "users.read"
             ]
           },
           {
@@ -14712,9 +15007,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.write",
               "tweet.read",
-              "users.read",
-              "tweet.write"
+              "users.read"
             ]
           },
           {
@@ -14769,8 +15064,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -14848,9 +15143,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "like.read",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "like.read"
             ]
           },
           {
@@ -15156,8 +15451,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -15259,9 +15554,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.moderate.write",
               "users.read",
-              "tweet.read"
+              "tweet.read",
+              "tweet.moderate.write"
             ]
           },
           {
@@ -15436,8 +15731,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -15863,9 +16158,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
+              "tweet.read",
               "users.read",
-              "tweet.read"
+              "dm.read"
             ]
           },
           {
@@ -16026,8 +16321,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -16117,8 +16412,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -16187,8 +16482,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -16279,9 +16574,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "block.read",
               "tweet.read",
-              "block.read"
+              "users.read"
             ]
           },
           {
@@ -16367,9 +16662,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "block.write",
+              "users.read",
               "tweet.read",
-              "users.read"
+              "block.write"
             ]
           },
           {
@@ -16436,9 +16731,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "bookmark.read",
               "tweet.read",
-              "users.read",
-              "bookmark.read"
+              "users.read"
             ]
           },
           {
@@ -16535,8 +16830,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "bookmark.write",
-              "users.read"
+              "users.read",
+              "bookmark.write"
             ]
           }
         ],
@@ -16601,8 +16896,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "bookmark.read",
-              "users.read"
+              "users.read",
+              "bookmark.read"
             ]
           },
           {
@@ -16746,8 +17041,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "bookmark.read"
             ]
           },
@@ -16838,8 +17133,8 @@
           {
             "OAuth2UserToken": [
               "users.read",
-              "bookmark.write",
-              "tweet.read"
+              "tweet.read",
+              "bookmark.write"
             ]
           }
         ],
@@ -16907,8 +17202,8 @@
           {
             "OAuth2UserToken": [
               "dm.write",
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -16965,9 +17260,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "dm.write",
               "tweet.read",
-              "dm.write"
+              "users.read"
             ]
           },
           {
@@ -17024,8 +17319,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "list.read",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -17116,9 +17411,9 @@
         "security": [
           {
             "OAuth2UserToken": [
+              "tweet.read",
               "users.read",
-              "list.write",
-              "tweet.read"
+              "list.write"
             ]
           },
           {
@@ -17185,9 +17480,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "list.write",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "list.write"
             ]
           },
           {
@@ -17257,9 +17552,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "follows.read",
               "tweet.read",
-              "users.read"
+              "users.read",
+              "follows.read"
             ]
           },
           {
@@ -17444,8 +17739,8 @@
           {
             "OAuth2UserToken": [
               "follows.write",
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -17512,8 +17807,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "users.read",
+              "tweet.read",
               "like.read"
             ]
           },
@@ -17612,9 +17907,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "like.write",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -17681,8 +17976,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "like.write",
+              "tweet.read",
               "users.read"
             ]
           },
@@ -17749,9 +18044,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
+              "users.read",
               "list.read",
-              "users.read"
+              "tweet.read"
             ]
           },
           {
@@ -17987,9 +18282,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.read",
               "mute.read",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -18075,9 +18370,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "mute.write",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -18238,8 +18533,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
               "list.read",
+              "users.read",
               "tweet.read"
             ]
           },
@@ -18378,8 +18673,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "users.read",
-              "list.write"
+              "list.write",
+              "users.read"
             ]
           },
           {
@@ -18449,8 +18744,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "dm.read",
               "users.read",
+              "dm.read",
               "tweet.read"
             ]
           },
@@ -18587,8 +18882,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "tweet.write",
-              "users.read"
+              "users.read",
+              "tweet.write"
             ]
           },
           {
@@ -18659,9 +18954,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
               "tweet.write",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -18732,8 +19027,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
-              "tweet.read"
+              "tweet.read",
+              "users.read"
             ]
           },
           {
@@ -18892,8 +19187,8 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "tweet.read",
-              "users.read"
+              "users.read",
+              "tweet.read"
             ]
           },
           {
@@ -19057,8 +19352,8 @@
           {
             "OAuth2UserToken": [
               "tweet.read",
-              "users.read",
-              "block.write"
+              "block.write",
+              "users.read"
             ]
           },
           {
@@ -19128,9 +19423,9 @@
         "security": [
           {
             "OAuth2UserToken": [
-              "users.read",
+              "tweet.read",
               "follows.write",
-              "tweet.read"
+              "users.read"
             ]
           },
           {
@@ -24250,7 +24545,7 @@
             "description": "If true, do not auto-publish at start; call POST .../live when ready."
           },
           "recurrence": {
-            "description": "If set, creates a recurring series.",
+            "description": "Deprecated: recurring schedules are being retired and requests that include `recurrence` will be rejected. Create each occurrence as its own scheduled broadcast.",
             "$ref": "#/components/schemas/CreateScheduledBroadcastRecurrence"
           },
           "scheduled_end_ms": {
@@ -24270,7 +24565,7 @@
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast id (numeric string).",
+            "description": "Deprecated: telecast associations are being retired and this field will be ignored.",
             "pattern": "^[0-9]{1,19}$"
           },
           "thumbnail_media_id": {
@@ -24308,7 +24603,7 @@
           },
           "broadcast_id": {
             "type": "string",
-            "description": "Alphanumeric UBS broadcast id (path `:id` for get/update/delete/live)."
+            "description": "Alphanumeric broadcast id (path `:id` for get/update/delete/live)."
           },
           "chat_option": {
             "type": "string",
@@ -24328,7 +24623,7 @@
           },
           "recurring_schedule_id": {
             "type": "string",
-            "description": "Set when this occurrence belongs to a recurrence."
+            "description": "Deprecated: always null for new schedules."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -24348,11 +24643,11 @@
           },
           "state": {
             "type": "string",
-            "description": "Scheduler state (Created, Scheduled, Running, …)."
+            "description": "Scheduler state: `Created` or `Scheduled` before start, then `Running`, `Ended`, or `Error`."
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast association."
+            "description": "Deprecated: always null for new schedules."
           },
           "thumbnail_media_id": {
             "type": "string",
@@ -24363,6 +24658,96 @@
             "description": "Broadcast title / status text."
           }
         }
+      },
+      "CreateSourceRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "region"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Label for the source.",
+            "minLength": 1
+          },
+          "region": {
+            "type": "string",
+            "description": "Ingest region: us-east-1, us-east-2, us-west-1, us-west-2, ca-central-1, sa-east-1, eu-west-1, eu-west-3, eu-central-1, ap-south-1, ap-southeast-1, ap-southeast-2, ap-northeast-1 or ap-northeast-2.",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSourceResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CreateSourceResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "CreateSourceResponseData": {
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/CreateSourceResponseDataSource"
+          }
+        }
+      },
+      "CreateSourceResponseDataSource": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "creation_time": {
+            "type": "integer",
+            "description": "Creation time, ms since Unix epoch."
+          },
+          "id": {
+            "type": "string",
+            "description": "Source id; also the RTMP stream key."
+          },
+          "is_stream_active": {
+            "type": "boolean",
+            "description": "Whether the source is currently receiving video."
+          },
+          "name": {
+            "type": "string",
+            "description": "Label for the source."
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "Owner's numeric user id. Exceeds the exact integer range of many JSON parsers."
+          },
+          "rtmp_region": {
+            "type": "string",
+            "description": "Ingest region, e.g. `us-east-1`."
+          },
+          "rtmp_stream_key": {
+            "type": "string",
+            "description": "Stream key; equal to `id`."
+          },
+          "rtmp_url": {
+            "type": "string",
+            "description": "RTMP ingest URL."
+          },
+          "rtmps_url": {
+            "type": "string",
+            "description": "RTMPS ingest URL (port 443)."
+          }
+        },
+        "additionalProperties": false
       },
       "CreateUsersBookmarkFolderRequest": {
         "type": "object",
@@ -25578,6 +25963,24 @@
           }
         }
       },
+      "DeleteSourceResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DeleteSourceResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "DeleteSourceResponseData": {
+        "type": "object",
+        "properties": {}
+      },
       "DeleteUsersBookmarkResponse": {
         "type": "object",
         "properties": {
@@ -26328,6 +26731,12 @@
       "Expansions": {
         "type": "object",
         "properties": {
+          "calls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Call"
+            }
+          },
           "media": {
             "type": "array",
             "items": {
@@ -28158,7 +28567,7 @@
           },
           "broadcast_id": {
             "type": "string",
-            "description": "Alphanumeric UBS broadcast id (path `:id` for get/update/delete/live)."
+            "description": "Alphanumeric broadcast id (path `:id` for get/update/delete/live)."
           },
           "chat_option": {
             "type": "string",
@@ -28178,7 +28587,7 @@
           },
           "recurring_schedule_id": {
             "type": "string",
-            "description": "Set when this occurrence belongs to a recurrence."
+            "description": "Deprecated: always null for new schedules."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -28198,11 +28607,11 @@
           },
           "state": {
             "type": "string",
-            "description": "Scheduler state (Created, Scheduled, Running, …)."
+            "description": "Scheduler state: `Created` or `Scheduled` before start, then `Running`, `Ended`, or `Error`."
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast association."
+            "description": "Deprecated: always null for new schedules."
           },
           "thumbnail_media_id": {
             "type": "string",
@@ -28230,6 +28639,76 @@
             "$ref": "#/components/schemas/Expansions"
           }
         }
+      },
+      "GetSourceResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/GetSourceResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "GetSourceResponseData": {
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/GetSourceResponseDataSource"
+          }
+        }
+      },
+      "GetSourceResponseDataSource": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "creation_time": {
+            "type": "integer",
+            "description": "Creation time, ms since Unix epoch."
+          },
+          "id": {
+            "type": "string",
+            "description": "Source id; also the RTMP stream key."
+          },
+          "is_stream_active": {
+            "type": "boolean",
+            "description": "Whether the source is currently receiving video."
+          },
+          "name": {
+            "type": "string",
+            "description": "Label for the source."
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "Owner's numeric user id. Exceeds the exact integer range of many JSON parsers."
+          },
+          "rtmp_region": {
+            "type": "string",
+            "description": "Ingest region, e.g. `us-east-1`."
+          },
+          "rtmp_stream_key": {
+            "type": "string",
+            "description": "Stream key; equal to `id`."
+          },
+          "rtmp_url": {
+            "type": "string",
+            "description": "RTMP ingest URL."
+          },
+          "rtmps_url": {
+            "type": "string",
+            "description": "RTMPS ingest URL (port 443)."
+          }
+        },
+        "additionalProperties": false
       },
       "GetSpacesBuyersResponse": {
         "type": "object",
@@ -29353,7 +29832,7 @@
           },
           "broadcast_id": {
             "type": "string",
-            "description": "Alphanumeric UBS broadcast id (path `:id` for get/update/delete/live)."
+            "description": "Alphanumeric broadcast id (path `:id` for get/update/delete/live)."
           },
           "chat_option": {
             "type": "string",
@@ -29373,7 +29852,7 @@
           },
           "recurring_schedule_id": {
             "type": "string",
-            "description": "Set when this occurrence belongs to a recurrence."
+            "description": "Deprecated: always null for new schedules."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -29393,11 +29872,11 @@
           },
           "state": {
             "type": "string",
-            "description": "Scheduler state (Created, Scheduled, Running, …)."
+            "description": "Scheduler state: `Created` or `Scheduled` before start, then `Running`, `Ended`, or `Error`."
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast association."
+            "description": "Deprecated: always null for new schedules."
           },
           "thumbnail_media_id": {
             "type": "string",
@@ -29842,7 +30321,7 @@
           },
           "broadcast_id": {
             "type": "string",
-            "description": "Alphanumeric UBS broadcast id (path `:id` for get/update/delete/live)."
+            "description": "Alphanumeric broadcast id (path `:id` for get/update/delete/live)."
           },
           "chat_option": {
             "type": "string",
@@ -29862,7 +30341,7 @@
           },
           "recurring_schedule_id": {
             "type": "string",
-            "description": "Set when this occurrence belongs to a recurrence."
+            "description": "Deprecated: always null for new schedules."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -29882,11 +30361,11 @@
           },
           "state": {
             "type": "string",
-            "description": "Scheduler state (Created, Scheduled, Running, …)."
+            "description": "Scheduler state: `Created` or `Scheduled` before start, then `Running`, `Ended`, or `Error`."
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast association."
+            "description": "Deprecated: always null for new schedules."
           },
           "thumbnail_media_id": {
             "type": "string",
@@ -29927,6 +30406,79 @@
             }
           }
         }
+      },
+      "ListSourcesResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ListSourcesResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "ListSourcesResponseData": {
+        "type": "object",
+        "required": [
+          "sources"
+        ],
+        "properties": {
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListSourcesResponseDataSources"
+            }
+          }
+        }
+      },
+      "ListSourcesResponseDataSources": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "creation_time": {
+            "type": "integer",
+            "description": "Creation time, ms since Unix epoch."
+          },
+          "id": {
+            "type": "string",
+            "description": "Source id; also the RTMP stream key."
+          },
+          "is_stream_active": {
+            "type": "boolean",
+            "description": "Whether the source is currently receiving video."
+          },
+          "name": {
+            "type": "string",
+            "description": "Label for the source."
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "Owner's numeric user id. Exceeds the exact integer range of many JSON parsers."
+          },
+          "rtmp_region": {
+            "type": "string",
+            "description": "Ingest region, e.g. `us-east-1`."
+          },
+          "rtmp_stream_key": {
+            "type": "string",
+            "description": "Stream key; equal to `id`."
+          },
+          "rtmp_url": {
+            "type": "string",
+            "description": "RTMP ingest URL."
+          },
+          "rtmps_url": {
+            "type": "string",
+            "description": "RTMPS ingest URL (port 443)."
+          }
+        },
+        "additionalProperties": false
       },
       "MarkChatConversationReadResponse": {
         "type": "object",
@@ -36418,7 +36970,7 @@
           },
           "roll_forward": {
             "type": "boolean",
-            "description": "When true, shift the head of a recurring series."
+            "description": "Deprecated: recurring schedules are being retired and `true` will be rejected."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -36474,7 +37026,7 @@
           },
           "broadcast_id": {
             "type": "string",
-            "description": "Alphanumeric UBS broadcast id (path `:id` for get/update/delete/live)."
+            "description": "Alphanumeric broadcast id (path `:id` for get/update/delete/live)."
           },
           "chat_option": {
             "type": "string",
@@ -36494,7 +37046,7 @@
           },
           "recurring_schedule_id": {
             "type": "string",
-            "description": "Set when this occurrence belongs to a recurrence."
+            "description": "Deprecated: always null for new schedules."
           },
           "scheduled_broadcast_id": {
             "type": "string",
@@ -36514,11 +37066,11 @@
           },
           "state": {
             "type": "string",
-            "description": "Scheduler state (Created, Scheduled, Running, …)."
+            "description": "Scheduler state: `Created` or `Scheduled` before start, then `Running`, `Ended`, or `Error`."
           },
           "telecast_id": {
             "type": "string",
-            "description": "Optional telecast association."
+            "description": "Deprecated: always null for new schedules."
           },
           "thumbnail_media_id": {
             "type": "string",
@@ -36654,6 +37206,90 @@
           "updated": {
             "type": "boolean",
             "description": "Whether the scheduled call was changed."
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSourceRequest": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "New label for the source.",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSourceResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UpdateSourceResponseData"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "UpdateSourceResponseData": {
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/UpdateSourceResponseDataSource"
+          }
+        }
+      },
+      "UpdateSourceResponseDataSource": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "creation_time": {
+            "type": "integer",
+            "description": "Creation time, ms since Unix epoch."
+          },
+          "id": {
+            "type": "string",
+            "description": "Source id; also the RTMP stream key."
+          },
+          "is_stream_active": {
+            "type": "boolean",
+            "description": "Whether the source is currently receiving video."
+          },
+          "name": {
+            "type": "string",
+            "description": "Label for the source."
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "Owner's numeric user id. Exceeds the exact integer range of many JSON parsers."
+          },
+          "rtmp_region": {
+            "type": "string",
+            "description": "Ingest region, e.g. `us-east-1`."
+          },
+          "rtmp_stream_key": {
+            "type": "string",
+            "description": "Stream key; equal to `id`."
+          },
+          "rtmp_url": {
+            "type": "string",
+            "description": "RTMP ingest URL."
+          },
+          "rtmps_url": {
+            "type": "string",
+            "description": "RTMPS ingest URL (port 443)."
           }
         },
         "additionalProperties": false
@@ -38605,6 +39241,7 @@
           "items": {
             "type": "string",
             "enum": [
+              "call_id",
               "invitees",
               "organizer_id"
             ]
